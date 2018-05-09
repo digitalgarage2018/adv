@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>it.iseed.account</groupId>
-	<artifactId>AccountMicroservice</artifactId>
+	<artifactId>UserMicroservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>AccountMicroservice</name>
-	<description>First Microservice in SpringBoot</description>
+	<name>UserMicroservice</name>
+	<description>User Microservice in SpringBoot</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

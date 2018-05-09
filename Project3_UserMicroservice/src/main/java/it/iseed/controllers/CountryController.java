@@ -10,8 +10,6 @@ import it.iseed.entities.CountryEntity;
 import it.iseed.services.CountryService;
 
 
-
-
 @RestController
 public class CountryController {
 	
@@ -22,6 +20,7 @@ public class CountryController {
 	@RequestMapping(value = "/country/{id}", method = RequestMethod.GET,headers="Accept=application/json")
 	public CountryEntity getCountryById(@PathVariable int id)
 	{
+		//System.out.println("ID: "+ id);
 		return countryService.getCountryById(id);
 	}
 }
