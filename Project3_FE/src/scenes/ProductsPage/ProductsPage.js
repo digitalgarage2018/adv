@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {productsService} from '../../services/productsPageService/productsPageService';
+import axios from "axios/index";
+
+import Product from './components/Product';
 
 
-export default class ProductsPage extends React.Component {
+export default class ProductsPage extends Component {
+
+    state = {
+        products: []
+    }
+
     constructor() {
         super();
         this.catchOutput = this.catchOutput.bind(this);
@@ -10,11 +18,18 @@ export default class ProductsPage extends React.Component {
     }
 
     componentDidMount(){
-        productsService();
+        axios.get('http://localhost:8091/products/')
+            .then( response => {
+                    this.setState({products: response.data});
+                    console.log(this.state.products);
+                }
+            )
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
-    state = {
-        showOutput: ''
-    }
+
 
     catchOutput(e) {
         console.log(e.target.value);
@@ -25,11 +40,17 @@ export default class ProductsPage extends React.Component {
 
 
     render() {
+
+
+
         return (
             <div>
                 <h1> sono SUI PRODOTTI  </h1>
+
                 
             </div>
+
+
         )
     }
 }

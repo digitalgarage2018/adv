@@ -14,8 +14,7 @@ export default class Login extends Component {
 
         this.state = {
             email: "",
-            password: "",
-            esito: ""
+            password: ""
         };
     }
 
@@ -47,7 +46,7 @@ export default class Login extends Component {
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="email" bsSize="large">
-                        <ControlLabel>Email</ControlLabel>
+                        <ControlLabel>UserName </ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"

@@ -10,11 +10,9 @@ export const loginService = (userData) => {
         u_pword: userData.password
     })
         .then(function (response) {
-            console.log(JSON.stringify(response.headers));
-
             console.log("Responde Login: ", response.data);
-            console.log("Responde Login: ", response.data);
-
+            console.log("Responde Header: ", response.headers);
+            console.log("Responde jwt prova: ", response.headers.jwt);
 
 
         })
