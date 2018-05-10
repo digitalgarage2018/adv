@@ -4,6 +4,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,10 @@ import it.iseed.account.utils.UserNotLoggedException;
 import it.iseed.entities.BaseResponse;
 import it.iseed.entities.JsonResponseBody;
 import it.iseed.entities.LoginEntity;
+import it.iseed.entities.WellnessCenterEntity;
 import it.iseed.services.LoginService;
 
+@CrossOrigin("*")
 
 @RestController
 public class LoginController {
@@ -40,15 +44,15 @@ public class LoginController {
 	@Autowired
     private LoginService loginService;
 
-	
+	/*
 	@RequestMapping(value = "/users/{u_username}", method = RequestMethod.GET,headers="Accept=application/json")
 	public LoginEntity getUserById(@PathVariable String u_username)
 	{
 		//System.out.println("user: |"+u_username+"|");
 		return loginService.getUser(u_username);
-	}
+	}*/
 	
-	
+	/*
 	@RequestMapping(value="/loginController", method = RequestMethod.POST,headers="Accept=application/json")
 	public BaseResponse userCheck(@RequestBody LoginEntity request) {
 		
@@ -80,11 +84,10 @@ public class LoginController {
 		}
     	return response;
 
-	}
+	}*/
 	
 	
-	
-	@RequestMapping(value = "/loginJSON", method = POST)
+	@RequestMapping(value = "/login", method = POST)
     public ResponseEntity<JsonResponseBody> loginUserJson(@RequestBody LoginEntity request){
         //check if user exists in DB -> if exists generate JWT and send back to client
         try {
@@ -106,13 +109,53 @@ public class LoginController {
     }
 	
 	
+	@RequestMapping(value = "/loginCenter", method = POST)
+    public ResponseEntity<JsonResponseBody> loginCenterJson(@RequestBody WellnessCenterEntity request){
+        //check if user exists in DB -> if exists generate JWT and send back to client
+        try {
+        	String result = loginService.authenticateCenter(request);
+            //Optional<LoginEntity> userr = loginService.getUserFromDbAndVerifyPassword(request.getId(), request.getPassword());
+            if(result.equals("success")){
+        	//if(userr.isPresent()){
+            	//LoginEntity user = userr.get();
+            	WellnessCenterEntity user = loginService.getCenter(request.getW_username());
+                String jwt = loginService.createJwt(user.getW_username(), user.getW_name(), new Date(), "default_center");
+                return ResponseEntity.status(HttpStatus.OK).header("jwt", jwt).body(new JsonResponseBody(HttpStatus.OK.value(), "Success! Center logged in!"));
+            }
+        }catch (UserNotLoggedException e1){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Login failed! Wrong credentials" + e1.toString()));
+        }catch (UnsupportedEncodingException e2){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Token Error" + e2.toString()));
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "No corrispondence in the database of centers"));
+    }
+	
+	
 	@RequestMapping("/users/{username}")
     public ResponseEntity<JsonResponseBody> getUserInfo(HttpServletRequest request, @PathVariable(name = "username") String username){
         //request -> fetch JWT -> check validity -> Get operations from the user account
         try {
-            loginService.verifyJwtAndGetData(request);
+        	Map<String, Object> userData = loginService.verifyJwtAndGetData(request);
+        	
+        	
+        	String jwt_name=(String) userData.get("name");
+        	String jwt_scope=(String) userData.get("scope");
+        	Date jwt_exp_date=(Date) userData.get("exp_date");
+        	String jwt_subject=(String) userData.get("subject");
+        	System.out.println("name: "+jwt_name);
+        	System.out.println("scope: "+jwt_scope);
+        	System.out.println("expDate: "+jwt_exp_date);
+        	System.out.println("subject: "+jwt_subject);
+        	
+        	
+        	
+        	if (jwt_scope.equals("default_user")){
             //user verified
             return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), loginService.getUser(username)));
+        	}
+        	else {
+        		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "You have no permissions to do this: " ));
+        	}
         }catch(UnsupportedEncodingException e1){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Unsupported Encoding: " + e1.toString()));
         }catch (UserNotLoggedException e2) {
@@ -137,15 +180,6 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JsonResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), "Session Expired!: " + e3.toString()));
         }
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@RequestMapping(value="/signUpController", method = RequestMethod.POST,headers="Accept=application/json")
 	public BaseResponse registerUser(@RequestBody LoginEntity request) {
@@ -186,11 +220,7 @@ public class LoginController {
 			
 	    	return response;
 	}
-    ////////////////////////////////////    ////////////////////////////////////	
-    //code that hasn't been reworked yet//
-	////////////////////////////////////    ////////////////////////////////////
-	
-		
+	/*	
 	@RequestMapping(value="logoutController")
     protected ModelAndView logout(HttpServletRequest request) {  
 
@@ -200,5 +230,5 @@ public class LoginController {
         model.setViewName("redirect:/index.jsp");
         return model;
     }  
-	
+	*/
 }
