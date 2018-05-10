@@ -11,11 +11,6 @@ export default class ProductsPage extends Component {
         products: []
     }
 
-    constructor() {
-        super();
-        this.catchOutput = this.catchOutput.bind(this);
-        
-    }
 
     componentDidMount(){
         axios.get('http://localhost:8091/products/')
@@ -31,21 +26,23 @@ export default class ProductsPage extends Component {
     }
 
 
-    catchOutput(e) {
-        console.log(e.target.value);
-        this.setState({
-            showOutput: e.target.value
-        })
-    }
 
 
     render() {
+
+        const productList = this.state.products.map( prod => {
+            console.log(prod);
+           return <Product name={prod.p_name}/>
+        });
+
+
+
 
 
 
         return (
             <div>
-                <h1> sono SUI PRODOTTI  </h1>
+                {productList}
 
                 
             </div>
