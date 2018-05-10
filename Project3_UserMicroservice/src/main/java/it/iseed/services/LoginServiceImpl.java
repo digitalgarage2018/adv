@@ -18,6 +18,7 @@ import it.iseed.account.utils.JwtUtils;
 import it.iseed.account.utils.UserNotLoggedException;
 import it.iseed.daos.LoginDao;
 import it.iseed.entities.LoginEntity;
+import it.iseed.entities.WellnessCenterEntity;
 
 
 
@@ -28,7 +29,8 @@ public class LoginServiceImpl implements LoginService {
 	LoginDao loginDao;
 	
 	private static final Logger log = LoggerFactory.getLogger(LoginServiceImpl.class);
-	
+
+	 //autenticazione User
 	 public String authenticateUser(LoginEntity loginEntity) throws UserNotLoggedException{
 		 try{
 			 LoginEntity login = loginDao.getLoginById(loginEntity.getU_username());
@@ -47,7 +49,28 @@ public class LoginServiceImpl implements LoginService {
 		 }
 		 return "failure";
 	 }
+	 
+	 //autenticazione Center
+	 public String authenticateCenter(WellnessCenterEntity centerEntity) throws UserNotLoggedException{
+		 try{
+			 WellnessCenterEntity login = loginDao.getCenterById(centerEntity.getW_username());
+		 
+		 if(login!=null){
+			 if(login.getW_password().equals(centerEntity.getW_password()) && login.getW_username().equals(centerEntity.getW_username())){
+				 return "success";
+			 }
+		 }
+		 }catch (Exception e){
+			 System.out.println("Connection failed!!\n" + e);
+			 return "errorDB";
+		 }
+		 finally{
+			 
+		 }
+		 return "failure";
+	 }
 
+	 //Registrazione utente
 	 public String registrationUserService(LoginEntity signUpBean) {
 		 
 		 try{
@@ -67,11 +90,17 @@ public class LoginServiceImpl implements LoginService {
 		return "failure";			
 		}
 	 
+	 //get informazioni utente
 	 public LoginEntity getUser(String u_username){
 		 return loginDao.getLoginById(u_username);
 	 }
 	 
+	//get informazioni centro
+		 public WellnessCenterEntity getCenter(String w_username){
+			 return loginDao.getCenterById(w_username);
+		 }
 	 
+	 //creazione JWT
 	 @Override
 	    public String createJwt(String subject, String name, Date datenow,String permission) throws UnsupportedEncodingException{
 	        Date expDate = datenow;
@@ -79,18 +108,17 @@ public class LoginServiceImpl implements LoginService {
 	        log.info("JWT Creation. Expiration time: " + expDate.getTime());
 	        String token = JwtUtils.generateJwt(subject, expDate, name, permission);
 	        
-	        ////////////////////////////////////////////////////////////
 	        try{
 	        	loginDao.insertJwt(token,expDate.getTime());
 	        }catch (Exception e){
 	        	throw new UnsupportedEncodingException("No db connection, couldn't create jwt correctly");
 	        }
-	        ////////////////////////////////////////////////////////////
-	        
+
 	        
 	        return token;
 	    }
 	 
+	 //verifica validità JWT
 	 @Override
 	    public Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) throws UserNotLoggedException, UnsupportedEncodingException{
 	        String jwt = JwtUtils.getJwtFromHttpRequest(request);
@@ -99,11 +127,9 @@ public class LoginServiceImpl implements LoginService {
 	            throw new UserNotLoggedException("Authentication token not found in the request");
 	        }
 	        
-	        ///////////////////////////////////////////////////////////
 		    if (loginDao.checkJwt(jwt)==null){
 		        throw new UserNotLoggedException("Authentication token not valid");
 		    }
-		    ////////////////////////////////////////////////////////////
 		    
 		    else{
 		    	//System.out.println("Controllo scadenza jwt 3: ");
@@ -112,7 +138,7 @@ public class LoginServiceImpl implements LoginService {
 		    }
 	    }
 	 
-////////////////////////////////////////////////////////////
+	 //logout
 	 public void logoutJwt(HttpServletRequest request) throws UnsupportedEncodingException{
 		 String jwt = JwtUtils.getJwtFromHttpRequest(request);
 		 try{
@@ -121,5 +147,4 @@ public class LoginServiceImpl implements LoginService {
 			 throw new UnsupportedEncodingException("No db connection, couldn't delete jwt correctly");
 		 }
 	 }
-////////////////////////////////////////////////////////////
 }

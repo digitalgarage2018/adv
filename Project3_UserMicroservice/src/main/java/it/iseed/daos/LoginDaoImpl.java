@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.iseed.entities.JwtOkEntity;
 import it.iseed.entities.LoginEntity;
+import it.iseed.entities.WellnessCenterEntity;
 
 @Repository
 @Transactional
@@ -22,6 +23,10 @@ public class LoginDaoImpl implements LoginDao {
 	 public LoginEntity getLoginById(String u_username) {
 		return entityManager.find(LoginEntity.class, u_username);
 	 }
+	 
+	 public WellnessCenterEntity getCenterById(String w_username) {
+			return entityManager.find(WellnessCenterEntity.class, w_username);
+		 }
 
 	 public String registerUser(LoginEntity signUpBean) throws PersistenceException,CannotCreateTransactionException{
 		 String query = "insert into users (u_username,u_pword,u_email,u_name,u_surname,u_born_date,u_born_place) values (?,?,?,?,?,?,?);";
