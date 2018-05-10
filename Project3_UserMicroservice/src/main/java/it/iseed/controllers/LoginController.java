@@ -40,15 +40,15 @@ public class LoginController {
 	@Autowired
     private LoginService loginService;
 
-	
+	/*
 	@RequestMapping(value = "/users/{u_username}", method = RequestMethod.GET,headers="Accept=application/json")
 	public LoginEntity getUserById(@PathVariable String u_username)
 	{
 		//System.out.println("user: |"+u_username+"|");
 		return loginService.getUser(u_username);
-	}
+	}*/
 	
-	
+	/*
 	@RequestMapping(value="/loginController", method = RequestMethod.POST,headers="Accept=application/json")
 	public BaseResponse userCheck(@RequestBody LoginEntity request) {
 		
@@ -80,11 +80,10 @@ public class LoginController {
 		}
     	return response;
 
-	}
+	}*/
 	
 	
-	
-	@RequestMapping(value = "/loginJSON", method = POST)
+	@RequestMapping(value = "/login", method = POST)
     public ResponseEntity<JsonResponseBody> loginUserJson(@RequestBody LoginEntity request){
         //check if user exists in DB -> if exists generate JWT and send back to client
         try {
@@ -138,15 +137,6 @@ public class LoginController {
         }
     }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@RequestMapping(value="/signUpController", method = RequestMethod.POST,headers="Accept=application/json")
 	public BaseResponse registerUser(@RequestBody LoginEntity request) {
 		
@@ -186,11 +176,7 @@ public class LoginController {
 			
 	    	return response;
 	}
-    ////////////////////////////////////    ////////////////////////////////////	
-    //code that hasn't been reworked yet//
-	////////////////////////////////////    ////////////////////////////////////
-	
-		
+	/*	
 	@RequestMapping(value="logoutController")
     protected ModelAndView logout(HttpServletRequest request) {  
 
@@ -200,5 +186,5 @@ public class LoginController {
         model.setViewName("redirect:/index.jsp");
         return model;
     }  
-	
+	*/
 }
