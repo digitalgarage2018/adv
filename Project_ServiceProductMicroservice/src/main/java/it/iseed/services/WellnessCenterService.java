@@ -5,4 +5,5 @@ import org.springframework.http.ResponseEntity;
 
 public interface WellnessCenterService {
     public ResponseEntity<Void> addService(ServiceEntity serviceEntity);
+    public ResponseEntity<Void> updateService(ServiceEntity serviceEntity);
 }
