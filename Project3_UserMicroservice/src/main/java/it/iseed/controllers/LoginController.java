@@ -4,6 +4,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -98,7 +99,13 @@ public class LoginController {
             	//LoginEntity user = userr.get();
             	LoginEntity user = loginService.getUser(request.getU_username());
                 String jwt = loginService.createJwt(user.getU_username(), user.getU_name(), new Date(), "default_user");
-                return ResponseEntity.status(HttpStatus.OK).header("jwt", jwt).body(new JsonResponseBody(HttpStatus.OK.value(), "Success! User logged in!"));
+                return ResponseEntity.status(HttpStatus.OK)
+                		.header("Access-Control-Allow-Origin", "*")
+                		.header("Access-Control-Allow-Credentials", "true")
+                		.header("Access-Control-Allow-Headers", "jwt")
+                		.header("Access-Control-Expose-Headers", "jwt")
+                		.header("jwt",jwt)
+                		.body(new JsonResponseBody(HttpStatus.OK.value(), "Success! User logged in!"));
             }
         }catch (UserNotLoggedException e1){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Login failed! Wrong credentials" + e1.toString()));
@@ -120,7 +127,17 @@ public class LoginController {
             	//LoginEntity user = userr.get();
             	WellnessCenterEntity user = loginService.getCenter(request.getW_username());
                 String jwt = loginService.createJwt(user.getW_username(), user.getW_name(), new Date(), "default_center");
-                return ResponseEntity.status(HttpStatus.OK).header("jwt", jwt).body(new JsonResponseBody(HttpStatus.OK.value(), "Success! Center logged in!"));
+//                response.setHeader("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, " +
+//                        "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+//                header("Access-Control-Allow-Headers", "Authorization, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, " +
+//                        "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers","jwt",jwt)
+                return ResponseEntity.status(HttpStatus.OK)
+                		.header("Access-Control-Allow-Origin", "*")
+                		.header("Access-Control-Allow-Credentials", "true")
+                		.header("Access-Control-Allow-Headers", "jwt")
+                		.header("Access-Control-Expose-Headers", "jwt")
+                		.header("jwt",jwt)
+                		.body(new JsonResponseBody(HttpStatus.OK.value(), "Success! Center logged in!"));
             }
         }catch (UserNotLoggedException e1){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Login failed! Wrong credentials" + e1.toString()));
@@ -137,7 +154,16 @@ public class LoginController {
         try {
         	Map<String, Object> userData = loginService.verifyJwtAndGetData(request);
         	
-        	
+        	/*
+        	ResponseEntity<JsonResponseBody> responseEntity = checkJwtforUser(request);
+        	//LoginEntity usertmp=(LoginEntity)responseEntity.getBody().getResponse();
+        	  	
+        	if ((responseEntity.getBody().getResponse())!=null){
+        		return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), loginService.getUser(username)));
+        	}
+        	else{
+        		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "You have no permissions to do this: " ));
+        	}*/
         	String jwt_name=(String) userData.get("name");
         	String jwt_scope=(String) userData.get("scope");
         	Date jwt_exp_date=(Date) userData.get("exp_date");
@@ -156,6 +182,8 @@ public class LoginController {
         	else {
         		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "You have no permissions to do this: " ));
         	}
+        	
+        		
         }catch(UnsupportedEncodingException e1){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Unsupported Encoding: " + e1.toString()));
         }catch (UserNotLoggedException e2) {
@@ -220,6 +248,88 @@ public class LoginController {
 			
 	    	return response;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//////////////////prova di chiamata al controllo jwt per user
+	@RequestMapping("/checkjwtuser")
+    public ResponseEntity<JsonResponseBody> checkJwtforUser(HttpServletRequest request){
+        //request -> fetch JWT -> check validity -> Get operations from the user account
+        try {
+        	Map<String, Object> userData = loginService.verifyJwtAndGetData(request);
+        	        	
+        	String jwt_name=(String) userData.get("name");
+        	String jwt_scope=(String) userData.get("scope");
+        	Date jwt_exp_date=(Date) userData.get("exp_date");
+        	String jwt_subject=(String) userData.get("subject");
+        	System.out.println("name: "+jwt_name);
+        	System.out.println("scope: "+jwt_scope);
+        	System.out.println("expDate: "+jwt_exp_date);
+        	System.out.println("subject: "+jwt_subject);
+        	
+        	if (jwt_scope.equals("default_user")){
+            //user verified
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(),  loginService.getUser(jwt_subject)));
+        	}
+        	else {
+        		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), null ));
+        	}
+        }catch(UnsupportedEncodingException e1){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Unsupported Encoding: " + e1.toString()));
+        }catch (UserNotLoggedException e2) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "User not correctly logged: " + e2.toString()));
+        }catch(ExpiredJwtException e3){
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JsonResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), "Session Expired!: " + e3.toString()));
+        }
+    }
+	
+	@RequestMapping("/checkjwtcenter")
+    public ResponseEntity<JsonResponseBody> checkJwtforCenter(HttpServletRequest request){
+        //request -> fetch JWT -> check validity -> Get operations from the user account
+        try {
+        	Map<String, Object> userData = loginService.verifyJwtAndGetData(request);
+        	        	
+        	String jwt_name=(String) userData.get("name");
+        	String jwt_scope=(String) userData.get("scope");
+        	Date jwt_exp_date=(Date) userData.get("exp_date");
+        	String jwt_subject=(String) userData.get("subject");
+        	System.out.println("name: "+jwt_name);
+        	System.out.println("scope: "+jwt_scope);
+        	System.out.println("expDate: "+jwt_exp_date);
+        	System.out.println("subject: "+jwt_subject);
+        	
+        	if (jwt_scope.equals("default_center")){
+            //user verified
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), loginService.getCenter(jwt_subject)));
+        	}
+        	else {
+        		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), null ));
+        	}
+        }catch(UnsupportedEncodingException e1){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Unsupported Encoding: " + e1.toString()));
+        }catch (UserNotLoggedException e2) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "User not correctly logged: " + e2.toString()));
+        }catch(ExpiredJwtException e3){
+            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JsonResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), "Session Expired!: " + e3.toString()));
+        }
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*	
 	@RequestMapping(value="logoutController")
     protected ModelAndView logout(HttpServletRequest request) {  
