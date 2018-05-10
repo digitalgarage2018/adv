@@ -1,11 +1,10 @@
 import axios from 'axios';
 
-export const contactBackend = () => {
+export const productsService = () => {
 
 
-    return axios.post('http://localhost:8070/login', {
-        u_username: 'admin',
-        u_pword: 'admin'
+    return axios.get('http://localhost:8091/products/1', {
+
     })
         .then(function (response) {
             console.log(response);
@@ -17,6 +16,3 @@ export const contactBackend = () => {
 
 
 }
-
-
-
