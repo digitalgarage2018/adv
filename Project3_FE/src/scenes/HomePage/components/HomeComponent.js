@@ -1,6 +1,5 @@
 import React from 'react';
-import {Button} from "../../../components/Button/Button";
-import {Input} from "../../../components/Input/Input";
+import {Image} from 'react-bootstrap';
 
 import image from '../../../images/home.jpg';
 
@@ -15,19 +14,6 @@ export const HomeComponent = (props) => {
     };
 
     return (
-        <div>
-
-        <img src={image} />
-        </div>
+        <Image src={image} responsive />
     )
 };
-
-/*
-return (
-
-    <div>
-        <Button title='example' customOnClick={() => onClick()}/>
-        <Input type='text' customOnChange={(e) => outputToFather(e)}/>
-    </div>
-)
-*/

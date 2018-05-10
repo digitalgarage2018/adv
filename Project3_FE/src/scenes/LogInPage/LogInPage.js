@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+
+import {loginService} from '../../services/LoginService/LoginService';
+import {logout} from "../../services/LogoutService/LogoutService";
+
+
 import "./LogInPage.css";
 
 export default class Login extends Component {
@@ -9,7 +14,8 @@ export default class Login extends Component {
 
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            esito: ""
         };
     }
 
@@ -23,9 +29,18 @@ export default class Login extends Component {
         });
     }
 
-    handleSubmit = event => {
+    handleSubmit = (event) => {
         event.preventDefault();
+        console.log(this.state);
+        loginService(this.state);
+        
     }
+
+    logoutHandler = (event) => {
+        logout();
+    }
+
+
 
     render() {
         return (
@@ -35,7 +50,7 @@ export default class Login extends Component {
                         <ControlLabel>Email</ControlLabel>
                         <FormControl
                             autoFocus
-                            type="email"
+                            type="text"
                             value={this.state.email}
                             onChange={this.handleChange}
                         />
@@ -56,8 +71,16 @@ export default class Login extends Component {
                     >
                         Login
                     </Button>
+                    <Button
+                        block
+                        bsSize="large"
+                        onClick={this.logoutHandler}
+                    >
+                        Log Out
+                    </Button>
                 </form>
             </div>
+
         );
     }
 }

@@ -3,6 +3,7 @@ package it.iseed.entities;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -42,11 +43,11 @@ public class ServiceEntity implements Serializable {
     @Column(name="sr_description", nullable=false)
     private String sr_description;
 
-    @NotEmpty
+    @NotNull
     @Column(name="sr_price", nullable=false)
     private int sr_price;
 
-    @NotEmpty
+    @NotNull
     @Column(name="sr_time")
     private int sr_time;
 
