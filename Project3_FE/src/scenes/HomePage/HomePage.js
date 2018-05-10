@@ -28,9 +28,6 @@ export default class HomePage extends React.Component {
         return (
             <div>
                 <HomeComponent />
-                <p> HOME PAGE </p>
-
-
             </div>
         )
     }

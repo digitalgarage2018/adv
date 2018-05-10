@@ -7,7 +7,7 @@ export const Footer = () => {
      * @type {{backgroundColor: string, borderTop: string, textAlign: string, padding: string, position: string, left: string, bottom: string, height: string, width: string}}
      */
     let style = {
-        backgroundColor: "#F8F8F8",
+        backgroundColor: "black",
         borderTop: "1px solid #E7E7E7",
         textAlign: "center",
         padding: "20px",
@@ -29,8 +29,9 @@ export const Footer = () => {
         <div>
             <div style={phantom}/>
             <div style={style}>
-                This is a footer
+                {/* This is a footer */}
             </div>
+
         </div>
 
 
