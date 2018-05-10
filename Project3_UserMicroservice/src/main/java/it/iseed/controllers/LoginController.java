@@ -4,6 +4,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,7 +12,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -19,6 +25,7 @@ import it.iseed.account.utils.UserNotLoggedException;
 import it.iseed.entities.BaseResponse;
 import it.iseed.entities.JsonResponseBody;
 import it.iseed.entities.LoginEntity;
+import it.iseed.entities.WellnessCenterEntity;
 import it.iseed.services.LoginService;
 
 @CrossOrigin("*")
@@ -102,13 +109,53 @@ public class LoginController {
     }
 	
 	
+	@RequestMapping(value = "/loginCenter", method = POST)
+    public ResponseEntity<JsonResponseBody> loginCenterJson(@RequestBody WellnessCenterEntity request){
+        //check if user exists in DB -> if exists generate JWT and send back to client
+        try {
+        	String result = loginService.authenticateCenter(request);
+            //Optional<LoginEntity> userr = loginService.getUserFromDbAndVerifyPassword(request.getId(), request.getPassword());
+            if(result.equals("success")){
+        	//if(userr.isPresent()){
+            	//LoginEntity user = userr.get();
+            	WellnessCenterEntity user = loginService.getCenter(request.getW_username());
+                String jwt = loginService.createJwt(user.getW_username(), user.getW_name(), new Date(), "default_center");
+                return ResponseEntity.status(HttpStatus.OK).header("jwt", jwt).body(new JsonResponseBody(HttpStatus.OK.value(), "Success! Center logged in!"));
+            }
+        }catch (UserNotLoggedException e1){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Login failed! Wrong credentials" + e1.toString()));
+        }catch (UnsupportedEncodingException e2){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Token Error" + e2.toString()));
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "No corrispondence in the database of centers"));
+    }
+	
+	
 	@RequestMapping("/users/{username}")
     public ResponseEntity<JsonResponseBody> getUserInfo(HttpServletRequest request, @PathVariable(name = "username") String username){
         //request -> fetch JWT -> check validity -> Get operations from the user account
         try {
-            loginService.verifyJwtAndGetData(request);
+        	Map<String, Object> userData = loginService.verifyJwtAndGetData(request);
+        	
+        	
+        	String jwt_name=(String) userData.get("name");
+        	String jwt_scope=(String) userData.get("scope");
+        	Date jwt_exp_date=(Date) userData.get("exp_date");
+        	String jwt_subject=(String) userData.get("subject");
+        	System.out.println("name: "+jwt_name);
+        	System.out.println("scope: "+jwt_scope);
+        	System.out.println("expDate: "+jwt_exp_date);
+        	System.out.println("subject: "+jwt_subject);
+        	
+        	
+        	
+        	if (jwt_scope.equals("default_user")){
             //user verified
             return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), loginService.getUser(username)));
+        	}
+        	else {
+        		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "You have no permissions to do this: " ));
+        	}
         }catch(UnsupportedEncodingException e1){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Unsupported Encoding: " + e1.toString()));
         }catch (UserNotLoggedException e2) {
