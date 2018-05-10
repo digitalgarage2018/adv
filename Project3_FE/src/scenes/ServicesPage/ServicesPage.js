@@ -1,5 +1,5 @@
 import React from 'react';
-import {contactBackend} from '../../services/firstPageService/firstPageService';
+import {loginService} from '../../services/LoginService/LoginService';
 
 
 export default class ServicesPage extends React.Component {
@@ -10,7 +10,7 @@ export default class ServicesPage extends React.Component {
     }
 
     componentDidMount(){
-        contactBackend();
+        loginService();
     }
     state = {
         showOutput: ''

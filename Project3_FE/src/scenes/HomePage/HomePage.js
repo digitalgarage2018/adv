@@ -1,5 +1,5 @@
 import React from 'react';
-import {contactBackend} from '../../services/firstPageService/firstPageService';
+import {loginService} from '../../services/LoginService/LoginService';
 import {HomeComponent} from '../HomePage/components/HomeComponent';
 
 export default class HomePage extends React.Component {
@@ -9,9 +9,7 @@ export default class HomePage extends React.Component {
         
     }
 
-    componentDidMount(){
-        contactBackend();
-    }
+
     state = {
         showOutput: ''
     }
