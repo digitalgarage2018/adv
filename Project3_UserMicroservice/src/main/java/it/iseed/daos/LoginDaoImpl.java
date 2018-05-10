@@ -48,10 +48,12 @@ public class LoginDaoImpl implements LoginDao {
 		 return entityManager.find(JwtOkEntity.class, jwt_id);
 	 }
 	 
-	 public void insertJwt(String token){
-		 String query = "insert into jwtok values(?)";
+	 public void insertJwt(String token, long expDate){
+		 cleanDB();
+		 String query = "insert into jwtok values(?,?)";
 		 entityManager.createNativeQuery(query)
 		    .setParameter(1, token)
+		    .setParameter(2, expDate)
 		    .executeUpdate();
 	 }
 	 
@@ -60,5 +62,14 @@ public class LoginDaoImpl implements LoginDao {
 		 entityManager.createNativeQuery(query)
 		    .setParameter(1, token)
 		    .executeUpdate();
+		 System.out.println("Eliminato: "+token);
 	 }
+	 
+	 public void cleanDB(){
+		 String query = "delete from jwtok where jwt_exp_date < DATEDIFF(NOW(),'1970-01-02') * 86400 *1000"; //elimina i cookies da db più vecchi di 2 giorni
+		 entityManager.createNativeQuery(query)
+		    .executeUpdate();
+		 System.out.println("Pulito DB");
+	 }
+	 
 }

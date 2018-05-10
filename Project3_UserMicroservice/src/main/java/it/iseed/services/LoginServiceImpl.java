@@ -81,7 +81,7 @@ public class LoginServiceImpl implements LoginService {
 	        
 	        ////////////////////////////////////////////////////////////
 	        try{
-	        	loginDao.insertJwt(token);
+	        	loginDao.insertJwt(token,expDate.getTime());
 	        }catch (Exception e){
 	        	throw new UnsupportedEncodingException("No db connection, couldn't create jwt correctly");
 	        }
@@ -93,7 +93,8 @@ public class LoginServiceImpl implements LoginService {
 	 
 	 @Override
 	    public Map<String, Object> verifyJwtAndGetData(HttpServletRequest request) throws UserNotLoggedException, UnsupportedEncodingException{
-	        String jwt = JwtUtils.getJwtFromHttpRequest(request);	        
+	        String jwt = JwtUtils.getJwtFromHttpRequest(request);
+	        //System.out.println("Controllo scadenza jwt 2: ");
 	        if(jwt == null){
 	            throw new UserNotLoggedException("Authentication token not found in the request");
 	        }
@@ -105,6 +106,7 @@ public class LoginServiceImpl implements LoginService {
 		    ////////////////////////////////////////////////////////////
 		    
 		    else{
+		    	//System.out.println("Controllo scadenza jwt 3: ");
 		        Map<String, Object> userData = JwtUtils.jwt2Map(jwt);
 		        return userData;
 		    }

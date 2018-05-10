@@ -11,6 +11,6 @@ public interface LoginDao {
 	public LoginEntity getLoginById(String u_username);
 	public String registerUser(LoginEntity signUpBean)throws PersistenceException,CannotCreateTransactionException;
 	public JwtOkEntity checkJwt(String jwt);
-	public void insertJwt(String token);
+	public void insertJwt(String token, long expDate);
 	public void removeJwt(String token);
 }

@@ -17,6 +17,10 @@ public class JwtOkEntity {
 	@NotEmpty @NotBlank @NotNull
     @Column(name="jwt_id", nullable=false, unique=true)
     private String jwt_id;
+	
+	@NotEmpty @NotBlank @NotNull
+    @Column(name="jwt_expDate", nullable=false, unique=true)
+    private String jwt_expDate;
 
 	public String getJwt_id() {
 		return jwt_id;
@@ -24,6 +28,14 @@ public class JwtOkEntity {
 
 	public void setJwt_id(String jwt_id) {
 		this.jwt_id = jwt_id;
+	}
+
+	public String getJwt_expDate() {
+		return jwt_expDate;
+	}
+
+	public void setJwt_expDate(String jwt_expDate) {
+		this.jwt_expDate = jwt_expDate;
 	}
 	
 }
