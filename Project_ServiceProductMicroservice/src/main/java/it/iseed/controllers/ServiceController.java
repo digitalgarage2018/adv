@@ -7,11 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import it.iseed.entities.ServiceEntity;
 import it.iseed.services.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 
 
 @RestController
@@ -60,17 +58,6 @@ public class ServiceController {
         	serviceList = serviceService.searchKeyWordService(sr_name);
         	//serviceList = serviceService.getServiceService();
         }
-/*
-        if (serviceList != null) {
-           model.addObject("services", serviceList);
-
-        } else {
-          //  request.setAttribute("errorMessage", "Errore connessione database. Riprova più tardi");
-
-            System.out.println("errore connessione db");
-        }*/
-       // model.setViewName("service_list");
-       // return model;
 
         return serviceList;
     }
@@ -78,18 +65,6 @@ public class ServiceController {
 
     @RequestMapping(value="/service/{sr_serviceID}", method = RequestMethod.GET,headers="Accept=application/json")
     public ServiceEntity getServiceById(@PathVariable long sr_serviceID) {
-
-/*
-        List<ProductEntity> productList = productService.getProducts();
-
-        if(productList != null){
-            model.addObject("products", productList);
-        }
-        else {
-            request.setAttribute("errorMessage", "Errore connessione database. Riprova più tardi");
-        }
-        model.setViewName("product_list");
-*/
         return serviceService.getServiceById(sr_serviceID);
     }
 

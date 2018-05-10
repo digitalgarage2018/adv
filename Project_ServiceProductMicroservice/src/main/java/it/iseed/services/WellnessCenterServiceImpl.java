@@ -13,6 +13,12 @@ public class WellnessCenterServiceImpl implements WellnessCenterService{
     private WellnessCenterDao wellnessCenterDao;
 
     public ResponseEntity<Void> addService(ServiceEntity serviceEntity){
+
         return this.wellnessCenterDao.addService(serviceEntity);
+    }
+
+    public ResponseEntity<Void> updateService(ServiceEntity serviceEntity){
+
+        return this.wellnessCenterDao.updateService(serviceEntity);
     }
 }

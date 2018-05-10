@@ -9,12 +9,15 @@ import java.io.Serializable;
 @Table(name = "centers")
 public class WellnessCenterEntity implements Serializable {
 
+    /*
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long w_centerID;
 
+    */
+    @Id
     @NotEmpty
-    @Column(name="w_username", nullable=false)
+    @Column(name="w_username", nullable=false, unique = true)
     private String w_username;
 
     @NotEmpty
@@ -36,7 +39,7 @@ public class WellnessCenterEntity implements Serializable {
     @NotEmpty
     @Column(name="w_mail", nullable=false)
     private String w_mail;
-
+/*
     public long getW_centerID() {
         return w_centerID;
     }
@@ -44,7 +47,7 @@ public class WellnessCenterEntity implements Serializable {
     public void setW_centerID(long w_centerID) {
         this.w_centerID = w_centerID;
     }
-
+*/
     public String getW_username() {
         return w_username;
     }
