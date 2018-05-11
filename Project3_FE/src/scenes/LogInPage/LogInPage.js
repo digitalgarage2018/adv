@@ -12,7 +12,7 @@ import "./LogInPage.css";
 export default class Login extends Component {
 
         state = {
-            email: "",
+            userName: "",
             password: "",
             isLogged: false,
             jwt: ""
@@ -20,7 +20,7 @@ export default class Login extends Component {
 
 
     validateForm() {
-        return this.state.email.length > 0 && this.state.password.length > 0;
+        return this.state.userName.length > 0 && this.state.password.length > 0;
     }
 
     handleChange = event => {
@@ -35,11 +35,14 @@ export default class Login extends Component {
         // const prova = {...this.state};
         // console.log('prova copia state', prova);
         axios.post('http://localhost:8070/login', {
-            u_username: this.state.email,
+            u_username: this.state.userName,
             u_pword: this.state.password
         })
             .then( response => {
+<<<<<<< HEAD
                 console.log(response);
+=======
+>>>>>>> e30737bee5fd73bcbe8ed0d0deb16ccaa54cd2f0
                 this.setState({isLogged: true, jwt: response.headers.jwt});
                 console.log("Stato dopo la LogIn: ", this.state);
                 this.props.history.push("/");
@@ -61,12 +64,12 @@ export default class Login extends Component {
         return (
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="email" bsSize="large">
+                    <FormGroup controlId="userName" bsSize="large">
                         <ControlLabel>UserName </ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
-                            value={this.state.email}
+                            value={this.state.userName}
                             onChange={this.handleChange}
                         />
                     </FormGroup>
