@@ -39,10 +39,9 @@ export default class Login extends Component {
             u_pword: this.state.password
         })
             .then( response => {
-<<<<<<< HEAD
-                console.log(response);
-=======
->>>>>>> e30737bee5fd73bcbe8ed0d0deb16ccaa54cd2f0
+
+
+
                 this.setState({isLogged: true, jwt: response.headers.jwt});
                 console.log("Stato dopo la LogIn: ", this.state);
                 this.props.history.push("/");
