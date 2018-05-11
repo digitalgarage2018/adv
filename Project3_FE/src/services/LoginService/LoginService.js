@@ -6,7 +6,7 @@ export const loginService = (userData) => {
     console.log('User Data: ', userData);
 
     return axios.post('http://localhost:8070/login', {
-        u_username: userData.email,
+        u_username: userData.userName,
         u_pword: userData.password
     })
         .then(function (response) {
