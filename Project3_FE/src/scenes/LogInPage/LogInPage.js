@@ -9,16 +9,18 @@ import {logout} from "../../services/LogoutService/LogoutService";
 
 import "./LogInPage.css";
 
+const error = {
+    color: 'red',
+    textalign:'center'};
+
 export default class Login extends Component {
-
-
-
 
         state = {
             userName: "",
             password: "",
             isLogged: false,
-            jwt: ""
+            jwt: "",
+            message:""
         };
 
 
@@ -42,18 +44,33 @@ export default class Login extends Component {
             u_pword: this.state.password
         })
             .then( response => {
+
                 this.setState({isLogged: true, jwt: response.headers.jwt});
                 console.log("Stato dopo la LogIn: ", this.state);
+                this.props.history.push("/");
+
             })
-            .catch(function (error) {
-                console.log(error);
-            });
+            .catch( error => {
+             if (error.response === undefined){
+                    this.setState({message:"Network Error"})}
+
+               else if (error.response.data.server === 403)
+                    {this.setState({message:"Credenziali non corrette"})}
+
+
+                    else if (error.response.data.server === 0){
+                    this.setState({message:"Credenziali non corrette"})}
+
+
+
+    });
 
     }
 
     logoutHandler = (event) => {
-        logout();
+
     }
+
 
 
 
@@ -93,8 +110,14 @@ export default class Login extends Component {
                     >
                         Log Out
                     </Button>
+                    <h4 style={error}> {this.state.message}</h4>
+
+
                 </form>
+
+
             </div>
+
 
         );
     }

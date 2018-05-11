@@ -321,15 +321,7 @@ public class LoginController {
         }
     }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+    
 	/*	
 	@RequestMapping(value="logoutController")
     protected ModelAndView logout(HttpServletRequest request) {  
