@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from 'axios';
+
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 import {loginService} from '../../services/LoginService/LoginService';
@@ -7,20 +9,23 @@ import {logout} from "../../services/LogoutService/LogoutService";
 
 import "./LogInPage.css";
 
+const error = {
+    color: 'red',
+    textalign:'center'};
+
 export default class Login extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            email: "",
+        state = {
+            userName: "",
             password: "",
-            esito: ""
+            isLogged: false,
+            jwt: "",
+            message:""
         };
-    }
+
 
     validateForm() {
-        return this.state.email.length > 0 && this.state.password.length > 0;
+        return this.state.userName.length > 0 && this.state.password.length > 0;
     }
 
     handleChange = event => {
@@ -31,14 +36,41 @@ export default class Login extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state);
-        loginService(this.state);
-        
+        // console.log(this.state);
+        // const prova = {...this.state};
+        // console.log('prova copia state', prova);
+        axios.post('http://localhost:8070/login', {
+            u_username: this.state.userName,
+            u_pword: this.state.password
+        })
+            .then( response => {
+
+                this.setState({isLogged: true, jwt: response.headers.jwt});
+                console.log("Stato dopo la LogIn: ", this.state);
+                this.props.history.push("/");
+
+            })
+            .catch( error => {
+             if (error.response === undefined){
+                    this.setState({message:"Network Error"})}
+
+               else if (error.response.data.server === 403)
+                    {this.setState({message:"Credenziali non corrette"})}
+
+
+                    else if (error.response.data.server === 0){
+                    this.setState({message:"Credenziali non corrette"})}
+
+
+
+    });
+
     }
 
     logoutHandler = (event) => {
-        logout();
+
     }
+
 
 
 
@@ -46,12 +78,12 @@ export default class Login extends Component {
         return (
             <div className="Login">
                 <form onSubmit={this.handleSubmit}>
-                    <FormGroup controlId="email" bsSize="large">
-                        <ControlLabel>Email</ControlLabel>
+                    <FormGroup controlId="userName" bsSize="large">
+                        <ControlLabel>UserName </ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
-                            value={this.state.email}
+                            value={this.state.userName}
                             onChange={this.handleChange}
                         />
                     </FormGroup>
@@ -78,8 +110,14 @@ export default class Login extends Component {
                     >
                         Log Out
                     </Button>
+                    <h4 style={error}> {this.state.message}</h4>
+
+
                 </form>
+
+
             </div>
+
 
         );
     }
