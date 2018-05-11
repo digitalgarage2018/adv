@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import axios from 'axios';
+
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 import {loginService} from '../../services/LoginService/LoginService';
@@ -9,14 +11,16 @@ import "./LogInPage.css";
 
 export default class Login extends Component {
 
-    constructor(props) {
-        super(props);
 
-        this.state = {
+
+
+        state = {
             email: "",
-            password: ""
+            password: "",
+            isLogged: false,
+            jwt: ""
         };
-    }
+
 
     validateForm() {
         return this.state.email.length > 0 && this.state.password.length > 0;
@@ -30,9 +34,22 @@ export default class Login extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log(this.state);
-        loginService(this.state);
-        
+        // console.log(this.state);
+        // const prova = {...this.state};
+        // console.log('prova copia state', prova);
+        axios.post('http://localhost:8070/login', {
+            u_username: this.state.email,
+            u_pword: this.state.password
+        })
+            .then( response => {
+                console.log(response);
+                this.setState({isLogged: true, jwt: response.data.jwt});
+                console.log("Stato dopo la LogIn: ", this.state);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
 
     logoutHandler = (event) => {

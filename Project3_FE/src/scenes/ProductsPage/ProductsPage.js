@@ -31,8 +31,9 @@ export default class ProductsPage extends Component {
     render() {
 
         const productList = this.state.products.map( prod => {
-            console.log(prod);
-           return <Product name={prod.p_name}/>
+           console.log(prod);
+           return <Product
+               name={prod.p_name}/>
         });
 
 

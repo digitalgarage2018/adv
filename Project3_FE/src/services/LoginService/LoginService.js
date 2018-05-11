@@ -13,8 +13,6 @@ export const loginService = (userData) => {
             console.log("Responde Login: ", response.data);
             console.log("Responde Header: ", response.headers);
             console.log("Responde jwt prova: ", response.headers.jwt);
-
-
         })
         .catch(function (error) {
             console.log(error);
