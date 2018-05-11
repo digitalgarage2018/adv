@@ -51,13 +51,19 @@ export default class Login extends Component {
 
             })
             .catch( error => {
-                if (error.response.data.server === 403)
+             if (error.response === undefined){
+                    this.setState({message:"Network Error"})}
+
+               else if (error.response.data.server === 403)
                     {this.setState({message:"Credenziali non corrette"})}
+
 
                     else if (error.response.data.server === 0){
                     this.setState({message:"Credenziali non corrette"})}
 
-            });
+
+
+    });
 
     }
 
