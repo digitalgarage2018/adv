@@ -30,13 +30,7 @@ public class LoginDaoImpl implements LoginDao {
 
 	 public String registerUser(LoginEntity signUpBean) throws PersistenceException,CannotCreateTransactionException{
 		 String query = "insert into users (u_username,u_pword,u_email,u_name,u_surname,u_born_date,u_born_place) values (?,?,?,?,?,?,?);";
-		 /*System.out.println(signUpBean.getU_username());
-		 System.out.println(signUpBean.getU_pword());
-		 System.out.println(signUpBean.getU_email());
-		 System.out.println(signUpBean.getU_name());
-		 System.out.println(signUpBean.getU_surname());
-		 System.out.println(signUpBean.getU_born_date());
-		 System.out.println(signUpBean.getU_born_place());*/
+		 
 		 entityManager.createNativeQuery(query).setParameter(1, signUpBean.getU_username())
 		 		.setParameter(2, signUpBean.getU_pword())
 		 		.setParameter(3, signUpBean.getU_email())
