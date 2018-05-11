@@ -11,9 +11,6 @@ import "./LogInPage.css";
 
 export default class Login extends Component {
 
-
-
-
         state = {
             email: "",
             password: "",
@@ -43,8 +40,10 @@ export default class Login extends Component {
         })
             .then( response => {
                 console.log(response);
-                this.setState({isLogged: true, jwt: response.data.jwt});
+                this.setState({isLogged: true, jwt: response.headers.jwt});
                 console.log("Stato dopo la LogIn: ", this.state);
+                this.props.history.push("/");
+
             })
             .catch(function (error) {
                 console.log(error);
