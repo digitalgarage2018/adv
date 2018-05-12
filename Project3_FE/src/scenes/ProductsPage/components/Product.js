@@ -12,7 +12,7 @@ const product = (props) => {
     return (
         <div className="Product">
             <Card>
-                <CardImg top width="100%" src={require('../images/accappatoio.jpg')} alt={props.name} />
+                <CardImg top width="100%" src={props.path} alt={props.name} />
 
                 <CardBody>
                     <CardTitle>{props.name}</CardTitle>
