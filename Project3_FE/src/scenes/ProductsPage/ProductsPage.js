@@ -1,22 +1,5 @@
-import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
-import axios from "axios/index";
-
-import accappatoio from "./images/accappatoio.jpg";
-import candele from "./images/candele.jpeg";
-import candele2 from "./images/candele2.jpg";
-import ciabatte from "./images/ciabatte.jpg";
-import cremaCalendula from "./images/crema-calendula.jpg";
-import cremaCalendula2 from "./images/crema-calendula2.jpg";
-import cremaCamomilla from "./images/crema-camomilla.jpg";
-import shiatsu from "./images/kit-massaggio-shiatsu.jpg";
-import thai from "./images/kit-massaggio-thai.jpg";
-import oliProfumati from "./images/oli-profumati.jpg";
-import olioArgan from "./images/olio-argan.jpg";
-import telo from "./images/telo.jpg";
-
-
-import {productsService} from '../../services/productsPageService/productsPageService';
+import React, { Component } from "react";
+import axios from "axios";
 
 import Product from './components/Product';
 
@@ -25,9 +8,8 @@ import Product from './components/Product';
 export default class ProductsPage extends Component {
 
     state = {
-        products: [],
-        imagePaths: []
-    }
+        products: []
+    };
 
 
 
@@ -35,25 +17,13 @@ export default class ProductsPage extends Component {
     componentDidMount(){
         axios.get('http://localhost:8091/products/')
             .then( response => {
-                this.setState({products: response.data});
-                this.setState({imagePaths: [
-                        "accappatoio",
-                        "candele",
-                        "candele2",
-                        "ciabatte",
-                        "cremaCalendula",
-                        "cremaCalendula2",
-                        "cremaCamomilla",
-                        "shiatsu",
-                        "thai",
-                        "oliProfumati",
-                        "olioArgan",
-                        "telo"
-                    ]});
+                    console.log(response.data);
+                    this.setState({products: response.data});
                 }
+
             )
-            .catch(function (error) {
-                console.log(error);
+            .catch(error => {
+                console.log(error)
             });
 
     }
@@ -63,20 +33,32 @@ export default class ProductsPage extends Component {
 
     render() {
 
-        const productlist = this.state.products.map( (prod, index) => {
+        const prods = this.state.products.map( (product, index) =>
+            {
+                return <Product
+                    name={product.p_name}
+                    path={product.p_image}
+                    description={product.p_description}
+                    relatedservice={product.p_service}
+                    price={product.p_price}
+                    key={index}/>
 
-           return
-            <Product name={prod.p_name} path={this.imagePaths[index]} />
+            }
+
+        )
 
 
-        });
 
 
         return (
-            <div>
-                {productlist}
-            </div>
-        )
+            <span>
+            {prods}
+            </span>
+            );
+
+
 
     }
 }
+
+
