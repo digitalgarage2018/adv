@@ -313,20 +313,20 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(),  loginService.getUser(jwt_subject)));
         	}
         	else {
-        		return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new JsonResponseBody(HttpStatus.NOT_ACCEPTABLE.value(), "You have no permissions to do this: " ));
+        		return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.NOT_ACCEPTABLE.value(), "You have no permissions to do this: " ));
         	}
         }catch(UnsupportedEncodingException e1){
-            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(new JsonResponseBody(HttpStatus.PRECONDITION_FAILED.value(), "Unsupported Encoding: " + e1.toString()));
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.PRECONDITION_FAILED.value(), "Unsupported Encoding: " + e1.toString()));
         }catch (UserNotLoggedException e2) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "User not correctly logged: " + e2.toString()));
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "User not correctly logged: " + e2.toString()));
         }catch(ExpiredJwtException e3){
-            return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JsonResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), "Session Expired!: " + e3.toString()));
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), "Session Expired!: " + e3.toString()));
         }catch (NoDbConnection e4){
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No connection DB"));
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No connection DB"));
         }
     }
 	//////////////////prova di chiamata al controllo JWT per center
-	@RequestMapping("/checkjwtcenter")
+	/*@RequestMapping("/checkjwtcenter")
     public ResponseEntity<JsonResponseBody> checkJwtforCenter(HttpServletRequest request){
         //request -> fetch JWT -> check validity -> Get operations from the center
         try {
@@ -356,6 +356,39 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JsonResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), "Session Expired!: " + e3.toString()));
         }catch (NoDbConnection e4){
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No connection DB"));
+        }
+    }*/
+	
+	@RequestMapping("/checkjwtcenter")
+    public ResponseEntity<JsonResponseBody> checkJwtforCenter(HttpServletRequest request){
+        //request -> fetch JWT -> check validity -> Get operations from the center
+        try {
+        	Map<String, Object> userData = loginService.verifyJwtAndGetData(request);
+        	        	
+        	String jwt_name=(String) userData.get("name");
+        	String jwt_scope=(String) userData.get("scope");
+        	Date jwt_exp_date=(Date) userData.get("exp_date");
+        	String jwt_subject=(String) userData.get("subject");
+        	System.out.println("name: "+jwt_name);
+        	System.out.println("scope: "+jwt_scope);
+        	System.out.println("expDate: "+jwt_exp_date);
+        	System.out.println("subject: "+jwt_subject);
+        	
+        	if (jwt_scope.equals("default_center")){
+            //user verified
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), loginService.getCenter(jwt_subject)));
+        	}
+        	else {
+        		return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.NOT_ACCEPTABLE.value(), "You have no permissions to do this: " ));
+        	}
+        }catch(UnsupportedEncodingException e1){
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.PRECONDITION_FAILED.value(), "Unsupported Encoding: " + e1.toString()));
+        }catch (UserNotLoggedException e2) {
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "User not correctly logged: " + e2.toString()));
+        }catch(ExpiredJwtException e3){
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), "Session Expired!: " + e3.toString()));
+        }catch (NoDbConnection e4){
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No connection DB"));
         }
     }
 
