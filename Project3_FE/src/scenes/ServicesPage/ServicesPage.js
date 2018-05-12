@@ -54,26 +54,49 @@ class ServicesPage extends Component {
             }
         ],
         showModal: false,
-        serviceSelected: null
+        serviceSelectedName: " ",
+        serviceSelectedType: " ",
+        serviceSelectedCenter: " ",
+        serviceSelectedDescription: " ",
+        serviceSelectedTime: " ",
+        serviceSelectedPrice: " "
+
+
     };
 
 
     showDetailsHandler(serviceitem, index) {
+
+
+        const serviceSelected = this.state.services[index];
+        console.log('servizio selezionato in variabile', serviceSelected);
+
+        // const nome = prova.sr_name;
+        // console.log('nome del servizio selezionato in variabile', serviceSelected.sr_name);
+
+
+
+        this.setState({serviceSelectedName: serviceSelected.sr_name});
+        this.setState({serviceSelectedType: serviceSelected.sr_type});
+        this.setState({serviceSelectedCenter: serviceSelected.sr_wellness_center});
+        this.setState({serviceSelectedDescription: serviceSelected.sr_description});
+        this.setState({serviceSelectedTime: serviceSelected.sr_time});
+        this.setState({serviceSelectedPrice: serviceSelected.sr_price});
+
+
+        // console.log('nome del servizio sel. nello STATO', this.state.serviceSelectedName);
+
         this.setState({showModal: true});
-        this.setState({serviceSelected: serviceitem});
-        console.log(this.state);
 
     }
 
     closeModalHandler() {
         this.setState({showModal: false});
-        }
+    }
 
 
 
     render() {
-
-        console.log(this.state);
 
         const servicelist = this.state.services.map( (serviceitem, index) =>
             {
@@ -103,39 +126,31 @@ class ServicesPage extends Component {
 
             <div className="ServicesPage">
             {servicelist}
+
+
             </div>
 
                 <Modal show={this.state.showModal} onHide={() => this.closeModalHandler()}>
 
                         <Modal.Header closeButton>
-                            <Modal.Title>  </Modal.Title>
+                            <Modal.Title> {this.state.serviceSelectedName} </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <h4>Text in a modal</h4>
+                            <h5>  <strong> Centro Benessere: </strong> {this.state.serviceSelectedCenter}</h5>
                             <p>
-                                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                                {this.state.serviceSelectedDescription}
                             </p>
-
 
                             <hr />
-
-                            <h4>Overflowing text to show scroll behavior</h4>
                             <p>
-                                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-                                ac consectetur ac, vestibulum at eros.
+                                <strong> Tipologia del servizio: </strong> {this.state.serviceSelectedType}
                             </p>
                             <p>
-                                Praesent commodo cursus magna, vel scelerisque nisl consectetur
-                                et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-                                auctor.
+                                <strong> Durata del servizio: </strong> {this.state.serviceSelectedTime} minuti
                             </p>
                             <p>
-                                Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-                                cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-                                dui. Donec ullamcorper nulla non metus auctor fringilla.
+                                <strong> Prezzo: </strong> {this.state.serviceSelectedPrice} $
                             </p>
-
 
                         </Modal.Body>
                         <Modal.Footer>
