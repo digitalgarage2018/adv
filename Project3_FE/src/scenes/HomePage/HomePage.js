@@ -2,31 +2,42 @@ import React from 'react';
 import {loginService} from '../../services/LoginService/LoginService';
 import {HomeComponent} from '../HomePage/components/HomeComponent';
 
-export default class HomePage extends React.Component {
-    constructor() {
-        super();
-        this.catchOutput = this.catchOutput.bind(this);
-        
-    }
+import LogoutModal from './components/LogoutModal';
+
+
+class HomePage extends React.Component {
+
 
 
     state = {
-        showOutput: ''
+        showModal: false
     }
 
-    catchOutput(e) {
-        console.log(e.target.value);
-        this.setState({
-            showOutput: e.target.value
-        })
+    showModalHandler() {
+        this.setState({showModal: true});
     }
+
+    closeModalHandler() {
+        this.setState({showModal: false});
+    }
+
+
 
 
     render() {
         return (
             <div>
-                <HomeComponent />
+                <div>
+                    <HomeComponent />
+                </div>
+                <LogoutModal
+                    show={this.showModalHandler()}
+                    hide={this.closeModalHandler()}
+                />
             </div>
+
         )
     }
-}
+};
+
+export default HomePage;

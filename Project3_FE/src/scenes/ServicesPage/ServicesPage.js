@@ -120,7 +120,7 @@ class ServicesPage extends Component {
         return (
             <div>
 
-            <div className="ServicesPage">
+            <div className="Services">
             {servicelist}
             </div>
                 <ServiceModal
@@ -132,8 +132,6 @@ class ServicesPage extends Component {
                     type={this.state.serviceSelectedType}
                     time={this.state.serviceSelectedTime}
                     price={this.state.serviceSelectedPrice}
-
-
                 />
 
 

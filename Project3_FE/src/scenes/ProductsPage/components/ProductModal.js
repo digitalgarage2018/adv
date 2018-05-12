@@ -2,11 +2,12 @@ import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 
 
-const serviceModal = (props) => {
+const productModal = (props) => {
+
 
     return (
 
-        <Modal  show={props.show} onHide={props.hide} >
+        <Modal show={props.show} onHide={props.hide} >
 
             <Modal.Header closeButton>
                 <Modal.Title>
@@ -14,17 +15,12 @@ const serviceModal = (props) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h5>  <strong> Centro Benessere: </strong> {props.center} </h5>
+                <h5>  <strong> Servizio in cui hai usufruito il prodotto: </strong> {props.service} </h5>
                 <p>
                     {props.description}
                 </p>
                 <hr />
-                <p>
-                    <strong> Tipologia del servizio: </strong>  {props.type}
-                </p>
-                <p>
-                    <strong> Durata del servizio: </strong> {props.time} minuti
-                </p>
+
                 <p>
                     <strong> Prezzo: </strong>  {props.price} $
                 </p>
@@ -38,7 +34,7 @@ const serviceModal = (props) => {
 
 };
 
-export default serviceModal;
+export default productModal;
 
 
 
