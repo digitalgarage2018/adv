@@ -6,10 +6,20 @@ import {Footer} from "./components/Footer/Footer";
 
 class App extends Component {
 
+    state = {
+        isLogged: true,
+        showModal: false
+    }
+
+    showModalHandler(){
+        console.log('Apri modale');
+    }
+
+
     render() {
         return (
             <div>
-                <NavBar/>
+                <NavBar isLogged={this.state.isLogged} click={() => this.showModalHandler()}/>
                 <AppRouter/>
                 <Footer/>
             </div>

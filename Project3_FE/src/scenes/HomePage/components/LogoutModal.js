@@ -6,7 +6,6 @@ const logoutModal = (props) => {
 
 
     return (
-
         <Modal show={props.show} onHide={props.hide} >
 
             <Modal.Header closeButton>
@@ -15,7 +14,6 @@ const logoutModal = (props) => {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-
                 <p>
                     Sei sicuro di voler uscire?
                 </p>
