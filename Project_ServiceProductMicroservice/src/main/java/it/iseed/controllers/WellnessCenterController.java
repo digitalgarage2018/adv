@@ -31,7 +31,7 @@ public class WellnessCenterController {
     ServiceService ServiceService;
 
     @RequestMapping(value = "/addService", method = RequestMethod.POST,headers = "Accept=application/json")
-    public ResponseEntity<JsonResponseBody> pollo(@RequestBody ServiceEntity serviceEntity, HttpServletRequest request){
+    public ResponseEntity<JsonResponseBody> addService(@RequestBody ServiceEntity serviceEntity, HttpServletRequest request){
     	
     	String jwt = JwtUtils.getJwtFromHttpRequest(request);
     	MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();

@@ -3,7 +3,10 @@ package it.iseed.entities;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.Set;
 
 @Entity
@@ -13,20 +16,18 @@ public class PurchaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long pur_purchaseID;
-/*
-    @ManyToMany
-    private LoginEntity users;
-
-    @ManyToMany
-    private ServiceEntity services;
-*/
-    @NotEmpty
-    @Column(name="pur_userID", nullable=false)
-    private String pur_userID;
 
     @NotEmpty
+    @Column(name="pur_username", nullable=false)
+    private String pur_username;
+
+    @NotNull
     @Column(name="pur_serviceID", nullable=false)
-    private String pur_serviceID;
+    private long pur_serviceID;
+    
+    @NotNull @NotEmpty
+    @Column(name="pur_date", nullable=false)
+    private Date pur_date;
 
     public long getPur_purchaseID() {
         return pur_purchaseID;
@@ -36,47 +37,29 @@ public class PurchaseEntity implements Serializable {
         this.pur_purchaseID = pur_purchaseID;
     }
 
-    public String getPur_userID() {
-        return pur_userID;
-    }
+    public String getPur_username() {
+		return pur_username;
+	}
 
-    public void setPur_userID(String pur_userID) {
-        this.pur_userID = pur_userID;
-    }
+	public void setPur_username(String pur_username) {
+		this.pur_username = pur_username;
+	}
 
-    public String getPur_serviceID() {
+	public Date getPur_date() {
+		return pur_date;
+	}
+
+	public void setPur_date(Date pur_date) {
+		this.pur_date = pur_date;
+	}
+
+	public long getPur_serviceID() {
         return pur_serviceID;
     }
 
-    public void setPur_serviceID(String pur_serviceID) {
+    public void setPur_serviceID(long pur_serviceID) {
         this.pur_serviceID = pur_serviceID;
     }
 
-   /*
-    public LoginEntity getUsers() {
-        return users.getUsername();
-    }
-
-    public void setUsers(LoginEntity users) {
-        this.users = users;
-    }
-
-    public ServiceEntity getServices() {
-        return services.getSr_serviceID();
-    }
-
-    public void setServices(ServiceEntity services) {
-        this.services = services;
-    }
-*/
-    /*
-    @ManyToOne
-    @ForeignKey(name = "FK_USER")
-    private LoginEntity user;
-
-    @ManyToOne
-    @ForeignKey(name = "FK_SERVICE")
-    private ServiceEntity service;
-*/
 
 }
