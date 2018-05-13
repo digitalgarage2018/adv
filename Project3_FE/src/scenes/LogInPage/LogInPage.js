@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import axios from 'axios';
 
-
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 import {AuthConsumer} from "../../AuthContext";
-
 
 import "./LogInPage.css";
 
@@ -25,7 +23,7 @@ export default class Login extends Component {
 
 
     validateForm() {
-        return this.state.userName.length > 0 && this.state.password.length > 0;
+        return this.state.userName.length > 0 && this.state.password.length > 5;
     }
 
     handleChange = event => {
@@ -88,7 +86,7 @@ export default class Login extends Component {
                                 />
                             </FormGroup>
                             <FormGroup controlId="password" bsSize="large">
-                                <ControlLabel>Password</ControlLabel>
+                                <ControlLabel>Password <small> (almeno 6 caratteri) </small></ControlLabel>
                                 <FormControl
                                     value={this.state.password}
                                     onChange={this.handleChange}

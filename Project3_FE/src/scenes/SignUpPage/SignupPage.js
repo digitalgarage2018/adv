@@ -3,6 +3,8 @@ import axios from 'axios';
 
 import { Button, FormGroup, FormControl, ControlLabel, Checkbox } from "react-bootstrap";
 
+import {AuthConsumer} from "../../AuthContext";
+
 import './SignupPage.css';
 
 const error = {
@@ -22,16 +24,33 @@ export default class SignupPage extends Component {
         borndate: "",
         bornplace: "",
         walletaddress: "",
-        checked: true,
+        checked: false,
+        isLogged: false,
+        jwt: "",
         message:""
     };
 
 
     validateForm() {
 
-       return  this.state.checked &&
-               this.state.username.length > 0 &&
-               this.state.password.length > 0;
+
+
+         return  (
+
+            this.state.name.length > 0 &&
+            this.state.surname.length > 0 &&
+            (this.state.borndate.match(/^([0-9]{2})-([0-9]{2})-([0-9]{4})$/) !== null) &&
+            this.state.bornplace.length > 0 &&
+            this.state.password.length > 5 &&
+            this.state.checked &&
+            this.state.confirmpassword === this.state.password &&
+           (this.state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) !== null) &&
+            this.state.username.length > 0
+
+       );
+
+
+
     }
 
     handleChange = event => {
@@ -77,6 +96,12 @@ export default class SignupPage extends Component {
 
             });
 
+
+    }
+
+    checkboxcChanginHandler = () => {
+        const isChecked = !this.state.checked;
+        this.setState({checked: isChecked});
     }
 
 
@@ -109,11 +134,12 @@ export default class SignupPage extends Component {
                     </FormGroup>
 
                     <FormGroup controlId="borndate" bsSize="large">
-                        <ControlLabel> Data di nascita </ControlLabel>
+                        <ControlLabel> Data di nascita <small> (formato gg-mm-aaaa) </small> </ControlLabel>
                         <FormControl
                             autoFocus
                             type="text"
                             value={this.state.borndate}
+
                             onChange={this.handleChange}
                         />
                     </FormGroup>
@@ -128,7 +154,11 @@ export default class SignupPage extends Component {
                         />
                     </FormGroup>
 
-                    <Checkbox readOnly >
+                    <Checkbox
+                        readOnly
+                        onChange={() => this.checkboxcChanginHandler()}
+
+                    >
                         Dichiaro di essere in condizioni di buona salute
                     </Checkbox>
                     <hr />
@@ -151,14 +181,14 @@ export default class SignupPage extends Component {
                         <ControlLabel> Indirizzo Email </ControlLabel>
                         <FormControl
                             autoFocus
-                            type="text"
+                            type="email"
                             value={this.state.email}
                             onChange={this.handleChange}
                         />
                     </FormGroup>
 
                     <FormGroup controlId="password" bsSize="large">
-                        <ControlLabel>Password</ControlLabel>
+                        <ControlLabel>Password <small> (almeno 6 caratteri) </small> </ControlLabel>
                         <FormControl
                             value={this.state.password}
                             onChange={this.handleChange}
