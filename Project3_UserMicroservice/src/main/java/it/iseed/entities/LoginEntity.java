@@ -14,43 +14,43 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table (name="users")
 public class LoginEntity implements Serializable{
 
-	/*
-	@NotEmpty @NotBlank @NotNull
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long u_id;*/
-	
+    /*
+    @NotEmpty @NotBlank @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long u_id;*/
+
 	@Id
 	@NotEmpty @NotBlank @NotNull @Size(min=1)
-    @Column(name="u_username", nullable=false, unique=true)
-    private String u_username;	
-	
+	@Column(name="u_username", nullable=false, unique=true)
+	private String u_username;
+
 	@NotEmpty @Size(min=1) @NotBlank
-    @Column(name="u_pword", nullable=false)
-    private String u_pword;
-    
-    @NotEmpty @Size(min=1) @NotBlank
-    @Column(name="u_email", nullable=false)
-    private String u_email;
+	@Column(name="u_pword", nullable=false)
+	private String u_pword;
 
-    @NotEmpty @Size(min=1) @NotBlank
-    @Column(name="u_name", nullable=false)
-    private String u_name;
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_email", nullable=false)
+	private String u_email;
 
-    @NotEmpty @Size(min=1) @NotBlank
-    @Column(name="u_surname", nullable=false)
-    private String u_surname;
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_name", nullable=false)
+	private String u_name;
 
-    @NotEmpty @Size(min=1) @NotBlank
-    @Column(name="u_born_date", nullable=false)
-    private String u_born_date;
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_surname", nullable=false)
+	private String u_surname;
 
-    @NotEmpty @Size(min=1) @NotBlank
-    @Column(name="u_born_place", nullable=false)
-    private String u_born_place;
-/*
-    @ManyToMany
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_born_date", nullable=false)
+	private String u_born_date;
+
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_born_place", nullable=false)
+	private String u_born_place;
+
+	/*@ManyToMany
 	private List<ServiceEntity> serviceList;*/
-	
+
 	@Column(name="u_wallet_address")
 	private String u_wallet_address;
 
@@ -109,8 +109,8 @@ public class LoginEntity implements Serializable{
 	public void setU_born_place(String u_born_place) {
 		this.u_born_place = u_born_place;
 	}
-/*
-	public List<ServiceEntity> getServiceList() {
+
+	/*public List<ServiceEntity> getServiceList() {
 		return serviceList;
 	}
 
@@ -127,3 +127,4 @@ public class LoginEntity implements Serializable{
 	}
 
 }
+

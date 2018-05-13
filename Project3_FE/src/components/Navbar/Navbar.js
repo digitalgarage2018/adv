@@ -1,49 +1,65 @@
 import React from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
-
+import { AuthConsumer } from '../../AuthContext';
 import './Navbar.css';
 
-export const NavBar = () => {
-
-
+export const NavBar = (props) => {
 
     return (
-        <div className="Navbar">
-        <Navbar inverse collapseOnSelect>
-        <Navbar.Header>
-            <Navbar.Brand>
-            <a href="/"> Super Relax</a>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
 
-            <Nav pullRight>
+        <AuthConsumer>
+            {({ isAuth }) => (
 
-            <NavItem eventKey={1} href="#">
-            <Link to={`/LogIn`}>Accedi</Link>
-            </NavItem>
-            <NavItem eventKey={2} href="#">
-            <Link to={`/SignUp`}>Registrazione</Link>
-            </NavItem>
-                <NavItem eventKey={3} href="#">
-                    <Link to={`/Servizi`}>Servizi</Link>
-                </NavItem>
-                <NavItem eventKey={4} href="#">
-                    <Link to={`/Prodotti`}>Prodotti</Link>
-                </NavItem>
-                <NavItem eventKey={5} href="#">
-                   LogOut
-                </NavItem>
+                <div className="Navbar">
+                     <Navbar inverse collapseOnSelect>
+                        <Navbar.Header>
+                           <Navbar.Brand>
+                               <a href="/"> Super Relax</a>
+                           </Navbar.Brand>
+                           <Navbar.Toggle />
+                        </Navbar.Header>
+                    <Navbar.Collapse>
 
+                    <Nav pullRight>
 
-            </Nav>
-        </Navbar.Collapse>
-        </Navbar>
+                        {!isAuth ? (
+                        <NavItem eventKey={1} href={`/LogIn`}>
+                            Accedi
+                        </NavItem>
+                        ) : null}
 
-        </div>
+                        {!isAuth ? (
+                        <NavItem eventKey={2} href={`/SignUp`}>
+                           Registrazione
+                        </NavItem>
+                        ) : null}
 
-)
+                        <NavItem eventKey={3} href={`/Servizi`}>
+                            Servizi
+                        </NavItem>
+
+                        {isAuth ? (
+                        <NavItem eventKey={4} href={`/Prodotti`}>
+                            Prodotti
+                        </NavItem>
+                            ) : null}
+
+                        {isAuth ? (
+
+                        <NavItem to={`/`} eventKey={5} href="#" onClick={props.click}>
+                            LogOut
+                        </NavItem>
+                        ) : null}
+
+                    </Nav>
+                     </Navbar.Collapse>
+                </Navbar>
+
+            </div>
+            )}
+        </AuthConsumer>
+
+    )
+
 }; 
 
