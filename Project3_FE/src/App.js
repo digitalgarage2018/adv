@@ -14,7 +14,7 @@ class App extends Component {
     }
 
     showModalHandler(){
-       this.setState({showModal: true})
+        this.setState({showModal: true});
     }
 
     closeModalHandler(){
@@ -25,6 +25,7 @@ class App extends Component {
     render() {
         return (
             <div>
+
                 <NavBar isLogged={this.state.isLogged} click={() => this.showModalHandler()}/>
                 <LogoutModal
                 show={this.state.showModal}

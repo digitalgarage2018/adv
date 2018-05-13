@@ -1,5 +1,5 @@
 import React from 'react';
-import {Route, Router } from 'react-router-dom';
+import {Route } from 'react-router-dom';
 
 import HomePage from "./scenes/HomePage/HomePage";
 import SignUpPage from "./scenes/SignUpPage/SignUpPage";
@@ -16,7 +16,6 @@ export const AppRouter = () => {
             <Route path="/SignUp" component={SignUpPage}/>
             <Route path="/Servizi" component={ServicesPage}/>
             <Route path="/Prodotti" component={ProductsPage}/>
-
         </div>
     )
 };

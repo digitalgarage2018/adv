@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-import {loginService} from '../../services/LoginService/LoginService';
 import {logout} from "../../services/LogoutService/LogoutService";
 
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import {loginService} from '../../services/LoginService/LoginService';
 import {HomeComponent} from '../HomePage/components/HomeComponent';
 
 
