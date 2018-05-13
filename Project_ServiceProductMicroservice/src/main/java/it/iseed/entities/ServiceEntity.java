@@ -14,14 +14,14 @@ public class ServiceEntity implements Serializable {
 
     /*Bidirectional relation between users and services*/
     /*So now we know who has purchased a service*/
-   // @ManyToMany(mappedBy = "listServices")
-  //  private List<LoginEntity> listUsers;
+// @ManyToMany(mappedBy = "listServices")
+// private List<LoginEntity> listUsers;
 /*
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "USER_SERVICE",
-    joinColumns = {@JoinColumn(name = "UID", referencedColumnName = "u_username")}
-            inverseJoinColumns={@JoinColumn(name="SID", referencedColumnName="sr_serviceID)})
-    private LoginEntity ser;
+@ManyToMany(cascade = CascadeType.ALL)
+@JoinTable(name = "USER_SERVICE",
+joinColumns = {@JoinColumn(name = "UID", referencedColumnName = "u_username")}
+inverseJoinColumns={@JoinColumn(name="SID", referencedColumnName="sr_serviceID)})
+private LoginEntity ser;
 */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,11 +29,11 @@ public class ServiceEntity implements Serializable {
     private long sr_serviceID;
     /*N.B. adding @manytomany for the bidirectional relation between users and services*/
 /*
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="sr_serviceID")
-    private Set<PurchaseServEntity> purchServ_;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+@OneToMany(cascade=CascadeType.ALL)
+@JoinColumn(name="sr_serviceID")
+private Set<PurchaseServEntity> purchServ_;
 */
     @NotEmpty
     @Column(name="sr_type", nullable=false)
@@ -55,20 +55,25 @@ public class ServiceEntity implements Serializable {
     @Column(name="sr_wellness_center", nullable=false)
     private String sr_wellness_center;
 
-    @NotEmpty
+
+    @Lob
+    @Column(length=100000)
+    private byte[] sr_image;
+
+    /* @NotEmpty
     @Column(name="sr_image", nullable=false)
     private String sr_image;
-
+    */
     @NotEmpty
     @Column(name="sr_name", nullable=false)
     private String sr_name;
 
-    @ManyToMany
-    private List<ProductEntity> productList;
+/* @ManyToMany
+private List<ProductEntity> productList;
 
-    @ManyToMany(mappedBy = "serviceList")
-    private List<LoginEntity> userList;
-
+@ManyToMany(mappedBy = "serviceList")
+private List<LoginEntity> userList;
+*/
 
 
 
@@ -95,17 +100,25 @@ public class ServiceEntity implements Serializable {
     public void setSr_wellness_center(String sr_wellness_center) {
         this.sr_wellness_center = sr_wellness_center;
     }
+/*
+public String getSr_image() {
+return sr_image;
+}
 
-    public String getSr_image() {
-        return sr_image;
-    }
-
-    public void setSr_image(String sr_image) {
-        this.sr_image = sr_image;
-    }
+public void setSr_image(String sr_image) {
+this.sr_image = sr_image;
+}*/
 
     public String getSr_description() {
         return sr_description;
+    }
+
+    public byte[] getSr_image() {
+        return sr_image;
+    }
+
+    public void setSr_image(byte[] sr_image) {
+        this.sr_image = sr_image;
     }
 
     public void setSr_description(String sr_description) {

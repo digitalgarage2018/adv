@@ -46,10 +46,10 @@ public class LoginEntity implements Serializable{
     @NotEmpty
     @Column(name="u_born_place", nullable=false)
     private String u_born_place;
-
+/*
     @ManyToMany
 	private List<ServiceEntity> serviceList;
-
+*/
 	@Column(name="u_wallet_address")
 	private String u_wallet_address;
 
@@ -108,7 +108,7 @@ public class LoginEntity implements Serializable{
 	public void setU_born_place(String u_born_place) {
 		this.u_born_place = u_born_place;
 	}
-
+/*
 	public List<ServiceEntity> getServiceList() {
 		return serviceList;
 	}
@@ -116,7 +116,7 @@ public class LoginEntity implements Serializable{
 	public void setServiceList(List<ServiceEntity> serviceList) {
 		this.serviceList = serviceList;
 	}
-
+*/
 	public String getU_wallet_address() {
 		return u_wallet_address;
 	}

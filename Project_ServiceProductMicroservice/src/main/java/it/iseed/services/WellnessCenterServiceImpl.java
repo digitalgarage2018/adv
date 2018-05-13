@@ -2,10 +2,8 @@ package it.iseed.services;
 
 import it.iseed.daos.WellnessCenterDao;
 import it.iseed.entities.JsonResponseBody;
+
 import it.iseed.entities.ServiceEntity;
-
-import javax.persistence.RollbackException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

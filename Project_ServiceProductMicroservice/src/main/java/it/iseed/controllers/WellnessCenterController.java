@@ -5,7 +5,6 @@ import it.iseed.entities.ServiceEntity;
 import it.iseed.services.ServiceService;
 import it.iseed.services.WellnessCenterService;
 
-import java.net.ConnectException;
 import java.util.LinkedHashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,14 +31,14 @@ public class WellnessCenterController {
 
     @RequestMapping(value = "/addService", method = RequestMethod.POST,headers = "Accept=application/json")
     public ResponseEntity<JsonResponseBody> pollo(@RequestBody ServiceEntity serviceEntity, HttpServletRequest request){
-    	
+    	/////////////////////////////////////////////////////////////////////////////
     	String jwt = JwtUtils.getJwtFromHttpRequest(request);
     	MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         headers.add("jwt", jwt);
         HttpEntity<?> request_2 = new HttpEntity(String.class, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        try {
+        try {/////////////////////////////////////////////////////checkjwtuser/////////////////////get
         	ResponseEntity<JsonResponseBody> responseEntity = restTemplate.exchange("http://localhost:8070/checkjwtcenter", HttpMethod.POST, request_2, JsonResponseBody.class);
         	int answer = (int) responseEntity.getBody().getServer();
         	if (answer!=200){
@@ -47,7 +46,7 @@ public class WellnessCenterController {
         	}
         	else {
         	LinkedHashMap center = (LinkedHashMap) responseEntity.getBody().getResponse();
-        	String name = (String) center.get("w_name");
+        	String name = (String) center.get("w_name");/////////////////////////username
         	serviceEntity.setSr_wellness_center(name);
         	
         	}
@@ -55,7 +54,7 @@ public class WellnessCenterController {
         	System.out.println("eccezione: " + e);
         	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: "+e ));
         }
-        
+        ////////////////////////////////////////////////////////////////////////
         return wellnessCenterService.addService(serviceEntity);
     }
     
