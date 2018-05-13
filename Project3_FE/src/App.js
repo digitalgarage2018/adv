@@ -9,7 +9,6 @@ import LogoutModal from "./components/LogoutModal/LogoutModal";
 class App extends Component {
 
     state = {
-        isLogged: true,
         showModal: false
     }
 
@@ -26,7 +25,7 @@ class App extends Component {
         return (
             <div>
 
-                <NavBar isLogged={this.state.isLogged} click={() => this.showModalHandler()}/>
+                <NavBar click={() => this.showModalHandler()}/>
                 <LogoutModal
                 show={this.state.showModal}
                 hide={() => this.closeModalHandler()}

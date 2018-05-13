@@ -1,7 +1,7 @@
 import React, {Component } from 'react';
 import axios from 'axios';
 
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Checkbox } from "react-bootstrap";
 
 import './SignupPage.css';
 
@@ -22,15 +22,18 @@ export default class SignupPage extends Component {
         borndate: "",
         bornplace: "",
         walletaddress: "",
+        checked: false,
         message:""
     };
 
 
     validateForm() {
 
-        // deve ritornare un booleano che è l'and di tutte le condizioni di validazione
-        // quello che segue è l'esempio del login
-        return this.state.username.length > 0 && this.state.password.length > 0;
+
+        return this.state.checked;
+       /* return
+                this.state.username.length > 0 &&
+                this.state.password.length > 0;*/
     }
 
     handleChange = event => {
@@ -128,7 +131,9 @@ export default class SignupPage extends Component {
                         />
                     </FormGroup>
 
-                    <p> check box da implementare </p>
+                    <Checkbox readOnly checked={this.state.checked}>
+                        Dichiaro di essere in condizioni di buona salute
+                    </Checkbox>
                     <hr />
 
                     <h3> INFORMAZIONI D'ACCESSO </h3>
