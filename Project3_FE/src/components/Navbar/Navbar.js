@@ -22,28 +22,34 @@ export const NavBar = (props) => {
 
                     <Nav pullRight>
 
+                        {!isAuth ? (
                         <NavItem eventKey={1} href={`/LogIn`}>
                             Accedi
                         </NavItem>
+                        ) : null}
 
+                        {!isAuth ? (
                         <NavItem eventKey={2} href={`/SignUp`}>
                            Registrazione
                         </NavItem>
-                        {isAuth ? (
-
+                        ) : null}
+                        
                         <NavItem eventKey={3} href={`/Servizi`}>
                             Servizi
                         </NavItem>
 
-                         ) : (
+                        {isAuth ? (
                         <NavItem eventKey={4} href={`/Prodotti`}>
                             Prodotti
                         </NavItem>
+                            ) : null}
 
-                        )}
+                        {isAuth ? (
+
                         <NavItem to={`/`} eventKey={5} href="#" onClick={props.click}>
                             LogOut
                         </NavItem>
+                        ) : null}
 
                     </Nav>
                      </Navbar.Collapse>
