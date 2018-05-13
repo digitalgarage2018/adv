@@ -9,7 +9,6 @@ import org.springframework.transaction.CannotCreateTransactionException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-import javax.persistence.RollbackException;
 import javax.transaction.Transactional;
 
 @Repository

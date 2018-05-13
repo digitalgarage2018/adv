@@ -113,7 +113,7 @@ public class LoginController {
         }catch (UnsupportedEncodingException e2){
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(new JsonResponseBody(HttpStatus.PRECONDITION_FAILED.value(), "Token Error" + e2.toString()));
         }catch (NoDbConnection e3){
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No corrispondence in the database of users"));
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No DB connection"));
         }
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new JsonResponseBody(HttpStatus.NOT_IMPLEMENTED.value(), "Generic Error"));
     }
@@ -143,7 +143,7 @@ public class LoginController {
         }catch (UnsupportedEncodingException e2){
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(new JsonResponseBody(HttpStatus.PRECONDITION_FAILED.value(), "Token Error" + e2.toString()));
         }catch (NoDbConnection e3){
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No corrispondence in the database of users"));
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No DB connection"));
         }
         return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new JsonResponseBody(HttpStatus.NOT_IMPLEMENTED.value(), "No corrispondence in the database of centers"));
     }
@@ -180,7 +180,7 @@ public class LoginController {
         }catch(ExpiredJwtException e3){
             return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JsonResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), "Session Expired!: " + e3.toString()));
         }catch (NoDbConnection e4){
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No corrispondence in the database of users"));
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No DB connection"));
         }
     }
 	
@@ -198,7 +198,7 @@ public class LoginController {
         }catch(ExpiredJwtException e3){
             return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(new JsonResponseBody(HttpStatus.GATEWAY_TIMEOUT.value(), "Session Expired!: " + e3.toString()));
         }catch (NoDbConnection e4){
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No corrispondence in the database of users"));
+            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No DB connection"));
         }
     }
 	
@@ -215,32 +215,45 @@ public class LoginController {
 		System.out.println(request.getU_surname());
 		System.out.println(request.getU_born_date());
 		System.out.println(request.getU_born_place());
-		try{
-			String result = loginService.registrationUserService(request);
-			
-			//BaseResponse response = new BaseResponse();
-			
-			System.out.println("valore ritornato: " +result);
-			
-			if (result.equals("success")){
-				LoginEntity user = loginService.getUser(request.getU_username());
-	            String jwt = loginService.createJwt(user.getU_username(), user.getU_name(), new Date(), "default_user");
-	            return ResponseEntity.status(HttpStatus.OK)
-	            		.header("Access-Control-Allow-Origin", "*")
-	            		.header("Access-Control-Allow-Credentials", "true")
-	            		.header("Access-Control-Allow-Headers", "jwt")
-	            		.header("Access-Control-Expose-Headers", "jwt")
-	            		.header("jwt",jwt)
-	            		.body(new JsonResponseBody(HttpStatus.OK.value(), "Success! User signed up and logged in!"));
-	        }
-		}catch(NoDbConnection e1){
-			return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No corrispondence in the database of users"));
-        }catch (UserNotLoggedException e2) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "User not correctly logged: " + e2.toString()));
-        } catch (UnsupportedEncodingException e3) {
-        	 return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(new JsonResponseBody(HttpStatus.PRECONDITION_FAILED.value(), "Unsupported Encoding: " + e3.toString()));
+		
+		if (request.getU_username()!= "" &&
+			request.getU_pword()!= "" &&	
+			request.getU_email()!= "" &&
+			request.getU_name()!= "" &&	
+			request.getU_surname()!= "" &&
+			request.getU_born_date()!= "" &&
+			request.getU_born_place()!= ""
+			){
+
+				try{
+					String result = loginService.registrationUserService(request);
+					
+					//BaseResponse response = new BaseResponse();
+					
+					System.out.println("valore ritornato: " +result);
+					
+					if (result.equals("success")){
+						LoginEntity user = loginService.getUser(request.getU_username());
+			            String jwt = loginService.createJwt(user.getU_username(), user.getU_name(), new Date(), "default_user");
+			            return ResponseEntity.status(HttpStatus.OK)
+			            		.header("Access-Control-Allow-Origin", "*")
+			            		.header("Access-Control-Allow-Credentials", "true")
+			            		.header("Access-Control-Allow-Headers", "jwt")
+			            		.header("Access-Control-Expose-Headers", "jwt")
+			            		.header("jwt",jwt)
+			            		.body(new JsonResponseBody(HttpStatus.OK.value(), "Success! User signed up and logged in!"));
+			        }
+				}catch(NoDbConnection e1){
+					return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No DB connection"));
+		        }catch (UserNotLoggedException e2) {
+		            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "User not correctly logged: " + e2.toString()));
+		        } catch (UnsupportedEncodingException e3) {
+		        	 return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(new JsonResponseBody(HttpStatus.PRECONDITION_FAILED.value(), "Unsupported Encoding: " + e3.toString()));
+				}
+				return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new JsonResponseBody(HttpStatus.NOT_IMPLEMENTED.value(), "Generic Error"));
+		}else {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "I campi devono tutti essere valorizzati: "));
 		}
-		return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new JsonResponseBody(HttpStatus.NOT_IMPLEMENTED.value(), "Generic Error"));
 	}
 	/*
 	@RequestMapping(value="/signUpController", method = RequestMethod.POST,headers="Accept=application/json")
