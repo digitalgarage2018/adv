@@ -1,18 +1,38 @@
-import React from 'react'
+import React, {Component} from 'react'
+import axios from "axios/index";
 
 const AuthContext = React.createContext()
 
-class AuthProvider extends React.Component {
-    state = { isAuth: true }
-
-    constructor() {
-        super()
-        this.login = this.login.bind(this)
-        this.logout = this.logout.bind(this)
+class AuthProvider extends Component {
+    state = {
+        isAuth: false,
+        jwt: ""
     }
 
-    login() {
-        this.setState({ isAuth: true })
+
+    login = (event, username, password) => {
+        event.preventDefault();
+        console.log('sono qui desntro');
+        axios.post('http://localhost:8070/login', {
+            u_username: username,
+            u_pword: password
+        })
+            .then( response => {
+                console.log(response);
+                console.log(this.state);
+                this.setState({ isAuth: true });
+                this.setState({jwt: response.headers.jwt});
+                console.log(this.state);
+                // this.props.history.push("/");
+
+            })
+            .catch( error => {
+                console.log(error);
+
+            });
+
+
+
     }
 
     logout() {

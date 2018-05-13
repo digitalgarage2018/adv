@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-
 import axios from 'axios';
 
 
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+
+import {AuthConsumer, AuthProvider} from "../../AuthContext";
 
 
 import "./LogInPage.css";
@@ -17,7 +18,6 @@ export default class Login extends Component {
         state = {
             userName: "",
             password: "",
-            isLogged: false,
             jwt: "",
             message:""
         };
@@ -35,17 +35,14 @@ export default class Login extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        // console.log(this.state);
-        // const prova = {...this.state};
-        // console.log('prova copia state', prova);
+
         axios.post('http://localhost:8070/login', {
             u_username: this.state.userName,
             u_pword: this.state.password
         })
             .then( response => {
 
-                this.setState({isLogged: true, jwt: response.headers.jwt});
-                console.log("Stato dopo la LogIn: ", this.state);
+                this.setState({jwt: response.headers.jwt});
                 this.props.history.push("/");
 
             })
@@ -60,8 +57,6 @@ export default class Login extends Component {
                     else if (error.response.data.server === 0){
                     this.setState({message:"Credenziali non corrette"})}
 
-
-
     });
 
     }
@@ -70,8 +65,11 @@ export default class Login extends Component {
 
     render() {
         return (
+            <AuthConsumer>
+                {({ login }) => (
+
             <div className="LoginPage">
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={(event) => login(event, this.state.userName, this.state.password)}>
                     <FormGroup controlId="userName" bsSize="large">
                         <ControlLabel>UserName </ControlLabel>
                         <FormControl
@@ -94,6 +92,7 @@ export default class Login extends Component {
                         bsSize="large"
                         disabled={!this.validateForm()}
                         type="submit"
+
                     >
                         Login
                     </Button>
@@ -112,6 +111,8 @@ export default class Login extends Component {
 
                 </form>
             </div>
+                )}
+            </AuthConsumer>
 
 
         );

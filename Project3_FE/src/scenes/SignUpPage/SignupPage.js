@@ -22,18 +22,16 @@ export default class SignupPage extends Component {
         borndate: "",
         bornplace: "",
         walletaddress: "",
-        checked: false,
+        checked: true,
         message:""
     };
 
 
     validateForm() {
 
-
-        return this.state.checked;
-       /* return
-                this.state.username.length > 0 &&
-                this.state.password.length > 0;*/
+       return  this.state.checked &&
+               this.state.username.length > 0 &&
+               this.state.password.length > 0;
     }
 
     handleChange = event => {
@@ -131,7 +129,7 @@ export default class SignupPage extends Component {
                         />
                     </FormGroup>
 
-                    <Checkbox readOnly checked={this.state.checked}>
+                    <Checkbox readOnly >
                         Dichiaro di essere in condizioni di buona salute
                     </Checkbox>
                     <hr />

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -13,41 +14,41 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table (name="users")
 public class LoginEntity implements Serializable{
 
-	/*
-	@NotEmpty @NotBlank @NotNull
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long u_id;*/
-	
+    /*
+    @NotEmpty @NotBlank @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long u_id;*/
+
 	@Id
-	@NotEmpty @NotBlank @NotNull
-    @Column(name="u_username", nullable=false, unique=true)
-    private String u_username;	
-	
-	@NotEmpty
-    @Column(name="u_pword", nullable=false)
-    private String u_pword;
-    
-    @NotEmpty
-    @Column(name="u_email", nullable=false)
-    private String u_email;
+	@NotEmpty @NotBlank @NotNull @Size(min=1)
+	@Column(name="u_username", nullable=false, unique=true)
+	private String u_username;
 
-    @NotEmpty
-    @Column(name="u_name", nullable=false)
-    private String u_name;
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_pword", nullable=false)
+	private String u_pword;
 
-    @NotEmpty
-    @Column(name="u_surname", nullable=false)
-    private String u_surname;
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_email", nullable=false)
+	private String u_email;
 
-    @NotEmpty
-    @Column(name="u_born_date", nullable=false)
-    private String u_born_date;
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_name", nullable=false)
+	private String u_name;
 
-    @NotEmpty
-    @Column(name="u_born_place", nullable=false)
-    private String u_born_place;
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_surname", nullable=false)
+	private String u_surname;
 
-    /*@ManyToMany
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_born_date", nullable=false)
+	private String u_born_date;
+
+	@NotEmpty @Size(min=1) @NotBlank
+	@Column(name="u_born_place", nullable=false)
+	private String u_born_place;
+
+	/*@ManyToMany
 	private List<ServiceEntity> serviceList;*/
 
 	@Column(name="u_wallet_address")
@@ -109,13 +110,13 @@ public class LoginEntity implements Serializable{
 		this.u_born_place = u_born_place;
 	}
 
-//	public List<ServiceEntity> getServiceList() {
-//		return serviceList;
-//	}
-//
-//	public void setServiceList(List<ServiceEntity> serviceList) {
-//		this.serviceList = serviceList;
-//	}
+	/*public List<ServiceEntity> getServiceList() {
+		return serviceList;
+	}
+
+	public void setServiceList(List<ServiceEntity> serviceList) {
+		this.serviceList = serviceList;
+	}*/
 
 	public String getU_wallet_address() {
 		return u_wallet_address;
@@ -126,3 +127,4 @@ public class LoginEntity implements Serializable{
 	}
 
 }
+
