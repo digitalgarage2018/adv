@@ -33,7 +33,7 @@ export const NavBar = (props) => {
                            Registrazione
                         </NavItem>
                         ) : null}
-                        
+
                         <NavItem eventKey={3} href={`/Servizi`}>
                             Servizi
                         </NavItem>
