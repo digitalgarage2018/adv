@@ -70,7 +70,7 @@ public class ProductController {
             else {
                 LinkedHashMap user = (LinkedHashMap) responseEntity.getBody().getResponse();
                 String name = (String) user.get("u_username");/////////////////////////username
-                loginEntity.setU_username(name);
+                loginEntity.setUsername(name);
 
             }
         }catch (Exception e){

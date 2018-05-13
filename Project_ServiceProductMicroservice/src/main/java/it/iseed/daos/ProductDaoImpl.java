@@ -43,7 +43,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     public List<ProductEntity> getListOfProductsByUser(LoginEntity loginEntity){
-        String username = loginEntity.getU_username();
+        String username = loginEntity.getUsername();
         System.out.println("l'username è:"+username);
       //  try {
 
