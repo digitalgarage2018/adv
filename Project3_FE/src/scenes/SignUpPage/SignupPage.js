@@ -1,4 +1,4 @@
-import React, {Component } from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
 
 import { Button, FormGroup, FormControl, ControlLabel, Checkbox } from "react-bootstrap";
@@ -46,7 +46,7 @@ export default class SignupPage extends Component {
 
         console.log('stato dopo la submit: ', this.state);
 
-        axios.post('http://localhost:8070//signUpController', {
+        axios.post('http://localhost:8070/signUpController', {
 
             u_username: this.state.username,
             u_pword: this.state.password,
@@ -66,16 +66,14 @@ export default class SignupPage extends Component {
             })
             .catch( error => {
                 if (error.response === undefined){
-                    this.setState({message:"Network Error"})}
+                    this.setState({message:"Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})}
 
                 else if (error.response.data.server === 403)
-                {this.setState({message:"Credenziali non corrette"})}
+                {this.setState({message:"Nome utente già un uso. Prova con un altro username"})}
 
 
                 else if (error.response.data.server === 0){
-                    this.setState({message:"Credenziali non corrette"})}
-
-
+                    this.setState({message:"Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})}
 
             });
 
@@ -86,6 +84,7 @@ export default class SignupPage extends Component {
         return (
             <div className="SignupPage">
                 <form onSubmit={this.handleSubmit}>
+
 
                     <h3> INFORMAZIONI PERSONALI </h3>
 
@@ -175,6 +174,7 @@ export default class SignupPage extends Component {
                             type="password"
                         />
                     </FormGroup>
+                    <h4 align="center" style={error}> {this.state.message}</h4>
 
                     <Button
                         block
@@ -185,7 +185,6 @@ export default class SignupPage extends Component {
                         Registrati
                     </Button>
 
-                    <h4 style={error}> {this.state.message}</h4>
                 </form>
             </div>
 

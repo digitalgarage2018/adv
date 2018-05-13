@@ -55,7 +55,7 @@ export default class Login extends Component {
             })
             .catch(error => {
                 if (error.response === undefined) {
-                    this.setState({message: "Network Error"})
+                    this.setState({message: "Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})
                 }
 
                 else if (error.response.data.server === 403) {
@@ -64,16 +64,13 @@ export default class Login extends Component {
 
 
                 else if (error.response.data.server === 0) {
-                    this.setState({message: "Credenziali non corrette"})
+                    this.setState({message: "Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})
                 }
 
             });
     };
 
 
-    provaRedirect(){
-        this.props.history.push("/");
-    }
 
 
     render() {
@@ -98,6 +95,7 @@ export default class Login extends Component {
                                     type="password"
                                 />
                             </FormGroup>
+                            <h4 align="center" style={error}> {this.state.message}</h4>
                             <Button
                                 block
                                 bsSize="large"
@@ -118,7 +116,7 @@ export default class Login extends Component {
                             >
                                 Registrati
                             </Button>
-                            <h4 style={error}> {this.state.message}</h4>
+
 
 
                         </form>
