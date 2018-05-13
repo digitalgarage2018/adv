@@ -62,11 +62,11 @@ public class ServiceEntity implements Serializable {
     @Column(name="sr_name", nullable=false)
     private String sr_name;
 
-    @ManyToMany
+    /*@ManyToMany
     private List<ProductEntity> productList;
 
     @ManyToMany(mappedBy = "serviceList")
-    private List<LoginEntity> userList;
+    private List<LoginEntity> userList;*/
 
 
 

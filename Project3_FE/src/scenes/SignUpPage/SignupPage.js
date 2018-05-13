@@ -43,7 +43,9 @@ export default class SignupPage extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        axios.post('http://localhost:8070/login', {
+        console.log('stato dopo la submit: ', this.state);
+
+        axios.post('http://localhost:8070//signUpController', {
 
             u_username: this.state.username,
             u_pword: this.state.password,
@@ -84,6 +86,8 @@ export default class SignupPage extends Component {
             <div className="SignupPage">
                 <form onSubmit={this.handleSubmit}>
 
+                    <h3> INFORMAZIONI PERSONALI </h3>
+
                     <FormGroup controlId="name" bsSize="large">
                         <ControlLabel> Nome </ControlLabel>
                         <FormControl
@@ -104,6 +108,43 @@ export default class SignupPage extends Component {
                         />
                     </FormGroup>
 
+                    <FormGroup controlId="borndate" bsSize="large">
+                        <ControlLabel> Data di nascita </ControlLabel>
+                        <FormControl
+                            autoFocus
+                            type="text"
+                            value={this.state.borndate}
+                            onChange={this.handleChange}
+                        />
+                    </FormGroup>
+
+                    <FormGroup controlId="bornplace" bsSize="large">
+                        <ControlLabel> Luogo di nascita </ControlLabel>
+                        <FormControl
+                            autoFocus
+                            type="text"
+                            value={this.state.bornplace}
+                            onChange={this.handleChange}
+                        />
+                    </FormGroup>
+
+                    <p> check box da implementare </p>
+                    <hr />
+
+                    <h3> INFORMAZIONI D'ACCESSO </h3>
+
+
+
+                    <FormGroup controlId="username" bsSize="large">
+                        <ControlLabel> Username </ControlLabel>
+                        <FormControl
+                            autoFocus
+                            type="text"
+                            value={this.state.username}
+                            onChange={this.handleChange}
+                        />
+                    </FormGroup>
+
                     <FormGroup controlId="email" bsSize="large">
                         <ControlLabel> Indirizzo Email </ControlLabel>
                         <FormControl
@@ -114,17 +155,6 @@ export default class SignupPage extends Component {
                         />
                     </FormGroup>
 
-
-
-                    <FormGroup controlId="username" bsSize="large">
-                        <ControlLabel>UserName </ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.username}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
                     <FormGroup controlId="password" bsSize="large">
                         <ControlLabel>Password</ControlLabel>
                         <FormControl
