@@ -106,118 +106,133 @@ export default class SignupPage extends Component {
 
 
     render() {
-        return (
-            <div className="SignupPage">
-                <form onSubmit={this.handleSubmit}>
+        if (!this.state.isLogged) {
+            return (
+
+                <div className="SignupPage">
+                    <form onSubmit={this.handleSubmit}>
 
 
-                    <h3> INFORMAZIONI PERSONALI </h3>
+                        <h3> INFORMAZIONI PERSONALI </h3>
 
-                    <FormGroup controlId="name" bsSize="large">
-                        <ControlLabel> Nome </ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.name}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
+                        <FormGroup controlId="name" bsSize="large">
+                            <ControlLabel> Nome </ControlLabel>
+                            <FormControl
+                                autoFocus
+                                type="text"
+                                value={this.state.name}
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
 
-                    <FormGroup controlId="surname" bsSize="large">
-                        <ControlLabel> Cognome </ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.surname}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
+                        <FormGroup controlId="surname" bsSize="large">
+                            <ControlLabel> Cognome </ControlLabel>
+                            <FormControl
+                                autoFocus
+                                type="text"
+                                value={this.state.surname}
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
 
-                    <FormGroup controlId="borndate" bsSize="large">
-                        <ControlLabel> Data di nascita <small> (formato gg-mm-aaaa) </small> </ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.borndate}
+                        <FormGroup controlId="borndate" bsSize="large">
+                            <ControlLabel> Data di nascita <small> (formato gg-mm-aaaa) </small></ControlLabel>
+                            <FormControl
+                                autoFocus
+                                type="text"
+                                value={this.state.borndate}
 
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
 
-                    <FormGroup controlId="bornplace" bsSize="large">
-                        <ControlLabel> Luogo di nascita </ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.bornplace}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
+                        <FormGroup controlId="bornplace" bsSize="large">
+                            <ControlLabel> Luogo di nascita </ControlLabel>
+                            <FormControl
+                                autoFocus
+                                type="text"
+                                value={this.state.bornplace}
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
 
-                    <Checkbox
-                        readOnly
-                        onChange={() => this.checkboxcChanginHandler()}
+                        <Checkbox
+                            readOnly
+                            onChange={() => this.checkboxcChanginHandler()}
 
-                    >
-                        Dichiaro di essere in condizioni di buona salute
-                    </Checkbox>
-                    <hr />
+                        >
+                            Dichiaro di essere in condizioni di buona salute
+                        </Checkbox>
+                        <hr/>
 
-                    <h3> INFORMAZIONI D'ACCESSO </h3>
+                        <h3> INFORMAZIONI D'ACCESSO </h3>
 
 
+                        <FormGroup controlId="username" bsSize="large">
+                            <ControlLabel> Username </ControlLabel>
+                            <FormControl
+                                autoFocus
+                                type="text"
+                                value={this.state.username}
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
 
-                    <FormGroup controlId="username" bsSize="large">
-                        <ControlLabel> Username </ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="text"
-                            value={this.state.username}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
+                        <FormGroup controlId="email" bsSize="large">
+                            <ControlLabel> Indirizzo Email </ControlLabel>
+                            <FormControl
+                                autoFocus
+                                type="email"
+                                value={this.state.email}
+                                onChange={this.handleChange}
+                            />
+                        </FormGroup>
 
-                    <FormGroup controlId="email" bsSize="large">
-                        <ControlLabel> Indirizzo Email </ControlLabel>
-                        <FormControl
-                            autoFocus
-                            type="email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                        />
-                    </FormGroup>
+                        <FormGroup controlId="password" bsSize="large">
+                            <ControlLabel>Password <small> (almeno 6 caratteri) </small></ControlLabel>
+                            <FormControl
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                type="password"
+                            />
+                        </FormGroup>
 
-                    <FormGroup controlId="password" bsSize="large">
-                        <ControlLabel>Password <small> (almeno 6 caratteri) </small> </ControlLabel>
-                        <FormControl
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            type="password"
-                        />
-                    </FormGroup>
+                        <FormGroup controlId="confirmpassword" bsSize="large">
+                            <ControlLabel> Conferma Password</ControlLabel>
+                            <FormControl
+                                value={this.state.confirmpassword}
+                                onChange={this.handleChange}
+                                type="password"
+                            />
+                        </FormGroup>
+                        <h4 align="center" style={error}> {this.state.message}</h4>
 
-                    <FormGroup controlId="confirmpassword" bsSize="large">
-                        <ControlLabel> Conferma Password</ControlLabel>
-                        <FormControl
-                            value={this.state.confirmpassword}
-                            onChange={this.handleChange}
-                            type="password"
-                        />
-                    </FormGroup>
-                    <h4 align="center" style={error}> {this.state.message}</h4>
+                        <Button
+                            block
+                            bsSize="large"
+                            disabled={!this.validateForm()}
+                            type="submit"
+                        >
+                            Registrati
+                        </Button>
 
-                    <Button
-                        block
-                        bsSize="large"
-                        disabled={!this.validateForm()}
-                        type="submit"
-                    >
-                        Registrati
-                    </Button>
+                    </form>
+                </div>
 
-                </form>
-            </div>
+            )
+        } else
+            {
+                return (
+                    <AuthConsumer>
+                        {({login}) => (
+                            <p>
+                                {login()}
+                                {this.props.history.push("/")} </p>
+                        )}
+                    </AuthConsumer>
+                )
 
-        );
+
+            }
+        }
     }
-}
