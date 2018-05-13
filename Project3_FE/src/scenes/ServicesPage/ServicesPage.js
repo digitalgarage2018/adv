@@ -4,7 +4,9 @@ import axios from "axios";
 import './ServicesPage.css';
 import Service from './components/Service';
 
-import {Modal, Button} from 'react-bootstrap';
+import ServiceModal from './components/ServiceModal';
+
+
 
 
 
@@ -115,48 +117,22 @@ class ServicesPage extends Component {
         )
 
 
-
-
-
-
-
-
         return (
             <div>
 
-            <div className="ServicesPage">
+            <div className="Services">
             {servicelist}
-
-
             </div>
-
-                <Modal show={this.state.showModal} onHide={() => this.closeModalHandler()}>
-
-                        <Modal.Header closeButton>
-                            <Modal.Title> {this.state.serviceSelectedName} </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <h5>  <strong> Centro Benessere: </strong> {this.state.serviceSelectedCenter}</h5>
-                            <p>
-                                {this.state.serviceSelectedDescription}
-                            </p>
-
-                            <hr />
-                            <p>
-                                <strong> Tipologia del servizio: </strong> {this.state.serviceSelectedType}
-                            </p>
-                            <p>
-                                <strong> Durata del servizio: </strong> {this.state.serviceSelectedTime} minuti
-                            </p>
-                            <p>
-                                <strong> Prezzo: </strong> {this.state.serviceSelectedPrice} $
-                            </p>
-
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={() => this.closeModalHandler() }>Close</Button>
-                        </Modal.Footer>
-                    </Modal>
+                <ServiceModal
+                    show={this.state.showModal}
+                    hide={() => this.closeModalHandler()}
+                    title={this.state.serviceSelectedName}
+                    center={this.state.serviceSelectedCenter}
+                    description={this.state.serviceSelectedDescription}
+                    type={this.state.serviceSelectedType}
+                    time={this.state.serviceSelectedTime}
+                    price={this.state.serviceSelectedPrice}
+                />
 
 
 

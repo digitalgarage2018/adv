@@ -85,7 +85,7 @@ public class LoginServiceImpl implements LoginService {
 				return "success";
 			}
 		 }catch (PersistenceException e){
-			 System.out.println("Connection failed!!\n" + e);
+			 System.out.println("Errore SQL!!\n" + e);
 			 throw new UserNotLoggedException("errorSQL");
 			 //return "errorSQL";
 		 }catch (CannotCreateTransactionException e){
@@ -113,7 +113,7 @@ public class LoginServiceImpl implements LoginService {
 	 @Override
 	    public String createJwt(String subject, String name, Date datenow,String permission) throws UnsupportedEncodingException, NoDbConnection{
 	        Date expDate = datenow;
-	        expDate.setTime(datenow.getTime() + (600*1000)); //jwt valido per 10 minuti
+	        expDate.setTime(datenow.getTime() + (6000*1000)); //jwt valido per 100 minuti
 	        log.info("JWT Creation. Expiration time: " + expDate.getTime());
 	        String token = JwtUtils.generateJwt(subject, expDate, name, permission);
 	        

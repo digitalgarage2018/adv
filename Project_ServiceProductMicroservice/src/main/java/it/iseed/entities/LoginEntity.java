@@ -1,129 +1,143 @@
 package it.iseed.entities;
 
+
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table (name="users")
 public class LoginEntity implements Serializable{
-
 /*
-@NotEmpty @NotBlank @NotNull
-@GeneratedValue(strategy = GenerationType.AUTO)
-private long u_id;*/
+    @JoinTable
+    @ManyToMany(mappedBy = "users")
+    private List<ServiceEntity> listService;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_SERVICE",
+            joinColumns = {@JoinColumn(name = "UID", referencedColumnName = "u_username")}
+            inverseJoinColumns={@JoinColumn(name="SID", referencedColumnName="sr_serviceID)})
+            private LoginEntity ser;
+*/
 
 	@Id
-	@NotEmpty @NotBlank @NotNull @Size(min=1)
-	@Column(name="u_username", nullable=false, unique=true)
 	private String u_username;
 
-	@NotEmpty @Size(min=1) @NotBlank
-	@Column(name="u_pword", nullable=false)
-	private String u_pword;
+    @NotEmpty
+    @Column(name="u_pword", nullable=false)
+    private String u_pword;
+    
+    @NotEmpty
+    @Column(name="u_email", nullable=false)
+    private String u_email;
 
-	@NotEmpty @Size(min=1) @NotBlank
-	@Column(name="u_email", nullable=false)
-	private String u_email;
+    @NotEmpty
+    @Column(name="u_name", nullable=false)
+    private String u_name;
 
-	@NotEmpty @Size(min=1) @NotBlank
-	@Column(name="u_name", nullable=false)
-	private String u_name;
+    @NotEmpty
+    @Column(name="u_surname", nullable=false)
+    private String u_surname;
 
-	@NotEmpty @Size(min=1) @NotBlank
-	@Column(name="u_surname", nullable=false)
-	private String u_surname;
+    @NotEmpty
+    @Column(name="u_born_date", nullable=false)
+    private String u_born_date;
 
-	@NotEmpty @Size(min=1) @NotBlank
-	@Column(name="u_born_date", nullable=false)
-	private String u_born_date;
+    @NotEmpty
+    @Column(name="u_born_place", nullable=false)
+    private String u_born_place;
 
-	@NotEmpty @Size(min=1) @NotBlank
-	@Column(name="u_born_place", nullable=false)
-	private String u_born_place;
-/*
-	@ManyToMany
-	private List<ServiceEntity> serviceList;
-*/
+  /*  @ManyToMany
+	private List<ServiceEntity> serviceList;*/
+
 	@Column(name="u_wallet_address")
 	private String u_wallet_address;
 
-	public String getU_username() {
+/*
+    @Id
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="u_username")
+	private Set<PurchaseServEntity> purchServ;
+    */
+
+	//creation of the join table, the foreign keys are implicit in the column
+	/*@ManyToMany//(targetEntity = ServiceEntity.class, mappedBy = "LoginEntity")
+	@JoinTable(name="USERS_SERVICES",
+			joinColumns = {@JoinColumn(name = "u_usernameQ",referencedColumnName = "u_username")},
+			inverseJoinColumns = {@JoinColumn(name = "sr_serviceIDQ", referencedColumnName = "sr_serviceID")})
+	public List<ServiceEntity> getListServices() {
+		return listServices;
+	}*/
+
+
+ 
+	public String getUsername() {
 		return u_username;
 	}
-
-	public void setU_username(String u_username) {
-		this.u_username = u_username;
+ 
+	public void setUsername(String username) {
+		this.u_username = username;
 	}
-
-	public String getU_pword() {
+ 
+	public String getPassword() {
 		return u_pword;
 	}
-
-	public void setU_pword(String u_pword) {
-		this.u_pword = u_pword;
+ 
+	public void setPassword(String password) {
+		this.u_pword = password;
 	}
 
-	public String getU_email() {
+	public String getEmail() {
 		return u_email;
 	}
 
-	public void setU_email(String u_email) {
+	public void setEmail(String u_email) {
 		this.u_email = u_email;
 	}
 
-	public String getU_name() {
+	public String getName() {
 		return u_name;
 	}
 
-	public void setU_name(String u_name) {
+	public void setName(String u_name) {
 		this.u_name = u_name;
 	}
 
-	public String getU_surname() {
+	public String getSurname() {
 		return u_surname;
 	}
 
-	public void setU_surname(String u_surname) {
+	public void setSurname(String u_surname) {
 		this.u_surname = u_surname;
 	}
 
-	public String getU_born_date() {
+	public String getBorn_date() {
 		return u_born_date;
 	}
 
-	public void setU_born_date(String u_born_date) {
+	public void setBorn_date(String u_born_date) {
 		this.u_born_date = u_born_date;
 	}
 
-	public String getU_born_place() {
+	public String getBorn_place() {
 		return u_born_place;
 	}
 
-	public void setU_born_place(String u_born_place) {
+	public void setBorn_place(String u_born_place) {
 		this.u_born_place = u_born_place;
 	}
-/*
-	public List<ServiceEntity> getServiceList() {
-		return serviceList;
-	}
 
-	public void setServiceList(List<ServiceEntity> serviceList) {
-		this.serviceList = serviceList;
-	}
-*/
-	public String getU_wallet_address() {
+	public String getWalletAddress() {
 		return u_wallet_address;
 	}
 
-	public void setU_wallet_address(String u_wallet_address) {
+	public void setWalletAddress(String u_wallet_address) {
 		this.u_wallet_address = u_wallet_address;
 	}
+
 
 }
