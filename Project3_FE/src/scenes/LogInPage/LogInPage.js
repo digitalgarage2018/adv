@@ -1,9 +1,9 @@
 import React, { Component } from "react";
+
 import axios from 'axios';
 
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-import {logout} from "../../services/LogoutService/LogoutService";
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 
 import "./LogInPage.css";
@@ -66,16 +66,11 @@ export default class Login extends Component {
 
     }
 
-    logoutHandler = (event) => {
-
-    }
-
-
 
 
     render() {
         return (
-            <div className="Login">
+            <div className="LoginPage">
                 <form onSubmit={this.handleSubmit}>
                     <FormGroup controlId="userName" bsSize="large">
                         <ControlLabel>UserName </ControlLabel>
@@ -102,19 +97,20 @@ export default class Login extends Component {
                     >
                         Login
                     </Button>
+                    <br />
+                    <br />
+                    <p align="center">    Non sei ancora registrato? </p>
                     <Button
                         block
                         bsSize="large"
-                        onClick={this.logoutHandler}
+                        onClick={() => this.props.history.push(`/SignUp`)}
                     >
-                        Log Out
+                        Registrati
                     </Button>
                     <h4 style={error}> {this.state.message}</h4>
 
 
                 </form>
-
-
             </div>
 
 
