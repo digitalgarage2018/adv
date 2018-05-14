@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BEApplication {
 
+	/*
 	@Autowired
 	EncryptionUtils encryptionUtils;
 
@@ -23,7 +24,7 @@ public class BEApplication {
 		textEncryptor.setPassword("mySecretEncriptionKeyBlaBla1234");
 		return textEncryptor;
 	}
-
+*/
 
 	private static final Logger log = LoggerFactory.getLogger(BEApplication.class);
 
