@@ -13,48 +13,8 @@ import ServiceModal from './components/ServiceModal';
 class ServicesPage extends Component {
 
     state = {
-        services: [
-            {
-                sr_name: 'Massaggio thai',
-                sr_type: 'Massaggio',
-                sr_description: 'Massaggio tradizionale thailandese, che affonda le sue radici ed in tempi remoti nel lontano Oriente.  La leggenda vuole che tale massaggio sia stato inventato dal medico, amico e compagno di viaggio del Buddha.  Grazie ad un sapiente uso delle mani, dita, piedi, gomiti riallineerete i vostri Sen.  Gli innumerevoli benefici sono ormai ben noti. ',
-                sr_price: '300',
-                sr_time: '60',
-                sr_wellness_center: 'Fonteverde',
-                sr_image: './images/thai-massage.jpg',
-                sr_serviceID: '1'
-            },
-            {
-                sr_name: 'Massaggio thai',
-                sr_type: 'Massaggio',
-                sr_description: 'Massaggio tradizionale thailandese, che affonda le sue radici ed in tempi remoti nel lontano Oriente.  La leggenda vuole che tale massaggio sia stato inventato dal medico, amico e compagno di viaggio del Buddha.  Grazie ad un sapiente uso delle mani, dita, piedi, gomiti riallineerete i vostri Sen.  Gli innumerevoli benefici sono ormai ben noti. ',
-                sr_price: '300',
-                sr_time: '60',
-                sr_wellness_center: 'Fonteverde',
-                sr_image: './images/thai-massage.jpg',
-                sr_serviceID: '2'
-            },
-            {
-                sr_name: 'Massaggio thai',
-                sr_type: 'Massaggio',
-                sr_description: 'Massaggio tradizionale thailandese, che affonda le sue radici ed in tempi remoti nel lontano Oriente.  La leggenda vuole che tale massaggio sia stato inventato dal medico, amico e compagno di viaggio del Buddha.  Grazie ad un sapiente uso delle mani, dita, piedi, gomiti riallineerete i vostri Sen.  Gli innumerevoli benefici sono ormai ben noti. ',
-                sr_price: '300',
-                sr_time: '60',
-                sr_wellness_center: 'Fonteverde',
-                sr_image: './images/thai-massage.jpg',
-                sr_serviceID: '3'
-            },
-            {
-                sr_name: 'Massaggio thai',
-                sr_type: 'Massaggio',
-                sr_description: 'Massaggio tradizionale thailandese, che affonda le sue radici ed in tempi remoti nel lontano Oriente.  La leggenda vuole che tale massaggio sia stato inventato dal medico, amico e compagno di viaggio del Buddha.  Grazie ad un sapiente uso delle mani, dita, piedi, gomiti riallineerete i vostri Sen.  Gli innumerevoli benefici sono ormai ben noti. ',
-                sr_price: '300',
-                sr_time: '60',
-                sr_wellness_center: 'Fonteverde',
-                sr_image: './images/thai-massage.jpg',
-                sr_serviceID: '4'
-            }
-        ],
+        services: [],
+
         showModal: false,
         serviceSelectedName: " ",
         serviceSelectedType: " ",
@@ -65,6 +25,21 @@ class ServicesPage extends Component {
 
 
     };
+
+    componentDidMount(){
+        console.log('SONO QUI!!!!!');
+        axios.get('http://localhost:8091/services/')
+            .then( response => {
+                    console.log(response.data);
+                    this.setState({services: response.data});
+                }
+
+            )
+            .catch(error => {
+                console.log(error)
+            });
+
+    }
 
 
     showDetailsHandler(serviceitem, index) {
