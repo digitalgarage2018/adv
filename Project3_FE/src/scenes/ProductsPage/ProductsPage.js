@@ -47,8 +47,8 @@ class ProductsPage extends Component {
         axios.get('http://localhost:8091/products/')
             .then( response => {
                     console.log('res.data', response.data);
-                    this.setState({products: response.data});
-                    // this.setState({products: response.data.response});
+                    // this.setState({products: response.data});
+                    this.setState({products: response.data.response});
 
                 }
 

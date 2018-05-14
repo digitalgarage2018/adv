@@ -32,7 +32,7 @@ class ServicesPage extends Component {
                 console.log('res', response);
 
                 console.log('res.data', response.data);
-                    this.setState({services: response.data});
+                    this.setState({services: response.data.response});
                 }
 
             )
