@@ -5,10 +5,10 @@ import './ProductsPage.css';
 import Product from './components/Product';
 import ProductModal from './components/ProductModal';
 
+import {Col, Grid, Row} from 'react-bootstrap';
 
 
-
-export default class ProductsPage extends Component {
+class ProductsPage extends Component {
 
     state = {
         products: [],
@@ -43,6 +43,7 @@ export default class ProductsPage extends Component {
     }
 
     componentDidMount(){
+        console.log('Sto facendo la chiamata ai prodotti...');
         axios.get('http://localhost:8091/products/')
             .then( response => {
                     console.log(response.data);
@@ -58,33 +59,37 @@ export default class ProductsPage extends Component {
 
 
 
-
     render() {
 
         const prods = this.state.products.map( (product, index) =>
             {
-                return <Product
+                return (
+                <Col key={index} md={4} sm={6}>
+                <Product
                     name={product.p_name}
                     path={product.p_image}
                     description={product.p_description}
                     relatedservice={product.p_service}
                     price={product.p_price}
-                    key={index}
-                    click={() => this.showDetailsHandler(product, index)} />
+                    click={() => this.showDetailsHandler(product, index)}
+                    key={index} />
+                </Col>
+                );
 
             }
 
         )
 
 
-
-
         return (
             <div>
+                <Grid>
 
-            <div className="Products">
-                {prods}
-            </div>
+                    <Row className="show-grid">
+                        {prods}
+                    </Row>
+
+                </Grid>
 
                 <ProductModal
                     show={this.state.showModal}
@@ -93,15 +98,16 @@ export default class ProductsPage extends Component {
                     service={this.state.productSelectedService}
                     description={this.state.productSelectedDescription}
                     price={this.state.productSelectedPrice}
-                />
+                    />
             </div>
-
-
-            );
+        );
 
 
 
     }
 }
+
+export default ProductsPage;
+
 
 

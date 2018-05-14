@@ -3,58 +3,15 @@ import axios from "axios";
 
 import './ServicesPage.css';
 import Service from './components/Service';
-
 import ServiceModal from './components/ServiceModal';
 
-
-
+import {Col, Grid, Row} from 'react-bootstrap';
 
 
 class ServicesPage extends Component {
 
     state = {
-        services: [
-            {
-                sr_name: 'Massaggio thai',
-                sr_type: 'Massaggio',
-                sr_description: 'Massaggio tradizionale thailandese, che affonda le sue radici ed in tempi remoti nel lontano Oriente.  La leggenda vuole che tale massaggio sia stato inventato dal medico, amico e compagno di viaggio del Buddha.  Grazie ad un sapiente uso delle mani, dita, piedi, gomiti riallineerete i vostri Sen.  Gli innumerevoli benefici sono ormai ben noti. ',
-                sr_price: '300',
-                sr_time: '60',
-                sr_wellness_center: 'Fonteverde',
-                sr_image: './images/thai-massage.jpg',
-                sr_serviceID: '1'
-            },
-            {
-                sr_name: 'Massaggio thai',
-                sr_type: 'Massaggio',
-                sr_description: 'Massaggio tradizionale thailandese, che affonda le sue radici ed in tempi remoti nel lontano Oriente.  La leggenda vuole che tale massaggio sia stato inventato dal medico, amico e compagno di viaggio del Buddha.  Grazie ad un sapiente uso delle mani, dita, piedi, gomiti riallineerete i vostri Sen.  Gli innumerevoli benefici sono ormai ben noti. ',
-                sr_price: '300',
-                sr_time: '60',
-                sr_wellness_center: 'Fonteverde',
-                sr_image: './images/thai-massage.jpg',
-                sr_serviceID: '2'
-            },
-            {
-                sr_name: 'Massaggio thai',
-                sr_type: 'Massaggio',
-                sr_description: 'Massaggio tradizionale thailandese, che affonda le sue radici ed in tempi remoti nel lontano Oriente.  La leggenda vuole che tale massaggio sia stato inventato dal medico, amico e compagno di viaggio del Buddha.  Grazie ad un sapiente uso delle mani, dita, piedi, gomiti riallineerete i vostri Sen.  Gli innumerevoli benefici sono ormai ben noti. ',
-                sr_price: '300',
-                sr_time: '60',
-                sr_wellness_center: 'Fonteverde',
-                sr_image: './images/thai-massage.jpg',
-                sr_serviceID: '3'
-            },
-            {
-                sr_name: 'Massaggio thai',
-                sr_type: 'Massaggio',
-                sr_description: 'Massaggio tradizionale thailandese, che affonda le sue radici ed in tempi remoti nel lontano Oriente.  La leggenda vuole che tale massaggio sia stato inventato dal medico, amico e compagno di viaggio del Buddha.  Grazie ad un sapiente uso delle mani, dita, piedi, gomiti riallineerete i vostri Sen.  Gli innumerevoli benefici sono ormai ben noti. ',
-                sr_price: '300',
-                sr_time: '60',
-                sr_wellness_center: 'Fonteverde',
-                sr_image: './images/thai-massage.jpg',
-                sr_serviceID: '4'
-            }
-        ],
+        services: [],
         showModal: false,
         serviceSelectedName: " ",
         serviceSelectedType: " ",
@@ -65,6 +22,21 @@ class ServicesPage extends Component {
 
 
     };
+
+    componentDidMount(){
+        console.log('Sto facendo la chiamata ai servizi...');
+        axios.get('http://localhost:8091/services/')
+            .then( response => {
+                    console.log(response.data);
+                    this.setState({services: response.data});
+                }
+
+            )
+            .catch(error => {
+                console.log(error)
+            });
+
+    }
 
 
     showDetailsHandler(serviceitem, index) {
@@ -98,11 +70,14 @@ class ServicesPage extends Component {
 
 
 
+
     render() {
 
         const servicelist = this.state.services.map( (serviceitem, index) =>
             {
-                return <Service
+                return (
+                <Col key={index} md={4} sm={6}>
+                <Service
                     name={serviceitem.sr_name}
                     path={serviceitem.sr_image}
                     description={serviceitem.sr_description}
@@ -112,17 +87,24 @@ class ServicesPage extends Component {
                     center={serviceitem.sr_wellness_center}
                     click={() => this.showDetailsHandler(serviceitem, index)}
                     key={index}/>
+                </Col>
+            );
             }
 
         )
 
 
         return (
-            <div>
 
-            <div className="Services">
-            {servicelist}
-            </div>
+            <div>
+                <Grid>
+
+                    <Row className="show-grid">
+                        {servicelist}
+                    </Row>
+
+                </Grid>
+
                 <ServiceModal
                     show={this.state.showModal}
                     hide={() => this.closeModalHandler()}

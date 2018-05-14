@@ -11,7 +11,7 @@ const service = (props) => {
     return (
         <div className="Service">
             <Card>
-                <CardImg top width="100%" src={require('../images/thai-massage.jpg')} alt={props.name} />
+                <CardImg top width="100%" height="270px" src={props.path} alt={props.name} />
                 <CardBody>
                     <CardTitle>{props.name}</CardTitle>
                     <CardSubtitle>{props.type}</CardSubtitle>

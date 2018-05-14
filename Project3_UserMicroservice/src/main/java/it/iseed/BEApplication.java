@@ -14,6 +14,7 @@ import it.iseed.account.utils.EncryptionUtils;
 
 @SpringBootApplication
 public class BEApplication {
+	/*
 	@Autowired
 	EncryptionUtils encryptionUtils;
 	
@@ -22,7 +23,7 @@ public class BEApplication {
 		BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
 		textEncryptor.setPassword("mySecretEncriptionKeyBlaBla1234");
 		return textEncryptor;
-	}
+	}*/
 
 	private static final Logger log = LoggerFactory.getLogger(BEApplication.class);
 
