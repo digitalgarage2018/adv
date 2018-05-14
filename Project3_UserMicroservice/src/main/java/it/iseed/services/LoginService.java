@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import it.iseed.account.utils.NoDbConnection;
 import it.iseed.account.utils.UserNotLoggedException;
+import it.iseed.entities.JwtOkEntity;
 import it.iseed.entities.LoginEntity;
 import it.iseed.entities.WellnessCenterEntity;
 
@@ -22,5 +23,6 @@ public interface LoginService {
 	public Map<String, Object> verifyJwtAndGetData(HttpServletRequest request)
 			throws UserNotLoggedException, UnsupportedEncodingException, NoDbConnection;
 	public void logoutJwt(HttpServletRequest request) throws UnsupportedEncodingException, NoDbConnection;
+	public JwtOkEntity checkSerJwt(String jwt);
 
 }

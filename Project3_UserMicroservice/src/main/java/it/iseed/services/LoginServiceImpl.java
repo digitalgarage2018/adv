@@ -169,4 +169,9 @@ public class LoginServiceImpl implements LoginService {
 			 throw new NoDbConnection("errorDB");
 		 }
 	 }
+	 
+	 
+	 public JwtOkEntity checkSerJwt(String jwt){
+		 return loginDao.checkJwt(jwt);
+	 }
 }
