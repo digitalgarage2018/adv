@@ -44,9 +44,15 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/products/", method = RequestMethod.GET,headers="Accept=application/json")
-    public List<ProductEntity> getListOfProducts(){
+    public ResponseEntity<JsonResponseBody> getListOfProducts() throws Exception   {
 
-        return productService.getListOfProducts();
+        try {
+            productService.getListOfProducts();
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No connection DB"));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), productService.getListOfProducts()));
 
     }
 

@@ -16,16 +16,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import it.iseed.account.utils.JwtUtils;
 import it.iseed.account.utils.NoDbConnection;
 import it.iseed.account.utils.UserNotLoggedException;
 import it.iseed.entities.BaseResponse;
 import it.iseed.entities.JsonResponseBody;
+import it.iseed.entities.JwtOkEntity;
 import it.iseed.entities.LoginEntity;
 import it.iseed.entities.WellnessCenterEntity;
 import it.iseed.services.LoginService;
@@ -186,10 +189,30 @@ public class LoginController {
 	
 	
 	
+	
+    //public ResponseEntity<JsonResponseBody> logoutUser(@RequestHeader(value="jwt") String jwt,HttpServletRequest request){
 	@RequestMapping("/logout")
-    public ResponseEntity<JsonResponseBody> logoutUser(HttpServletRequest request){
+	public ResponseEntity<JsonResponseBody> logoutUser(HttpServletRequest request){
         //request -> fetch JWT -> check validity -> Get operations from the user account
+		
+		String jwt = JwtUtils.getJwtFromHttpRequest(request);
+		
+        if(jwt == null){
+        	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Missing jwt"));
+        }	
+        JwtOkEntity tmp = null;
+        
         try {
+        	tmp = loginService.checkSerJwt(jwt);
+        	if (tmp == null){
+        		return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "User already logged out"));
+        	}
+        }catch (Exception e){
+        	System.out.println("errore: " + e);
+        	return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No DB connection"));
+        }
+        
+		try {
             loginService.logoutJwt(request);
             //user verified
             return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), "User succesfully logged out"));

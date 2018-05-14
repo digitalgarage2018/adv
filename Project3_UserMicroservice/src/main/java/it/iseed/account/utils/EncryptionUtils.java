@@ -11,21 +11,21 @@ import org.springframework.stereotype.Component;
 @Component                              //Spring will automatically instatiate and inject this component as a normal @Bean defined into a @Configuration file
 public class EncryptionUtils {
 
-    @Autowired                          //@Bean declared in @SpringBootApplication file and injected here by Spring
-    BasicTextEncryptor textEncryptor;
+    //@Autowired                          //@Bean declared in @SpringBootApplication file and injected here by Spring
+    //BasicTextEncryptor textEncryptor;
 
     /*
     this method provides an encryption of the String passed in input
     */
-    public String encrypt(String data){
-        return textEncryptor.encrypt(data);
-    }
+//    public String encrypt(String data){
+  //      return textEncryptor.encrypt(data);
+    //}
 
     /*
     this method provides a decryption of the String passed in input
     */
-    public String decrypt(String encriptedData){
-        return textEncryptor.decrypt(encriptedData);
-    }
+//    public String decrypt(String encriptedData){
+  //      return textEncryptor.decrypt(encriptedData);
+    //}
 
 }

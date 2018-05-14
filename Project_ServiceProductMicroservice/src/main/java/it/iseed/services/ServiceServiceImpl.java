@@ -23,7 +23,7 @@ public class ServiceServiceImpl implements ServiceService {
         return result;
     }
 
-    public List<ServiceEntity> searchKeyWordService(String keyword) {
+    public List<ServiceEntity> searchKeyWordService(String keyword) throws  Exception {
 
         List<ServiceEntity> result = null;
         try {
@@ -31,29 +31,25 @@ public class ServiceServiceImpl implements ServiceService {
             System.out.println("nel service la keyword è "+keyword);
         } catch (Exception e) {
         	System.out.println("Errore SQL: "+e);
+        	throw new Exception(" Impossibile raggiungere il DB");
             //e.printStackTrace();
         }
         return result;
     }
 
     public ServiceEntity getServiceById(long id)  {
-/*
-    	List<ProductEntity> result = null;
-    	try{
-    		result = productDao.printProducts();
-    	} catch (CannotCreateTransactionException e){
-    		System.out.println("errore exec: "+e);
-    	}
-
-        if(result == null)
-            System.out.println("lista prodotti nulla");
-*/
         return this.serviceDao.getServiceById(id);
 
     }
 
-    public List<ServiceEntity> getListOfServices(){
-        return this.serviceDao.getListOfServices();
+    public List<ServiceEntity> getListOfServices() throws Exception {
+        List<ServiceEntity>  ret = null;
+        try {
+          ret = this.serviceDao.getListOfServices();
+        }catch (Exception e){
+            throw new Exception("Impossibile raggiungere DB");
+        }
+        return ret;
     }
 
 
