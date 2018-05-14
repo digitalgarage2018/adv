@@ -17,23 +17,17 @@ public class ProductServiceImpl  implements  ProductService{
     ProductDao productDao;
 
     public ProductEntity getProductById(long id)  {
-/*
-    	List<ProductEntity> result = null;
-    	try{ 
-    		result = productDao.printProducts();
-    	} catch (CannotCreateTransactionException e){
-    		System.out.println("errore exec: "+e);
-    	}
-
-        if(result == null)
-            System.out.println("lista prodotti nulla");
-*/
         return this.productDao.getProductById(id);
-
     }
 
-    public List<ProductEntity> getListOfProducts(){
-        return this.productDao.getListOfProducts();
+    public List<ProductEntity> getListOfProducts() throws Exception{
+        List<ProductEntity>  ret = null;
+        try {
+            ret = this.productDao.getListOfProducts();
+        }catch (Exception e){
+            throw new Exception("Impossibile raggiungere DB");
+        }
+        return ret;
     }
 
     public List<ProductEntity> getListOfProductsByUser(LoginEntity loginEntity){

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ProductService {
     public ProductEntity getProductById(long id);
-    public List<ProductEntity> getListOfProducts();
+    public List<ProductEntity> getListOfProducts() throws Exception;
     public List<ProductEntity> getListOfProductsByUser(LoginEntity loginEntity);
 
 
