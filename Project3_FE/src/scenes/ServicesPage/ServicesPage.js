@@ -3,18 +3,15 @@ import axios from "axios";
 
 import './ServicesPage.css';
 import Service from './components/Service';
-
 import ServiceModal from './components/ServiceModal';
 
-
-
+import {Col, Grid, Row} from 'react-bootstrap';
 
 
 class ServicesPage extends Component {
 
     state = {
         services: [],
-
         showModal: false,
         serviceSelectedName: " ",
         serviceSelectedType: " ",
@@ -27,7 +24,7 @@ class ServicesPage extends Component {
     };
 
     componentDidMount(){
-        console.log('SONO QUI!!!!!');
+        console.log('Sto facendo la chiamata ai servizi...');
         axios.get('http://localhost:8091/services/')
             .then( response => {
                     console.log(response.data);
@@ -73,11 +70,14 @@ class ServicesPage extends Component {
 
 
 
+
     render() {
 
         const servicelist = this.state.services.map( (serviceitem, index) =>
             {
-                return <Service
+                return (
+                <Col key={index} md={4} sm={6}>
+                <Service
                     name={serviceitem.sr_name}
                     path={serviceitem.sr_image}
                     description={serviceitem.sr_description}
@@ -87,17 +87,24 @@ class ServicesPage extends Component {
                     center={serviceitem.sr_wellness_center}
                     click={() => this.showDetailsHandler(serviceitem, index)}
                     key={index}/>
+                </Col>
+            );
             }
 
         )
 
 
         return (
-            <div>
 
-            <div className="Services">
-            {servicelist}
-            </div>
+            <div>
+                <Grid>
+
+                    <Row className="show-grid">
+                        {servicelist}
+                    </Row>
+
+                </Grid>
+
                 <ServiceModal
                     show={this.state.showModal}
                     hide={() => this.closeModalHandler()}
