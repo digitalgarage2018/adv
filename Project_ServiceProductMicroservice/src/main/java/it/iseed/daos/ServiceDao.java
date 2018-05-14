@@ -1,8 +1,8 @@
 package it.iseed.daos;
 
-import it.iseed.entities.ServiceEntity;
-
 import java.util.List;
+
+import it.iseed.entities.ServiceEntity;
 
 public interface ServiceDao {
     //public boolean authenticateUser(LoginEntity loginBean);
