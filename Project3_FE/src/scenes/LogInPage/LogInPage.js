@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-import {AuthConsumer} from "../../AuthContext";
 
 import "./LogInPage.css";
 
@@ -13,13 +12,19 @@ const error = {
 
 export default class Login extends Component {
 
+
         state = {
-            isLogged: false,
+            isLogged: this.props.foo,
             userName: "",
             password: "",
             jwt: "",
             message:""
         };
+
+    componentDidMount() {
+        console.log('foo da console', this.props.foo);
+        console.log('stato foo ', this.state.isLogged);
+    }
 
 
     validateForm() {
@@ -47,9 +52,6 @@ export default class Login extends Component {
 
                 console.log('Stato dopo la login', this.state);
 
-
-                // this.props.history.push("/");
-
             })
             .catch(error => {
                 if (error.response === undefined) {
@@ -72,67 +74,60 @@ export default class Login extends Component {
 
 
     render() {
-        if ( !this.state.isLogged ) {
-            return (
-                    <div className="LoginPage">
-                        <form onSubmit={(event) => this.handleSubmit(event)}>
-                            <FormGroup controlId="userName" bsSize="large">
-                                <ControlLabel>UserName </ControlLabel>
-                                <FormControl
-                                    autoFocus
-                                    type="text"
-                                    value={this.state.userName}
-                                    onChange={this.handleChange}
-                                />
-                            </FormGroup>
-                            <FormGroup controlId="password" bsSize="large">
-                                <ControlLabel>Password <small> (almeno 6 caratteri) </small></ControlLabel>
-                                <FormControl
-                                    value={this.state.password}
-                                    onChange={this.handleChange}
-                                    type="password"
-                                />
-                            </FormGroup>
-                            <h4 align="center" style={error}> {this.state.message}</h4>
-                            <Button
-                                block
-                                bsSize="large"
-                                disabled={!this.validateForm()}
-                                type="submit"
-                            >
-                                Login
-                            </Button>
+
+        return(
+            <div className="LoginPage">
+
+            <form onSubmit={(event) => this.handleSubmit(event)}>
+                <FormGroup controlId="userName" bsSize="large">
+                    <ControlLabel>UserName </ControlLabel>
+                    <FormControl
+                        autoFocus
+                        type="text"
+                        value={this.state.userName}
+                        onChange={this.handleChange}
+                    />
+                </FormGroup>
+                <FormGroup controlId="password" bsSize="large">
+                    <ControlLabel>Password <small> (almeno 6 caratteri) </small></ControlLabel>
+                    <FormControl
+                        value={this.state.password}
+                        onChange={this.handleChange}
+                        type="password"
+                    />
+                </FormGroup>
+                <h4 align="center" style={error}> {this.state.message}</h4>
+                <Button
+                    block
+                    bsSize="large"
+                    disabled={!this.validateForm()}
+                    type="submit"
+                >
+                    Login
+                </Button>
 
 
-                            <br/>
-                            <br/>
-                            <p align="center"> Non sei ancora registrato? </p>
-                            <Button
-                                block
-                                bsSize="large"
-                                onClick={() => this.props.history.push(`/SignUp`)}
-                            >
-                                Registrati
-                            </Button>
+                <br/>
+                <br/>
+                <p align="center"> Non sei ancora registrato? </p>
+                <Button
+                    block
+                    bsSize="large"
+                    onClick={() => this.props.history.push(`/SignUp`)}
+                >
+                    Registrati
+                </Button>
 
 
 
-                        </form>
-                    </div>
-            )
+
+            </form>
 
 
-        } else {
-            return (
-            <AuthConsumer>
-                {({login}) => (
-                    <p>
-                    {login()}
-               {this.props.history.push("/")} </p>
-                )}
-            </AuthConsumer>
-            )
-        }
+            </div>
+
+
+        );
     }
 
 

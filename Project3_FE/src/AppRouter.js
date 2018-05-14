@@ -8,14 +8,26 @@ import ServicesPage from "./scenes/ServicesPage/ServicesPage";
 import ProductsPage from "./scenes/ProductsPage/ProductsPage";
 
 
-export const AppRouter = () => {
-    return (
-        <div>
-            <Route exact path="/" component={HomePage}/>
-            <Route path="/LogIn" component={LogInPage}/>
-            <Route path="/SignUp" component={SignupPage}/>
-            <Route path="/Servizi" component={ServicesPage}/>
-            <Route path="/Prodotti" component={ProductsPage}/>
-        </div>
-    )
-};
+export const AppRouter = (props) => {
+
+
+    console.log('Utente loggato?', props.isLogged);
+
+
+        return (
+
+            <div>
+                <Route exact path="/" component={HomePage}/>
+                <Route path="/LogIn" render={()=><LogInPage foo={props.isLogged}/>}/>
+                <Route path="/SignUp" component={SignupPage}/>
+                <Route path="/Servizi" component={ServicesPage}/>
+                <Route path="/Prodotti" component={ProductsPage}/>
+            </div>
+        )
+
+
+
+    }
+
+
+

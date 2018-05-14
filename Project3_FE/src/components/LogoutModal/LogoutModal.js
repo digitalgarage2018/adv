@@ -1,18 +1,10 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 
-import { AuthConsumer } from '../../AuthContext';
-
-
-
 const logoutModal = (props) => {
 
 
     return (
-
-        <AuthConsumer>
-            {({ isAuth, logout}) => (
-
 
                         <Modal show={props.show} onHide={props.hide}>
 
@@ -28,17 +20,10 @@ const logoutModal = (props) => {
                         </Modal.Body>
                         <Modal.Footer>
                             <Button onClick={props.hide}> No </Button>
-                            <Button onClick={logout}> Sì </Button>
+                            <Button> Sì </Button>
                         </Modal.Footer>
                     </Modal>
-                  
-
-            )}
-        </AuthConsumer>
-
-
-            );
-
+    );                  
 
 };
 

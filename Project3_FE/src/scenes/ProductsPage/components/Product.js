@@ -12,7 +12,7 @@ const product = (props) => {
         <div className="Product">
             <Card>
 
-                <CardImg top width="100%" height="270px"  src={props.path} alt={props.name}  />
+                <CardImg top width="100%" height="260px"  src={props.path} alt={props.name}  />
 
                 <CardBody>
                     <CardTitle>{props.name}</CardTitle>

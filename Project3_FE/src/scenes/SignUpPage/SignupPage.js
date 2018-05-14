@@ -3,8 +3,6 @@ import axios from 'axios';
 
 import { Button, FormGroup, FormControl, ControlLabel, Checkbox } from "react-bootstrap";
 
-import {AuthConsumer} from "../../AuthContext";
-
 import './SignupPage.css';
 
 const error = {
@@ -106,7 +104,7 @@ export default class SignupPage extends Component {
 
 
     render() {
-        if (!this.state.isLogged) {
+        
             return (
 
                 <div className="SignupPage">
@@ -220,19 +218,10 @@ export default class SignupPage extends Component {
                 </div>
 
             )
-        } else
-            {
-                return (
-                    <AuthConsumer>
-                        {({login}) => (
-                            <p>
-                                {login()}
-                                {this.props.history.push("/")} </p>
-                        )}
-                    </AuthConsumer>
-                )
+        
+            
 
 
             }
         }
-    }
+    

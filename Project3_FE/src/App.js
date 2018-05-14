@@ -3,34 +3,24 @@ import {AppRouter} from "./AppRouter";
 import NavBar from "./components/Navbar/Navbar";
 import {Footer} from "./components/Footer/Footer";
 
-import LogoutModal from "./components/LogoutModal/LogoutModal";
 
 
 class App extends Component {
 
-    /*state = {
-      showModal: false
-  }
-
-showModalHandler(){
-      this.setState({showModal: true});
-  }
-
-  closeModalHandler(){
-      this.setState({showModal: false})
-  }*/
-
+    state = {
+        authenticated: false
+    }
 
     render() {
         return (
-            <div>
-                <NavBar/>
+                <div>
+                    <NavBar isLogged={this.state.authenticated} />
 
-                <AppRouter/>
-                <Footer/>
+                    <AppRouter isLogged={this.state.authenticated}/>
 
-            </div>
+                    <Footer/>
 
+                </div>
         );
     }
 }

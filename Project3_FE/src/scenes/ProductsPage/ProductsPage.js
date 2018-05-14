@@ -46,8 +46,10 @@ class ProductsPage extends Component {
         console.log('Sto facendo la chiamata ai prodotti...');
         axios.get('http://localhost:8091/products/')
             .then( response => {
-                    console.log(response.data);
+                    console.log('res.data', response.data);
                     this.setState({products: response.data});
+                    // this.setState({products: response.data.response});
+
                 }
 
             )

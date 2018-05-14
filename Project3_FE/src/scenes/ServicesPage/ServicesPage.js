@@ -8,6 +8,8 @@ import ServiceModal from './components/ServiceModal';
 import {Col, Grid, Row} from 'react-bootstrap';
 
 
+
+
 class ServicesPage extends Component {
 
     state = {
@@ -27,7 +29,9 @@ class ServicesPage extends Component {
         console.log('Sto facendo la chiamata ai servizi...');
         axios.get('http://localhost:8091/services/')
             .then( response => {
-                    console.log(response.data);
+                console.log('res', response);
+
+                console.log('res.data', response.data);
                     this.setState({services: response.data});
                 }
 
