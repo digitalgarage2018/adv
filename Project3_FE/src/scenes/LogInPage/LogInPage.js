@@ -1,19 +1,14 @@
 import React, { Component } from "react";
-import {Route } from 'react-router-dom';
-
+import {withRouter } from 'react-router-dom';
 import axios from 'axios';
-
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-
-
 import "./LogInPage.css";
-import HomePage from "../HomePage/HomePage";
 
 const error = {
     color: 'red',
     textalign:'center'};
 
-export default class Login extends Component {
+class LogInPage extends Component {
 
 
         state = {
@@ -53,6 +48,10 @@ export default class Login extends Component {
                 this.setState({jwt: response.headers.jwt});
                 this.setState({isLogged: true});
                 console.log('Stato dopo la login', this.state);
+                sessionStorage.setItem("isLogged","true");
+                sessionStorage.setItem("jwt", response.headers.jwt);
+
+
 
             })
             .catch(error => {
@@ -81,6 +80,7 @@ export default class Login extends Component {
 
 
             if (!this.state.isLogged) {
+
                 return (
                     <div className="LoginPage">
 
@@ -134,17 +134,15 @@ export default class Login extends Component {
             } else {
                 return (
                     <div>
-                        <Route path="/" render={()=><HomePage/>}/>
-                    </div>
+                        {this.props.history.push("/")}
+                       { window.location.reload()}
+
+                        </div>
                 );
             }}
 
-
-
-
-
-
-
 }
+
+export default withRouter(LogInPage);
 
 

@@ -9,7 +9,7 @@ class NavBar extends Component {
 
 
     state = {
-        isLogged: true,
+        isLogged: sessionStorage.getItem('isLogged'),
         jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHYXp6dSIsImV4cCI6MTUyNjM4Mjc3OSwibmFtZSI6IlNpbHZpYSIsInNjb3BlIjoiZGVmYXVsdF91c2VyIn0.LyIb00mIYILmX2HEVL9_NsjJyTzUqAdennwARC6Nv0c",
         message: ""
     };
@@ -49,7 +49,41 @@ class NavBar extends Component {
 
     render() {
 
-        return (
+        if ( (sessionStorage.getItem("isLogged")) === "true") {
+            return (
+            <div className="Navbar">
+                <Navbar inverse collapseOnSelect>
+                    <Navbar.Header>
+                        <Navbar.Brand>
+                            <a href="/"> Super Relax</a>
+                        </Navbar.Brand>
+                        <Navbar.Toggle/>
+                    </Navbar.Header>
+                    <Navbar.Collapse>
+
+                        <Nav pullRight>
+
+                            <NavItem eventKey={3} href={`/Servizi`}>
+                                Servizi
+                            </NavItem>
+
+                            <NavItem eventKey={5} href="#" onClick={(event) => this.logoutHandler(event)}>
+                                LogOut
+                            </NavItem>
+
+
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+
+            </div>
+        );
+
+        }
+
+        else  {
+
+            return (
             <div className="Navbar">
                 <Navbar inverse collapseOnSelect>
                     <Navbar.Header>
@@ -74,22 +108,16 @@ class NavBar extends Component {
                                 Servizi
                             </NavItem>
 
-                            <NavItem eventKey={4} href={`/Prodotti`}>
-                                Prodotti
-                            </NavItem>
-
-                            <NavItem eventKey={5} href="#" onClick={(event) => this.logoutHandler(event)}>
-                                LogOut
-                            </NavItem>
 
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
             </div>
-        );
+        );}
 
 
     }
+
 }
 
 export default NavBar;

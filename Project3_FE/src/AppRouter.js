@@ -17,8 +17,6 @@ export const AppRouter = (props) => {
         console.log('ciao');
     }
 
-
-
     return (
 
             <div onChange={props.changed}>
@@ -29,8 +27,6 @@ export const AppRouter = (props) => {
                 <Route path="/Prodotti" component={ProductsPage}/>
             </div>
         )
-
-
 
     }
 
