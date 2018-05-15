@@ -51,7 +51,7 @@ public class ProductController {
 
         try {
         	//System.out.println("sono nel try: ");
-        	ResponseEntity<JsonResponseBody> responseEntity = restTemplate.exchange("http://192.168.171.55:8070/checkjwtuser", HttpMethod.POST, request_2, JsonResponseBody.class);
+        	ResponseEntity<JsonResponseBody> responseEntity = restTemplate.exchange("http://localhost:8070/checkjwtuser", HttpMethod.POST, request_2, JsonResponseBody.class);
         	int answer = (int) responseEntity.getBody().getServer();
         	System.out.println("print dell'answer: "+answer);
         	if (answer!=200){
