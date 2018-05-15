@@ -19,9 +19,7 @@ class ProductsPage extends Component {
         productSelectedDescription: "",
         productSelectedService: "",
         productSelectedPrice: "",
-        showModal: false,
-        jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHYXp6dSIsImV4cCI6MTUyNjI4ODExMywibmFtZSI6IlNpbHZpYSIsInNjb3BlIjoiZGVmYXVsdF91c2VyIn0.HliDgy9vrO6JnVZg_RyBznfKMjDXQA--hRk1KxPRFiQ"
-
+        showModal: false
     };
 
     showDetailsHandler(product, index) {
@@ -52,7 +50,7 @@ class ProductsPage extends Component {
 
 
         let instance = axiosinstance();
-        instance.get('http://192.168.171.55:8091/products/')
+        instance.get('http://localhost:8091/products/')
             .then( response => {
                     console.log('res.data', response.data);
                     // this.setState({products: response.data});

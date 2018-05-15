@@ -7,17 +7,7 @@ class HomePage extends Component {
 
 
 
-    state = {
-        isLogged: false
-    }
-
-
-
-
-
-
     render() {
-        console.log('stato auth dentro home page', this.props.foo);
 
         return (
                 <div>
