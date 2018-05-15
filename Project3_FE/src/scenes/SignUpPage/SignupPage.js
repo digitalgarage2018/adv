@@ -23,8 +23,6 @@ export default class SignupPage extends Component {
         bornplace: "",
         walletaddress: "",
         checked: false,
-        isLogged: false,
-        jwt: "",
         message:""
     };
 
@@ -46,8 +44,6 @@ export default class SignupPage extends Component {
             this.state.username.length > 0
 
        );
-
-
 
     }
 
@@ -76,9 +72,13 @@ export default class SignupPage extends Component {
         })
             .then( response => {
 
-                this.setState({isLogged: true, jwt: response.headers.jwt});
                 console.log("Stato dopo la LogIn: ", this.state);
+                sessionStorage.setItem('isLogged','true');
+                sessionStorage.setItem('jwt', response.headers.jwt);
+
                 this.props.history.push("/");
+                window.location.reload();
+
 
             })
             .catch( error => {
