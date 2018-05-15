@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 
+@CrossOrigin("*")
 
 @RestController
 public class ServiceController {
