@@ -16,7 +16,8 @@ class ProductsPage extends Component {
         productSelectedDescription: "",
         productSelectedService: "",
         productSelectedPrice: "",
-        showModal: false
+        showModal: false,
+        jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHYXp6dSIsImV4cCI6MTUyNjM4Nzk0MiwibmFtZSI6IlNpbHZpYSIsInNjb3BlIjoiZGVmYXVsdF91c2VyIn0.Pi5t6bKjAxYQUxRJ9qGhL3hhQ9-CpNmk4EcGj6-Q_Bw"
 
     };
 
@@ -44,7 +45,10 @@ class ProductsPage extends Component {
 
     componentDidMount(){
         console.log('Sto facendo la chiamata ai prodotti...');
-        axios.get('http://localhost:8091/products/')
+
+        let instance = axios.create();
+        instance.defaults.headers.common['jwt'] = this.state.jwt;
+        instance.get('http://192.168.171.55:8091/products/')
             .then( response => {
                     console.log('res.data', response.data);
                     // this.setState({products: response.data});

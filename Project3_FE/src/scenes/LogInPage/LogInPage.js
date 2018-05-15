@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import {Route } from 'react-router-dom';
+
 import axios from 'axios';
 
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 
 import "./LogInPage.css";
+import HomePage from "../HomePage/HomePage";
 
 const error = {
     color: 'red',
@@ -14,7 +17,7 @@ export default class Login extends Component {
 
 
         state = {
-            isLogged: this.props.foo,
+            isLogged: false,
             userName: "",
             password: "",
             jwt: "",
@@ -42,14 +45,13 @@ export default class Login extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
         axios.post('http://localhost:8070/login', {
-            u_username: this.state.userName,
-            u_pword: this.state.password
+            'u_username': this.state.userName,
+            'u_pword': this.state.password
         })
             .then(response => {
 
                 this.setState({jwt: response.headers.jwt});
                 this.setState({isLogged: true});
-
                 console.log('Stato dopo la login', this.state);
 
             })
@@ -68,67 +70,78 @@ export default class Login extends Component {
                 }
 
             });
+
     };
+
 
 
 
 
     render() {
 
-        return(
-            <div className="LoginPage">
 
-            <form onSubmit={(event) => this.handleSubmit(event)}>
-                <FormGroup controlId="userName" bsSize="large">
-                    <ControlLabel>UserName </ControlLabel>
-                    <FormControl
-                        autoFocus
-                        type="text"
-                        value={this.state.userName}
-                        onChange={this.handleChange}
-                    />
-                </FormGroup>
-                <FormGroup controlId="password" bsSize="large">
-                    <ControlLabel>Password <small> (almeno 6 caratteri) </small></ControlLabel>
-                    <FormControl
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        type="password"
-                    />
-                </FormGroup>
-                <h4 align="center" style={error}> {this.state.message}</h4>
-                <Button
-                    block
-                    bsSize="large"
-                    disabled={!this.validateForm()}
-                    type="submit"
-                >
-                    Login
-                </Button>
+            if (!this.state.isLogged) {
+                return (
+                    <div className="LoginPage">
 
-
-                <br/>
-                <br/>
-                <p align="center"> Non sei ancora registrato? </p>
-                <Button
-                    block
-                    bsSize="large"
-                    onClick={() => this.props.history.push(`/SignUp`)}
-                >
-                    Registrati
-                </Button>
+                        <form onSubmit={(event) => this.handleSubmit(event)}>
+                            <FormGroup controlId="userName" bsSize="large">
+                                <ControlLabel>UserName </ControlLabel>
+                                <FormControl
+                                    autoFocus
+                                    type="text"
+                                    value={this.state.userName}
+                                    onChange={this.handleChange}
+                                />
+                            </FormGroup>
+                            <FormGroup controlId="password" bsSize="large">
+                                <ControlLabel>Password <small> (almeno 6 caratteri) </small></ControlLabel>
+                                <FormControl
+                                    value={this.state.password}
+                                    onChange={this.handleChange}
+                                    type="password"
+                                />
+                            </FormGroup>
+                            <h4 align="center" style={error}> {this.state.message}</h4>
+                            <Button
+                                block
+                                bsSize="large"
+                                disabled={!this.validateForm()}
+                                type="submit"
+                            >
+                                Login
+                            </Button>
 
 
+                            <br/>
+                            <br/>
+                            <p align="center"> Non sei ancora registrato? </p>
+                            <Button
+                                block
+                                bsSize="large"
+
+                                onClick={() => this.props.history.push(`/SignUp`)}
+                            >
+                                Registrati
+                            </Button>
+
+                        </form>
 
 
-            </form>
+                    </div>
+
+                );
+            } else {
+                return (
+                    <div>
+                        <Route path="/" render={()=><HomePage/>}/>
+                    </div>
+                );
+            }}
 
 
-            </div>
 
 
-        );
-    }
 
 
 
