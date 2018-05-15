@@ -17,7 +17,7 @@ class ProductsPage extends Component {
         productSelectedService: "",
         productSelectedPrice: "",
         showModal: false,
-        jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHYXp6dSIsImV4cCI6MTUyNjM4Nzk0MiwibmFtZSI6IlNpbHZpYSIsInNjb3BlIjoiZGVmYXVsdF91c2VyIn0.Pi5t6bKjAxYQUxRJ9qGhL3hhQ9-CpNmk4EcGj6-Q_Bw"
+        jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHYXp6dSIsImV4cCI6MTUyNjI4ODExMywibmFtZSI6IlNpbHZpYSIsInNjb3BlIjoiZGVmYXVsdF91c2VyIn0.HliDgy9vrO6JnVZg_RyBznfKMjDXQA--hRk1KxPRFiQ"
 
     };
 
@@ -48,6 +48,8 @@ class ProductsPage extends Component {
 
         let instance = axios.create();
         instance.defaults.headers.common['jwt'] = this.state.jwt;
+        /* axios.get('http://192.168.171.55:8091/products/') */
+
         instance.get('http://192.168.171.55:8091/products/')
             .then( response => {
                     console.log('res.data', response.data);
