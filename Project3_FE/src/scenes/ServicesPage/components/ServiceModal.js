@@ -40,7 +40,7 @@ const serviceModal = (props) => {
                 </p>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={handleClick}> Paga con MetaMaskyarn st </Button>
+                <Button onClick={handleClick}> Paga con MetaMask </Button>
             </Modal.Footer>
         </Modal>
     );
