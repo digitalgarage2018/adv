@@ -11,21 +11,20 @@ class NavBar extends Component {
 
     state = {
         isLogged: sessionStorage.getItem('isLogged'),
-        jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHYXp6dSIsImV4cCI6MTUyNjM4Mjc3OSwibmFtZSI6IlNpbHZpYSIsInNjb3BlIjoiZGVmYXVsdF91c2VyIn0.LyIb00mIYILmX2HEVL9_NsjJyTzUqAdennwARC6Nv0c",
         message: ""
     };
-
-
+    
     logoutHandler = (event) => {
         console.log('Sto facendo la logout...');
         event.preventDefault();
 
         let instance = axiosinstance();
-        instance.get('http://localhost:8070/logout'
-        )
+        instance.get('http://localhost:8070/logout')
             .then(response => {
                 console.log('Response della logout', response);
                 this.setState({isLogged: false});
+                sessionStorage.setItem('isLogged','false');
+                this.setState(sessionStorage.getItem('isLogged'));
                 console.log('Stato dopo la logout', this.state);
             })
             .catch(error => {
