@@ -1,8 +1,6 @@
 package it.iseed.account.utils;
 
 
-import org.jasypt.util.text.BasicTextEncryptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**

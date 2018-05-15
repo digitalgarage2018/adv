@@ -170,7 +170,7 @@ public class LoginServiceImpl implements LoginService {
 		 }
 	 }
 	 
-	 
+	 //control jwt's presence on DB
 	 public JwtOkEntity checkSerJwt(String jwt){
 		 return loginDao.checkJwt(jwt);
 	 }
