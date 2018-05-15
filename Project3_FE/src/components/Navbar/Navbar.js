@@ -2,30 +2,29 @@ import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import './Navbar.css';
 
-import axios from 'axios';
+
+import { axiosinstance } from '../AxiosInstance/AxiosInstance';
 
 
 class NavBar extends Component {
 
 
     state = {
-        isLogged: true,
-        jwt: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJHYXp6dSIsImV4cCI6MTUyNjM4Mjc3OSwibmFtZSI6IlNpbHZpYSIsInNjb3BlIjoiZGVmYXVsdF91c2VyIn0.LyIb00mIYILmX2HEVL9_NsjJyTzUqAdennwARC6Nv0c",
+        isLogged: sessionStorage.getItem('isLogged'),
         message: ""
     };
-
-
+    
     logoutHandler = (event) => {
         console.log('Sto facendo la logout...');
         event.preventDefault();
 
-        let instance = axios.create();
-        instance.defaults.headers.common['jwt'] = this.state.jwt;
-        instance.get('http://localhost:8070/logout'
-        )
+        let instance = axiosinstance();
+        instance.get('http://localhost:8070/logout')
             .then(response => {
                 console.log('Response della logout', response);
                 this.setState({isLogged: false});
+                sessionStorage.setItem('isLogged','false');
+                this.setState(sessionStorage.getItem('isLogged'));
                 console.log('Stato dopo la logout', this.state);
             })
             .catch(error => {
@@ -48,7 +47,7 @@ class NavBar extends Component {
 
 
     render() {
-
+        const isLoggedIn = this.state.isLogged;
         return (
             <div className="Navbar">
                 <Navbar inverse collapseOnSelect>
@@ -62,34 +61,43 @@ class NavBar extends Component {
 
                         <Nav pullRight>
 
+                            {!isLoggedIn ? (
                             <NavItem eventKey={1} href={`/LogIn`}>
                                 Accedi
                             </NavItem>
-
+                            ) : (null)}
+                            {!isLoggedIn ? (
                             <NavItem eventKey={2} href={`/SignUp`}>
                                 Registrazione
-                            </NavItem>
+                            </NavItem>                            ) : (null)}
+
 
                             <NavItem eventKey={3} href={`/Servizi`}>
                                 Servizi
                             </NavItem>
+                            {isLoggedIn ? (
 
                             <NavItem eventKey={4} href={`/Prodotti`}>
                                 Prodotti
                             </NavItem>
+                            ) : (null)}
+                            {isLoggedIn ? (
 
                             <NavItem eventKey={5} href="#" onClick={(event) => this.logoutHandler(event)}>
                                 LogOut
                             </NavItem>
+                            ) : (null)}
 
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
+
             </div>
         );
 
 
     }
+
 }
 
 export default NavBar;
