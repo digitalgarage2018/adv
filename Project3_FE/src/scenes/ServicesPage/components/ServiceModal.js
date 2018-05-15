@@ -14,6 +14,8 @@ let handleClick = () => {
 
 
 const serviceModal = (props) => {
+    let isLoggedIn = sessionStorage.getItem('isLogged');
+
 
     return (
         <Modal  show={props.show} onHide={props.hide} >
@@ -36,11 +38,17 @@ const serviceModal = (props) => {
                     <strong> Durata del servizio: </strong> {props.time} minuti
                 </p>
                 <p>
-                    <strong> Prezzo: </strong>  {props.price} $
+                    <strong> Prezzo: </strong>
+                    {isLoggedIn ? (
+                        <p>{props.price} $ </p>) : (null)}
+
                 </p>
             </Modal.Body>
             <Modal.Footer>
+                {isLoggedIn ? (
                 <Button onClick={handleClick}> Paga con MetaMask </Button>
+                ) : (<Button href={`/LogIn`}>Acquista</Button>)}
+                
             </Modal.Footer>
         </Modal>
     );
