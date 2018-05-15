@@ -14,11 +14,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Table (name="users")
 public class LoginEntity implements Serializable{
 
-    /*
-    @NotEmpty @NotBlank @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long u_id;*/
-
 	@Id
 	@NotEmpty @NotBlank @NotNull @Size(min=1)
 	@Column(name="u_username", nullable=false, unique=true)
@@ -109,14 +104,6 @@ public class LoginEntity implements Serializable{
 	public void setU_born_place(String u_born_place) {
 		this.u_born_place = u_born_place;
 	}
-
-	/*public List<ServiceEntity> getServiceList() {
-		return serviceList;
-	}
-
-	public void setServiceList(List<ServiceEntity> serviceList) {
-		this.serviceList = serviceList;
-	}*/
 
 	public String getU_wallet_address() {
 		return u_wallet_address;
