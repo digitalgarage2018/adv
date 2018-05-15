@@ -17,7 +17,7 @@ export default class Login extends Component {
 
 
         state = {
-            isLogged: this.props.foo,
+            isLogged: false,
             userName: "",
             password: "",
             jwt: "",
@@ -125,12 +125,6 @@ export default class Login extends Component {
                                 Registrati
                             </Button>
 
-                           {/* <Button
-                                block
-                                onClick={this.props.clicked}>
-                                    CIAO
-                            </Button>*/}
-
                         </form>
 
 
@@ -139,8 +133,8 @@ export default class Login extends Component {
                 );
             } else {
                 return (
-                    <div onChange={this.props.clicked}>
-                        <Route path="/" render={()=><HomePage foo={this.state.isLogged}/>}/>
+                    <div>
+                        <Route path="/" render={()=><HomePage/>}/>
                     </div>
                 );
             }}
