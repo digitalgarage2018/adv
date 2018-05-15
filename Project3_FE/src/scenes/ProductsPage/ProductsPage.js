@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import axios from "axios";
+
+import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
 
 import './ProductsPage.css';
 import Product from './components/Product';
 import ProductModal from './components/ProductModal';
 
 import {Col, Grid, Row} from 'react-bootstrap';
+
+
 
 
 class ProductsPage extends Component {
@@ -46,10 +49,9 @@ class ProductsPage extends Component {
     componentDidMount(){
         console.log('Sto facendo la chiamata ai prodotti...');
 
-        let instance = axios.create();
-        instance.defaults.headers.common['jwt'] = this.state.jwt;
-        /* axios.get('http://192.168.171.55:8091/products/') */
 
+
+        let instance = axiosinstance();
         instance.get('http://192.168.171.55:8091/products/')
             .then( response => {
                     console.log('res.data', response.data);

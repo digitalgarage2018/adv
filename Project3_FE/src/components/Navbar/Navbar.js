@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import './Navbar.css';
 
-import axios from 'axios';
+
+import { axiosinstance } from '../AxiosInstance/AxiosInstance';
 
 
 class NavBar extends Component {
@@ -19,8 +20,7 @@ class NavBar extends Component {
         console.log('Sto facendo la logout...');
         event.preventDefault();
 
-        let instance = axios.create();
-        instance.defaults.headers.common['jwt'] = this.state.jwt;
+        let instance = axiosinstance();
         instance.get('http://localhost:8070/logout'
         )
             .then(response => {
