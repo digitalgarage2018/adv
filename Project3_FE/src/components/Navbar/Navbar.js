@@ -48,9 +48,8 @@ class NavBar extends Component {
 
 
     render() {
-
-        if ( (sessionStorage.getItem("isLogged")) === "true") {
-            return (
+        const isLoggedIn = this.state.isLogged;
+        return (
             <div className="Navbar">
                 <Navbar inverse collapseOnSelect>
                     <Navbar.Header>
@@ -63,14 +62,32 @@ class NavBar extends Component {
 
                         <Nav pullRight>
 
+                            {!isLoggedIn ? (
+                            <NavItem eventKey={1} href={`/LogIn`}>
+                                Accedi
+                            </NavItem>
+                            ) : (null)}
+                            {!isLoggedIn ? (
+                            <NavItem eventKey={2} href={`/SignUp`}>
+                                Registrazione
+                            </NavItem>                            ) : (null)}
+
+
                             <NavItem eventKey={3} href={`/Servizi`}>
                                 Servizi
                             </NavItem>
+                            {isLoggedIn ? (
+
+                            <NavItem eventKey={4} href={`/Prodotti`}>
+                                Prodotti
+                            </NavItem>
+                            ) : (null)}
+                            {isLoggedIn ? (
 
                             <NavItem eventKey={5} href="#" onClick={(event) => this.logoutHandler(event)}>
                                 LogOut
                             </NavItem>
-
+                            ) : (null)}
 
                         </Nav>
                     </Navbar.Collapse>
@@ -78,42 +95,6 @@ class NavBar extends Component {
 
             </div>
         );
-
-        }
-
-        else  {
-
-            return (
-            <div className="Navbar">
-                <Navbar inverse collapseOnSelect>
-                    <Navbar.Header>
-                        <Navbar.Brand>
-                            <a href="/"> Super Relax</a>
-                        </Navbar.Brand>
-                        <Navbar.Toggle/>
-                    </Navbar.Header>
-                    <Navbar.Collapse>
-
-                        <Nav pullRight>
-
-                            <NavItem eventKey={1} href={`/LogIn`}>
-                                Accedi
-                            </NavItem>
-
-                            <NavItem eventKey={2} href={`/SignUp`}>
-                                Registrazione
-                            </NavItem>
-
-                            <NavItem eventKey={3} href={`/Servizi`}>
-                                Servizi
-                            </NavItem>
-
-
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            </div>
-        );}
 
 
     }
