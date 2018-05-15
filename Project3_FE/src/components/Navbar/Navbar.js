@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import './Navbar.css';
 
-
 import { axiosinstance } from '../AxiosInstance/AxiosInstance';
 
 
@@ -47,7 +46,9 @@ class NavBar extends Component {
 
 
     render() {
-        const isLoggedIn = this.state.isLogged;
+        const isLoggedIn = (this.state.isLogged === "true");
+        console.log('this.state.isLogged', this.state.isLogged);
+        console.log('isLoggedIn', isLoggedIn);
         return (
             <div className="Navbar">
                 <Navbar inverse collapseOnSelect>

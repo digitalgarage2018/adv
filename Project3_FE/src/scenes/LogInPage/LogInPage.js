@@ -15,7 +15,6 @@ class LogInPage extends Component {
             isLogged: false,
             userName: "",
             password: "",
-            jwt: "",
             message:""
         };
 
@@ -45,7 +44,6 @@ class LogInPage extends Component {
         })
             .then(response => {
 
-                this.setState({jwt: response.headers.jwt});
                 this.setState({isLogged: true});
                 console.log('Stato dopo la login', this.state);
                 sessionStorage.setItem("isLogged","true");
