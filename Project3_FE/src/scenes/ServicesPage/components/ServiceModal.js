@@ -38,7 +38,8 @@ const serviceModal = (props) => {
                     <strong> Durata del servizio: </strong> {props.time} minuti
                 </p>
                 <p>
-                    <strong> Prezzo: </strong>
+                    {isLoggedIn ? (
+                    <strong> Prezzo: </strong>) : (null)}
                     {isLoggedIn ? (
                         <p>{props.price} $ </p>) : (null)}
 
@@ -48,7 +49,7 @@ const serviceModal = (props) => {
                 {isLoggedIn ? (
                 <Button onClick={handleClick}> Paga con MetaMask </Button>
                 ) : (<Button href={`/LogIn`}>Acquista</Button>)}
-                
+
             </Modal.Footer>
         </Modal>
     );
