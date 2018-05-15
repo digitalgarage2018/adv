@@ -196,7 +196,8 @@ public class LoginController {
         //request -> fetch JWT -> check validity -> Get operations from the user account
 		
 		String jwt = JwtUtils.getJwtFromHttpRequest(request);
-		
+		System.out.println(jwt);
+
         if(jwt == null){
         	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "Missing jwt"));
         }	

@@ -11,12 +11,24 @@ class App extends Component {
         authenticated: false
     }
 
+    risaluta(){
+
+        // this.state.authenticated =
+        console.log('CIAO CIAO');
+    }
+
+    risaluta(){
+
+
+        console.log('Buongiorno!');
+    }
+
     render() {
         return (
                 <div>
-                    <NavBar isLogged={this.state.authenticated} />
+                    <NavBar isLogged={this.state.authenticated} changed={this.provasaluta}/>
 
-                    <AppRouter isLogged={this.state.authenticated}/>
+                    <AppRouter isLogged={this.state.authenticated} changed={this.risaluta}/>
 
                     <Footer/>
 
