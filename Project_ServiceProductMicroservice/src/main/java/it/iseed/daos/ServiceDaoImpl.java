@@ -18,7 +18,7 @@ public class ServiceDaoImpl implements ServiceDao {
 
     public List<ServiceEntity> printServices()  {
         Query selectAll = entityManager.createQuery("select rr from ServiceEntity rr order by sr_name");
-        return /*(List<ServiceEntity>)*/ selectAll.getResultList();
+        return selectAll.getResultList();
     }
 
     public List<ServiceEntity> searchKeyWord(String keyword) {

@@ -1,14 +1,11 @@
 package it.iseed.services;
 
-import java.util.LinkedHashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import it.iseed.daos.PurchaseDao;
-import it.iseed.daos.WellnessCenterDao;
 import it.iseed.entities.JsonResponseBody;
 import it.iseed.entities.PurchaseEntity;
 
@@ -21,7 +18,7 @@ public class PurchaseServiceImpl  implements PurchaseService {
 	//add a purchase if the date of the service is not already in the table purchases in DB
 	public ResponseEntity<JsonResponseBody> addPurchase(PurchaseEntity purchaseEntity){
 		
-		ResponseEntity<JsonResponseBody> responseEntity;
+		//ResponseEntity<JsonResponseBody> responseEntity;
 		PurchaseEntity tmp=null;
 		try {
 			tmp = purchaseDao.findPurchaseByDate(purchaseEntity.getPur_date(),purchaseEntity.getPur_serviceID());

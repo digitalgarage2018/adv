@@ -2,10 +2,11 @@ package it.iseed.entities;
 
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -51,29 +52,8 @@ public class LoginEntity implements Serializable{
     @Column(name="u_born_place", nullable=false)
     private String u_born_place;
 
-  /*  @ManyToMany
-	private List<ServiceEntity> serviceList;*/
-
 	@Column(name="u_wallet_address")
 	private String u_wallet_address;
-
-/*
-    @Id
-	@OneToMany(cascade=CascadeType.ALL)
-	@JoinColumn(name="u_username")
-	private Set<PurchaseServEntity> purchServ;
-    */
-
-	//creation of the join table, the foreign keys are implicit in the column
-	/*@ManyToMany//(targetEntity = ServiceEntity.class, mappedBy = "LoginEntity")
-	@JoinTable(name="USERS_SERVICES",
-			joinColumns = {@JoinColumn(name = "u_usernameQ",referencedColumnName = "u_username")},
-			inverseJoinColumns = {@JoinColumn(name = "sr_serviceIDQ", referencedColumnName = "sr_serviceID")})
-	public List<ServiceEntity> getListServices() {
-		return listServices;
-	}*/
-
-
  
 	public String getUsername() {
 		return u_username;

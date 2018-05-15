@@ -42,12 +42,7 @@ public class BEApplication {
 
 		System.out.println("( ͡° ͜ʖ ͡°)");
 
-
-
 		SpringApplication.run(BEApplication.class, args);
-
-
-
 
 	}
 }

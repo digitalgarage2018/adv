@@ -1,40 +1,27 @@
 package it.iseed.entities;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table (name = "services")
 public class ServiceEntity implements Serializable {
 
-    /*Bidirectional relation between users and services*/
-    /*So now we know who has purchased a service*/
-   // @ManyToMany(mappedBy = "listServices")
-  //  private List<LoginEntity> listUsers;
-/*
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "USER_SERVICE",
-    joinColumns = {@JoinColumn(name = "UID", referencedColumnName = "u_username")}
-            inverseJoinColumns={@JoinColumn(name="SID", referencedColumnName="sr_serviceID)})
-    private LoginEntity ser;
-*/
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="sr_serviceID", nullable = false)
     private long sr_serviceID;
-    /*N.B. adding @manytomany for the bidirectional relation between users and services*/
-/*
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="sr_serviceID")
-    private Set<PurchaseServEntity> purchServ_;
-*/
+
     @NotEmpty
     @Column(name="sr_type", nullable=false)
     private String sr_type;
@@ -62,14 +49,6 @@ public class ServiceEntity implements Serializable {
     @NotEmpty
     @Column(name="sr_name", nullable=false)
     private String sr_name;
-/*
-    @ManyToMany
-    private List<ProductEntity> productList;
-
-    @ManyToMany(mappedBy = "serviceList")
-    private List<LoginEntity> userList;*/
-
-
 
 
     public String getSr_name() {

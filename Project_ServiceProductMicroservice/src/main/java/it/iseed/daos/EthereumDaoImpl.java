@@ -23,13 +23,5 @@ public class EthereumDaoImpl implements EthereumDao {
         BigInteger wei = ethGetBalance.getBalance();
         return wei;
     }
-	/* To delete, we needn't it anymore*/
 
-	/*
-	@PersistenceContext
-	 public EntityManager entityManager;
-	
-	 public LoginEntity getLoginById(String username) throws Exception{
-		return entityManager.find(LoginEntity.class, username);
-	 }*/
 }

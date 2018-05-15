@@ -34,17 +34,20 @@ public class WellnessCenterController {
     @RequestMapping(value = "/addService", method = RequestMethod.POST,headers = "Accept=application/json")
     public ResponseEntity<JsonResponseBody> addService(@RequestBody ServiceEntity serviceEntity, HttpServletRequest request){
     	
+    	//Controllo JWT
     	String jwt = JwtUtils.getJwtFromHttpRequest(request);
     	MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         headers.add("jwt", jwt);
         HttpEntity<?> request_2 = new HttpEntity(String.class, headers);
-
+        
         RestTemplate restTemplate = new RestTemplate();
-        if (serviceEntity.getSr_price() != 0 &&
-                serviceEntity.getSr_name() != "" &&
-                serviceEntity.getSr_description()!= "" &&
-                serviceEntity.getSr_time() != 0&&
-                serviceEntity.getSr_type() != "")
+        
+        //Controllo campi non nulli
+        if (serviceEntity.getSr_price() 		!= 0  &&
+            serviceEntity.getSr_name() 			!= "" &&
+            serviceEntity.getSr_description()	!= "" &&
+            serviceEntity.getSr_time() 			!= 0  &&
+            serviceEntity.getSr_type() 			!= "")
         {
         try {
         	ResponseEntity<JsonResponseBody> responseEntity = restTemplate.exchange("http://localhost:8070/checkjwtcenter", HttpMethod.POST, request_2, JsonResponseBody.class);
@@ -62,6 +65,7 @@ public class WellnessCenterController {
         	System.out.println("eccezione: " + e);
         	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: "+e ));
         }
+        //fine Controllo JWT
         
         return wellnessCenterService.addService(serviceEntity);
         }else{
@@ -74,6 +78,7 @@ public class WellnessCenterController {
     @RequestMapping(value = "/updateService/{sr_serviceID}", method = RequestMethod.PUT,headers = "Accept=application/json")
     public ResponseEntity<JsonResponseBody> updateService(@PathVariable long sr_serviceID,@RequestBody ServiceEntity serviceEntity, HttpServletRequest request) {
 
+    	//Controllo JWT
         String jwt = JwtUtils.getJwtFromHttpRequest(request);
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
         headers.add("jwt", jwt);
@@ -81,11 +86,13 @@ public class WellnessCenterController {
         String name = null;
 
         RestTemplate restTemplate = new RestTemplate();
-        if (serviceEntity.getSr_price() != 0 &&
-                serviceEntity.getSr_name() != "" &&
-                serviceEntity.getSr_description()!= "" &&
-                serviceEntity.getSr_time() != 0&&
-                serviceEntity.getSr_type() != "")
+        
+        //Controllo campi non null
+        if (serviceEntity.getSr_price() 		!= 0  &&
+            serviceEntity.getSr_name() 			!= "" &&
+            serviceEntity.getSr_description()	!= "" &&
+            serviceEntity.getSr_time() 			!= 0  &&
+            serviceEntity.getSr_type() 			!= "")
         {
 
                 try {
@@ -104,6 +111,8 @@ public class WellnessCenterController {
                     System.out.println("eccezione: " + e);
                     return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: " + e));
                 }
+                //fine Controllo JWT
+                
                 ServiceEntity serviceTmp = null;
                 try {
                     //TODO potrei trasformarlo in responseEntity, così da gestirlo meglio

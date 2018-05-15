@@ -15,16 +15,12 @@ import java.util.Map;
                             //it will be automatically instantiated and injected by Spring
 public class JwtUtils {
 
-    //https://stormpath.com/blog/jwt-java-create-verify
-    //https://stormpath.com/blog/beginners-guide-jwts-in-java
-    //https://github.com/jwtk/jjwt
-
     /**
      * this method generate the Jwt token to be sent to the client
-     * @param subject "RGNLSN87H13D761R"
-     * @param date    new Date(1300819380)
-     * @param name    "Alessandro Argentieri"
-     * @param scope   "user"
+     * @param subject "admin"
+     * @param date    new Date(1500819380)
+     * @param name    "Marco"
+     * @param scope   "user_default"
      * @return String jwt
      * @throws java.io.UnsupportedEncodingException
      */

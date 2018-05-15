@@ -1,9 +1,7 @@
 package it.iseed.controllers;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,20 +14,16 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import io.jsonwebtoken.ExpiredJwtException;
 //import it.iseed.account.utils.NoDbConnection;
 //import it.iseed.account.utils.UserNotLoggedException;
 import it.iseed.entities.JsonResponseBody;
 import it.iseed.entities.PurchaseEntity;
-import it.iseed.entities.ServiceEntity;
 import it.iseed.services.PurchaseService;
-import it.iseed.services.WellnessCenterService;
 import it.iseed.utils.JwtUtils;
 
 

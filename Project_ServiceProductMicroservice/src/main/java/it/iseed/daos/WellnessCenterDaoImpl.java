@@ -33,7 +33,6 @@ public class WellnessCenterDaoImpl implements WellnessCenterDao{
 
         return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.CREATED.value(), "Inserimento riuscito"));
         }catch (Exception e){
-        	//return new ResponseEntity<JsonResponseBody>(HttpStatus.CREATED);
         	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "Errore: "+e));
         }
     }
@@ -41,15 +40,6 @@ public class WellnessCenterDaoImpl implements WellnessCenterDao{
     
     public ResponseEntity<JsonResponseBody> updateService(ServiceEntity serviceEntity){
 
-    	
-    	/*System.out.println(serviceEntity.getSr_description());
-    	System.out.println(serviceEntity.getSr_image());
-    	System.out.println(serviceEntity.getSr_name());
-    	System.out.println(serviceEntity.getSr_price());
-    	System.out.println(serviceEntity.getSr_time());
-    	System.out.println(serviceEntity.getSr_type());
-    	System.out.println(serviceEntity.getSr_serviceID());*/
-    	
     	String query = "UPDATE services SET sr_description = ?, sr_image = ?, sr_name = ?, sr_price = ?, sr_time = ?, sr_type = ? WHERE sr_serviceID = ?;";
         try{
         entityManager.createNativeQuery(query)
@@ -63,7 +53,6 @@ public class WellnessCenterDaoImpl implements WellnessCenterDao{
                 .executeUpdate();
  		
         return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.CREATED.value(), "Aggiornamento riuscito"));
-        //return new ResponseEntity<JsonResponseBody>(HttpStatus.CREATED);
         }catch(Exception e){
         	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "Errore: "+e));
         }

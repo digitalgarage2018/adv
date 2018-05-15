@@ -30,19 +30,5 @@ public class EthereumServiceImpl implements EthereumService {
 			 }
 			return wei2;		 
 		 }
-		 /* To delete, we needn't it anymore*/
-		/*
-	public String getWalletAddress(String userId){
-		
-		LoginEntity user = null;
-		String walletAddress = null;
-		try {
-			user = ethereumDao.getLoginById(userId);
-			walletAddress = user.getWalletAddress();
-		} catch(Exception e){
-			 System.out.println("errore exec: "+e);			
-		}
-		return walletAddress;
-		
-	}*/
+
 }
