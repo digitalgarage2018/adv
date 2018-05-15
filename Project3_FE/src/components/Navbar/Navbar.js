@@ -13,7 +13,7 @@ class NavBar extends Component {
         isLogged: sessionStorage.getItem('isLogged'),
         message: ""
     };
-    
+
     logoutHandler = (event) => {
         console.log('Sto facendo la logout...');
         event.preventDefault();
