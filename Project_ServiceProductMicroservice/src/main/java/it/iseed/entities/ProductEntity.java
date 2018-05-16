@@ -32,6 +32,10 @@ public class ProductEntity implements Serializable {
     @NotEmpty
     @Column(name="p_price", nullable=false)
     private int p_price;
+    
+    @NotEmpty
+    @Column(name="p_serv_id", nullable=false)
+    private int p_serv_id;
 
     public long getP_product_id() {
         return p_product_id;
@@ -80,4 +84,12 @@ public class ProductEntity implements Serializable {
     public void setP_price(int p_price) {
         this.p_price = p_price;
     }
+
+	public int getP_serv_id() {
+		return p_serv_id;
+	}
+
+	public void setP_serv_id(int p_serv_id) {
+		this.p_serv_id = p_serv_id;
+	}
 }
