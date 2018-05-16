@@ -104,22 +104,18 @@ class LogInPage extends Component {
                             <Button
                                 block
                                 bsSize="large"
+                                bsStyle="primary"
                                 disabled={!this.validateForm()}
-                                type="submit"
-                            >
+                                type="submit">
                                 Login
                             </Button>
-
-
                             <br/>
                             <br/>
                             <p align="center"> Non sei ancora registrato? </p>
                             <Button
                                 block
                                 bsSize="large"
-
-                                onClick={() => this.props.history.push(`/SignUp`)}
-                            >
+                                onClick={() => this.props.history.push(`/SignUp`)}>
                                 Registrati
                             </Button>
 
