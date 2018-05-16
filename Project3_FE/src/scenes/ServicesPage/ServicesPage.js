@@ -25,8 +25,8 @@ class ServicesPage extends Component {
         serviceSelectedDescription: " ",
         serviceSelectedTime: " ",
         serviceSelectedPrice: " ",
-        keyword: "",
-
+        message: "",
+        keyword: ""
     };
 
     componentDidMount(){
