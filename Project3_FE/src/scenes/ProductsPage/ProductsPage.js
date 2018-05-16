@@ -21,7 +21,8 @@ class ProductsPage extends Component {
         productSelectedDescription: "",
         productSelectedService: "",
         productSelectedPrice: "",
-        showModal: false
+        showModal: false,
+        message: ""
     };
 
     showDetailsHandler(product, index) {
@@ -52,11 +53,17 @@ class ProductsPage extends Component {
 
 
         let instance = axiosinstance();
+        // instance.get('http://localhost:8091/productsUser/')
         instance.get('http://localhost:8091/products/')
             .then( response => {
-                    console.log('res.data', response.data);
-                    // this.setState({products: response.data});
-                    this.setState({products: response.data.response});
+                    console.log('res.data', response.data.response);
+                    console.log('prova lunghezza', response.data.response.length);
+                    if (response.data.response.length > 0) {
+                        this.setState({products: response.data.response, message: ""});
+
+                    } else {
+                        this.setState({products: [], message: "Non ci sono prodotti da visualizzare"});
+                    }
 
                 }
 

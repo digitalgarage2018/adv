@@ -10,7 +10,7 @@ const service = (props) => {
 
     return (
         <div className="Service">
-            <Card>
+            <Card className="Card">
                 <CardImg top width="100%" height="260px" src={props.path} alt={props.name} />
                 <CardBody>
                     <CardTitle>{props.name}</CardTitle>
