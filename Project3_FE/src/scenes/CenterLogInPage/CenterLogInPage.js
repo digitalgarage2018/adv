@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./LogInPage.css";
+import "./CenterLogInPage.css";
 
 const error = {
     color: 'red',
     textalign:'center'};
 
-class LogInPage extends Component {
+class CenterLogInPage extends Component {
 
 
         state = {
@@ -104,21 +104,10 @@ class LogInPage extends Component {
                                 type="submit">
                                 Login
                             </Button>
-                            <br/>
-                            <br/>
-                            <p align="center"> Non sei ancora registrato? </p>
-                            <Button
-                                block
-                                bsSize="large"
-                                onClick={() => this.props.history.push(`/SignUp`)}>
-                                Registrati
-                            </Button>
-                            <br/>
-                            <br/>
+
                            </form>
                         <div align="center">
 
-                            <Link to="/WellnessCenterLogIn"> Accedi come Centro Benessere </Link>
                         </div>
 
                     </div>
@@ -136,6 +125,6 @@ class LogInPage extends Component {
 
 }
 
-export default withRouter(LogInPage);
+export default withRouter(CenterLogInPage);
 
 
