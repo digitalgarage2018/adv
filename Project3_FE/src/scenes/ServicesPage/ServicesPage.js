@@ -7,6 +7,9 @@ import ServiceModal from './components/ServiceModal';
 
 import {Col, Grid, Row} from 'react-bootstrap';
 
+const error = {
+    color: 'red',
+    textalign:'center'};
 
 
 
@@ -37,7 +40,7 @@ class ServicesPage extends Component {
 
             )
             .catch(error => {
-                console.log(error)
+                this.setState({message: "Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})
             });
 
     }
@@ -104,6 +107,7 @@ class ServicesPage extends Component {
                 <Grid>
 
                     <Row className="show-grid">
+                        <h4 align="center" style={error}> {this.state.message}</h4>
                         {servicelist}
                     </Row>
 
