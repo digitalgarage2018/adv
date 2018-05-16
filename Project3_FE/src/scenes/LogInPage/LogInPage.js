@@ -133,7 +133,7 @@ class LogInPage extends Component {
                 return (
                     <div>
                         {this.props.history.push("/")}
-                       { window.location.reload()}
+                        {window.location.reload()}
 
                         </div>
                 );

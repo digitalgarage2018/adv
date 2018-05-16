@@ -10,7 +10,7 @@ const product = (props) => {
 
     return (
         <div className="Product">
-            <Card>
+            <Card className="Card">
 
                 <CardImg top width="100%" height="260px"  src={props.path} alt={props.name}  />
 
