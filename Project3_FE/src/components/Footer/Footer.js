@@ -1,11 +1,11 @@
+/*
+
 import React from 'react';
+
 import './Footer.css';
 
 export const Footer = () => {
-    /**
-     * INLINE STYLE
-     * @type {{backgroundColor: string, borderTop: string, textAlign: string, padding: string, position: string, left: string, bottom: string, height: string, width: string}}
-     */
+
     let style = {
         backgroundColor: "black",
         borderTop: "1px solid #E7E7E7",
@@ -29,7 +29,7 @@ export const Footer = () => {
         <div>
             <div style={phantom}/>
             <div style={style}>
-                {/* This is a footer */}
+               }
             </div>
 
         </div>
@@ -37,3 +37,5 @@ export const Footer = () => {
 
     )
 };
+
+*/

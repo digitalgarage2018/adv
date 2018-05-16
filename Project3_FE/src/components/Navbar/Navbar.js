@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
-import './Navbar.css';
-
 import { axiosinstance } from '../AxiosInstance/AxiosInstance';
 
+
+let margin ={
+    marginBottom:'0px'
+};
 
 class NavBar extends Component {
 
@@ -13,46 +15,13 @@ class NavBar extends Component {
         message: ""
     };
 
-    logoutHandler = (event) => {
-        console.log('Sto facendo la logout...');
-        event.preventDefault();
-
-        let instance = axiosinstance();
-        instance.get('http://localhost:8070/logout')
-            .then(response => {
-                console.log('Response della logout', response);
-                this.setState({isLogged: false});
-                sessionStorage.setItem('isLogged','false');
-                this.setState(sessionStorage.getItem('isLogged'));
-                console.log('Stato dopo la logout', this.state);
-                window.location.reload();
-            })
-            .catch(error => {
-                console.log(error);
-                if (error.response === undefined) {
-                    this.setState({message: "Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})
-                }
-
-                else if (error.response.data.server === 403) {
-                    this.setState({message: "Credenziali non corrette"})
-                }
-
-
-                else if (error.response.data.server === 0) {
-                    this.setState({message: "Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})
-                }
-
-            });
-    };
-
-
     render() {
         const isLoggedIn = (this.state.isLogged === "true");
         console.log('this.state.isLogged', this.state.isLogged);
         console.log('isLoggedIn', isLoggedIn);
         return (
             <div className="Navbar">
-                <Navbar inverse collapseOnSelect>
+                <Navbar style={margin} inverse collapseOnSelect>
                     <Navbar.Header>
                         <Navbar.Brand>
                             <a href="/"> Super Relax</a>

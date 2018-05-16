@@ -14,7 +14,7 @@ class App extends Component {
                 <div>
                     <NavBar/>
                     <AppRouter/>
-                    <Footer/>
+
                 </div>
         );
     }
