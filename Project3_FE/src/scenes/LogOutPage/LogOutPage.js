@@ -11,10 +11,16 @@ let aligns={
 };
 let btnspacetop = {
     marginTop:'30px'
-}
+};
+
+let btncolor = {
+    background:'#222222'
+};
 
 let btnspace = {
-    marginLeft: '20px'
+    marginLeft: '20px',
+    background:'#222222'
+
 };
 
 
@@ -48,7 +54,6 @@ class logOutPage extends Component {
     };
 
 
-
     render() {
 
             return (
@@ -56,18 +61,15 @@ class logOutPage extends Component {
 
                     <h3>Vuoi davvero uscire?</h3>
                     <div style={btnspacetop}>
-                    <Button bsStyle="primary" bsSize="large"  onClick={()=> {this.props.history.push("/")}
+                    <Button style={btncolor} bsStyle="primary" bsSize="large"  onClick={()=> {this.props.history.push("/")}
                     }> No </Button>
-                    <Button  style={btnspace} bsStyle="primary" bsSize="large"  onClick={this.logoutHandler}> Si
+                    <Button  style={btnspace}  bsStyle="primary" bsSize="large"  onClick={this.logoutHandler}> Si!
                     </Button>
                     </div>
 
                 </div>
-
             );
-
     }
-
 }
 
 export default logOutPage;
