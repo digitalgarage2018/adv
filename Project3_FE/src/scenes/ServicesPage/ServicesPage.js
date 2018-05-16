@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import {Navbar, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
 
 import './ServicesPage.css';
 import Service from './components/Service';
@@ -7,6 +8,9 @@ import ServiceModal from './components/ServiceModal';
 
 import {Col, Grid, Row} from 'react-bootstrap';
 
+const error = {
+    color: 'red',
+    textalign:'center'};
 
 
 
@@ -20,8 +24,8 @@ class ServicesPage extends Component {
         serviceSelectedCenter: " ",
         serviceSelectedDescription: " ",
         serviceSelectedTime: " ",
-        serviceSelectedPrice: " "
-
+        serviceSelectedPrice: " ",
+        keyword: "",
 
     };
 
@@ -37,7 +41,7 @@ class ServicesPage extends Component {
 
             )
             .catch(error => {
-                console.log(error)
+                this.setState({message: "Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})
             });
 
     }
@@ -49,20 +53,12 @@ class ServicesPage extends Component {
         const serviceSelected = this.state.services[index];
         console.log('servizio selezionato in variabile', serviceSelected);
 
-        // const nome = prova.sr_name;
-        // console.log('nome del servizio selezionato in variabile', serviceSelected.sr_name);
-
-
-
         this.setState({serviceSelectedName: serviceSelected.sr_name});
         this.setState({serviceSelectedType: serviceSelected.sr_type});
         this.setState({serviceSelectedCenter: serviceSelected.sr_wellness_center});
         this.setState({serviceSelectedDescription: serviceSelected.sr_description});
         this.setState({serviceSelectedTime: serviceSelected.sr_time});
         this.setState({serviceSelectedPrice: serviceSelected.sr_price});
-
-
-        // console.log('nome del servizio sel. nello STATO', this.state.serviceSelectedName);
 
         this.setState({showModal: true});
 
@@ -72,10 +68,36 @@ class ServicesPage extends Component {
         this.setState({showModal: false});
     }
 
+    handleChange = event => {
+        this.setState({
+            keyword: event.target.value
+        });
+    }
+
+    handleSubmit = (event) => {
+        console.log('spedisco la keyword a BE per la Query... ');
+        event.preventDefault();
+        const url =  'http://localhost:8091/services/'+this.state.keyword;
+        axios.get(url)
+            .then(response => {
+
+                console.log('response della query', response.data.response);
+                this.setState({services: response.data.response});
+
+            })
+            .catch(error => {
+               console.log(error);
+
+            });
+
+    };
+
 
 
 
     render() {
+
+        // console.log(this.state.keyword);
 
         const servicelist = this.state.services.map( (serviceitem, index) =>
             {
@@ -103,7 +125,35 @@ class ServicesPage extends Component {
             <div>
                 <Grid>
 
+
                     <Row className="show-grid">
+
+                        <Navbar>
+                            <Navbar.Header>
+
+                                <Navbar.Toggle />
+                            </Navbar.Header>
+                            <Navbar.Collapse>
+                               <Navbar.Form pullLeft>
+                                    <FormGroup>
+                                        <FormControl
+
+                                            autoFocus
+                                            type="text"
+                                            value={this.state.keyword}
+                                            placeholder="Cerca..."
+                                            onChange={this.handleChange}
+                                        />
+                                    </FormGroup>{' '}
+                                    <Button onClick={(event) => this.handleSubmit(event)}>
+                                        <Glyphicon glyph="glyphicon glyphicon-search" />
+                                    </Button>
+
+                                </Navbar.Form>
+                            </Navbar.Collapse>
+                        </Navbar>
+
+                        <h4 align="center" style={error}> {this.state.message}</h4>
                         {servicelist}
                     </Row>
 

@@ -24,13 +24,22 @@ import it.iseed.entities.ProductEntity;
 import it.iseed.services.ProductService;
 import it.iseed.utils.JwtUtils;
 
-
 @CrossOrigin("*")
-
 
 @RestController
 public class ProductController {
 
+//******LEGENDA STATUS COMUNICATI AL CLIENT
+////////
+////////OK->200->success
+////////FORBIDDEN->403->errore di login e/o jwt errata
+////////PRECONDITION_FAILED->412->token con formato errato
+////////SERVICE_UNAVAILABLE->503->no db connection
+////////NOT_IMPLEMENTED->501->errore generico
+////////GATEWAY_TIMEOUT->504->session expired
+////////
+//******FINE LEGENDA
+	
     @Autowired
     ProductService productService;
 
