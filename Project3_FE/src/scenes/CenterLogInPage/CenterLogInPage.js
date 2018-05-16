@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./CenterLogInPage.css";
@@ -33,9 +33,9 @@ class CenterLogInPage extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:8070/login', {
-            'u_username': this.state.userName,
-            'u_pword': this.state.password
+        axios.post('http://localhost:8070/loginCenter', {
+            'w_username': this.state.userName,
+            'w_password': this.state.password
         })
             .then(response => {
 
