@@ -25,6 +25,7 @@ class NavBar extends Component {
                 sessionStorage.setItem('isLogged','false');
                 this.setState(sessionStorage.getItem('isLogged'));
                 console.log('Stato dopo la logout', this.state);
+                window.location.reload();
             })
             .catch(error => {
                 console.log(error);
@@ -84,7 +85,7 @@ class NavBar extends Component {
                             ) : (null)}
                             {isLoggedIn ? (
 
-                            <NavItem eventKey={5} href="#" onClick={(event) => this.logoutHandler(event)}>
+                            <NavItem eventKey={5} href={'/Logout'}>
                                 LogOut
                             </NavItem>
                             ) : (null)}
