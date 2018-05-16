@@ -37,13 +37,15 @@ const serviceModal = (props) => {
                 <p>
                     <strong> Durata del servizio: </strong> {props.time} minuti
                 </p>
-                <p>
-                    {isLoggedIn ? (
-                    <strong> Prezzo: </strong>) : (null)}
-                    {isLoggedIn ? (
-                        <p>{props.price} $ </p>) : (null)}
 
-                </p>
+                    {isLoggedIn ? (
+                        <p>
+                    <strong> Prezzo: </strong>  {props.price} $ </p>
+
+                            ) : (null)}
+
+
+
             </Modal.Body>
             <Modal.Footer>
                 {isLoggedIn ? (

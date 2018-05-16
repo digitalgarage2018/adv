@@ -7,6 +7,7 @@ import LogInPage from "./scenes/LogInPage/LogInPage";
 import ServicesPage from "./scenes/ServicesPage/ServicesPage";
 import ProductsPage from "./scenes/ProductsPage/ProductsPage";
 import LogOutPage from "./scenes/LogOutPage/LogOutPage";
+import CenterLogInPage from './scenes/CenterLogInPage/CenterLogInPage';
 
 
 export const AppRouter = (props) => {
@@ -18,6 +19,7 @@ export const AppRouter = (props) => {
             <div onChange={props.changed}>
                 <Route exact path="/" component={HomePage}/>
                 <Route path="/LogIn" render={()=><LogInPage/>}/>
+                <Route path="/WellnessCenterLogIn" render={()=><CenterLogInPage/>}/>
                 <Route path="/SignUp" component={SignupPage}/>
                 <Route path="/Servizi" component={ServicesPage}/>
                 <Route path="/Prodotti" component={ProductsPage}/>

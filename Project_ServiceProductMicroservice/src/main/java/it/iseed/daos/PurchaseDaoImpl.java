@@ -3,6 +3,7 @@ package it.iseed.daos;
 import java.sql.Date;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import it.iseed.entities.JsonResponseBody;
 import it.iseed.entities.PurchaseEntity;
+import it.iseed.entities.ServiceEntity;
 
 
 @Repository
@@ -50,10 +52,21 @@ public class PurchaseDaoImpl implements PurchaseDao{
 
 	        return prova;
 		}
-		catch (Exception e){
-			System.out.println("Errore: "+e);
+		catch (NoResultException e){
+			//System.out.println("Errore: "+e);
         	return null;
         }
 	}
+	
+	
+	public ServiceEntity getServiceById(long id) {
+        try{
+        	return entityManager.find(ServiceEntity.class, id);
+        }
+        catch (NoResultException e){
+			//System.out.println("Errore: "+e);
+        	return null;
+        }
+    }
 	
 }

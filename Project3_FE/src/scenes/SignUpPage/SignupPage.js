@@ -40,7 +40,7 @@ export default class SignupPage extends Component {
             this.state.password.length > 5 &&
             this.state.checked &&
             this.state.confirmpassword === this.state.password &&
-           (this.state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/) !== null) &&
+           (this.state.email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/) !== null) &&
             this.state.username.length > 0
 
        );

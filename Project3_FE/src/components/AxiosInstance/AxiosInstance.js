@@ -1,8 +1,7 @@
-import React from 'react';
 import axios from 'axios';
 
 
-export const axiosinstance = () => {
+export const axiosinstance = (props) => {
 
 
     let instance = axios.create();

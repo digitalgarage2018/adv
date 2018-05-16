@@ -53,8 +53,8 @@ class ProductsPage extends Component {
 
 
         let instance = axiosinstance();
-        // instance.get('http://localhost:8091/productsUser/')
-        instance.get('http://localhost:8091/products/')
+        // instance.get('http://localhost:8091/products/')
+        instance.get('http://localhost:8091/productsUser/')
             .then( response => {
                     console.log('res.data', response.data.response);
                     console.log('prova lunghezza', response.data.response.length);

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import {withRouter } from 'react-router-dom';
-import axios from 'axios';
-import { Button, Modal,Panel } from "react-bootstrap";
+
+import { Button } from "react-bootstrap";
 import {axiosinstance} from "../../components/AxiosInstance/AxiosInstance";
 
 let aligns={
