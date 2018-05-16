@@ -8,7 +8,9 @@ import ProductModal from './components/ProductModal';
 
 import {Col, Grid, Row} from 'react-bootstrap';
 
-
+const error = {
+    color: 'red',
+    textalign:'center'};
 
 
 class ProductsPage extends Component {
@@ -60,7 +62,7 @@ class ProductsPage extends Component {
 
             )
             .catch(error => {
-                console.log(error)
+                this.setState({message: "Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})
             });
 
     }
@@ -94,6 +96,7 @@ class ProductsPage extends Component {
                 <Grid>
 
                     <Row className="show-grid">
+                        <h4 align="center" style={error}> {this.state.message}</h4>
                         {prods}
                     </Row>
 
