@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
+
 import { Button, FormGroup, FormControl, ControlLabel, Checkbox } from "react-bootstrap";
 
 import './AddServicePage.css';
+import imagedefault from '../../images/defaultimage.jpg';
 
 const error = {
     color: 'red',
@@ -29,8 +32,7 @@ export default class AddServicePage extends Component {
             this.state.srtype.length > 0 &&
             this.state.description.length > 0 &&
             this.state.price.length > 0 &&
-            this.state.time.length > 0 &&
-            this.state.image.length > 0
+            this.state.time.length > 0
 
        );
 
@@ -48,7 +50,12 @@ export default class AddServicePage extends Component {
 
         console.log('stato dopo la submit: ', this.state);
 
-        axios.post('http://localhost:8091/addService', {
+        if (this.state.image.length<50){
+            this.setState({image:imagedefault});
+        }
+        let instance = axiosinstance();
+        instance.post('http://localhost:8091/addService', {
+        //axios.post('http://localhost:8091/addService', {
 
             sr_name:this.state.name,    
             sr_type:this.state.srtype,
@@ -57,28 +64,26 @@ export default class AddServicePage extends Component {
 	        sr_time:this.state.time,
 	        sr_image:this.state.image
 	        
-
         })
             .then( response => {
 
                 console.log("Stato dopo l'inserimento: ", this.state);
-                
+                if (response.data.server === 406)
+                {this.setState({message:"Non hai i permessi per aggiungere un servizio. Loggati come centro benessere"})}
+                else{
                 this.props.history.push("/Servizi");
                 window.location.reload();
+                }
 
 
             })
             .catch( error => {
-                if (error.response === undefined){
-                    this.setState({message:"Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})}
-
-                else if (error.response.data.server === 403)
-                {this.setState({message:"I campi devono tutti essere valorizzati correttamente"})}
-
-
-                else if (error.response.data.server === 0){
-                    this.setState({message:"Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})}
-
+                if (error.response.status === 400){
+                    this.setState({message:"Inserire degli interi maggiori di zero in prezzo e durata"})
+                }
+                else{
+                    this.setState({message:error.response.data.response})
+                }
             });
 
     }
@@ -93,7 +98,7 @@ export default class AddServicePage extends Component {
                         <h3> INFORMAZIONI SERVIZIO </h3>
 
                         <FormGroup controlId="name" bsSize="large">
-                            <ControlLabel> Nome </ControlLabel>
+                            <ControlLabel> Nome Servizio </ControlLabel>
                             <FormControl
                                 autoFocus
                                 type="text"
@@ -103,7 +108,7 @@ export default class AddServicePage extends Component {
                         </FormGroup>
 
                         <FormGroup controlId="srtype" bsSize="large">
-                            <ControlLabel> Tipo </ControlLabel>
+                            <ControlLabel> Tipologia </ControlLabel>
                             <FormControl
                                 autoFocus
                                 type="text"
@@ -133,7 +138,7 @@ export default class AddServicePage extends Component {
                         </FormGroup>
 
                         <FormGroup controlId="time" bsSize="large">
-                            <ControlLabel> Tempo <small> (in minuti) </small> </ControlLabel>
+                            <ControlLabel> Durata <small> (in minuti) </small> </ControlLabel>
                             <FormControl
                                 autoFocus
                                 type="text"

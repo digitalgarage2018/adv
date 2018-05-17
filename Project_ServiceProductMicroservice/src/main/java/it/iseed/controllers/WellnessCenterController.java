@@ -30,6 +30,7 @@ public class WellnessCenterController {
 ////////
 ////////OK->200->success
 ////////FORBIDDEN->403->errore di login e/o jwt errata
+////////NOT_ACCEPTABLE->406->you have no permission to do this
 ////////PRECONDITION_FAILED->412->token con formato errato
 ////////SERVICE_UNAVAILABLE->503->no db connection
 ////////NOT_IMPLEMENTED->501->errore generico
