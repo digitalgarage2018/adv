@@ -87,4 +87,16 @@ public class PurchaseController {
         	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: "+e ));
 		}
 	}
+
+	@RequestMapping(value = "/getDate", method = RequestMethod.GET,headers = "Accept=application/json")
+	public ResponseEntity<JsonResponseBody> getInvalidDate(){
+
+
+		try {
+			return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), purchaseService.getInvalidDate()));
+		}catch (Exception e){
+			return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No connection DB"));
+		}
+
+	}
 }
