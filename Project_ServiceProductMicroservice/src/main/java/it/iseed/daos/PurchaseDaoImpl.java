@@ -1,6 +1,7 @@
 package it.iseed.daos;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -68,5 +69,10 @@ public class PurchaseDaoImpl implements PurchaseDao{
         	return null;
         }
     }
+
+	public List<PurchaseEntity> getInvalidDate(){
+		Query selectAll = entityManager.createQuery("select rr from PurchaseEntity rr order by pur_date");
+		return selectAll.getResultList();
+	}
 	
 }

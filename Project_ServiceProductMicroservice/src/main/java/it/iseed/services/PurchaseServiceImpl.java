@@ -3,6 +3,7 @@ package it.iseed.services;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,8 +53,18 @@ public class PurchaseServiceImpl  implements PurchaseService {
         }
 		//System.out.println("sono quiiiiii");
 	}
-	
-	
+
+	public List<PurchaseEntity> getInvalidDate() throws Exception{
+		List<PurchaseEntity> ret = null;
+		try {
+			ret = this.purchaseDao.getInvalidDate();
+		}catch (Exception e){
+			throw new Exception("Impossibile raggiungere DB");
+		}
+		return ret;
+	}
+
+
 	
 	
 	
