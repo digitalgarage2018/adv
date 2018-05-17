@@ -6,7 +6,7 @@ import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
 import { Button, FormGroup, FormControl, ControlLabel, Checkbox } from "react-bootstrap";
 
 import './AddServicePage.css';
-import imagedefault from '../../images/defaultimage.jpg';
+import imagedefault from '../../images/home.jpg';
 
 const error = {
     color: 'red',
@@ -55,7 +55,6 @@ export default class AddServicePage extends Component {
         }
         let instance = axiosinstance();
         instance.post('http://localhost:8091/addService', {
-        //axios.post('http://localhost:8091/addService', {
 
             sr_name:this.state.name,    
             sr_type:this.state.srtype,
