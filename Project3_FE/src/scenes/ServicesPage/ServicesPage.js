@@ -25,6 +25,7 @@ class ServicesPage extends Component {
         serviceSelectedDescription: " ",
         serviceSelectedTime: " ",
         serviceSelectedPrice: " ",
+        serviceSelectedId: " ",
         message: "",
         keyword: ""
     };
@@ -59,6 +60,7 @@ class ServicesPage extends Component {
         this.setState({serviceSelectedDescription: serviceSelected.sr_description});
         this.setState({serviceSelectedTime: serviceSelected.sr_time});
         this.setState({serviceSelectedPrice: serviceSelected.sr_price});
+        this.setState({serviceSelectedId: serviceSelected.sr_serviceID});
 
         this.setState({showModal: true});
 
@@ -110,6 +112,7 @@ class ServicesPage extends Component {
                     type={serviceitem.sr_type}
                     price={serviceitem.sr_price}
                     time={serviceitem.sr_time}
+                    serviceId={serviceitem.sr_serviceID}
                     center={serviceitem.sr_wellness_center}
                     click={() => this.showDetailsHandler(serviceitem, index)}
                     key={index}/>
@@ -168,6 +171,7 @@ class ServicesPage extends Component {
                     type={this.state.serviceSelectedType}
                     time={this.state.serviceSelectedTime}
                     price={this.state.serviceSelectedPrice}
+                    id={this.state.serviceSelectedId}
                 />
 
 

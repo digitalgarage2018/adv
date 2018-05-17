@@ -29,10 +29,17 @@ class DatePick extends React.Component {
     }
 
     render() {
-        return <DatePicker
+
+
+
+        return (
+
+        <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-        />;
+        />
+
+        );
     }
 }
 
