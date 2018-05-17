@@ -95,7 +95,7 @@ export default class AddServicePage extends Component {
                     <form onSubmit={this.handleSubmit}>
 
                         <h3> INFORMAZIONI SERVIZIO </h3>
-
+                        <hr />
                         <FormGroup controlId="name" bsSize="large">
                             <ControlLabel> Nome Servizio </ControlLabel>
                             <FormControl
@@ -116,7 +116,17 @@ export default class AddServicePage extends Component {
                             />
                         </FormGroup>
 
-                        <FormGroup controlId="description" bsSize="large">
+                        <FormGroup controlId="description">
+                            <ControlLabel> Descrizione </ControlLabel>
+                            <FormControl
+                                componentClass="textarea"
+                                autoFocus
+                                type="text"
+                                value={this.state.description}
+                                onChange={this.handleChange}/>
+                        </FormGroup>
+
+                      {/*  <FormGroup controlId="description" bsSize="large">
                             <ControlLabel> Descrizione </ControlLabel>
                             <FormControl
                                 autoFocus
@@ -124,7 +134,7 @@ export default class AddServicePage extends Component {
                                 value={this.state.description}
                                 onChange={this.handleChange}
                             />
-                        </FormGroup>
+                        </FormGroup>*/}
 
                         <FormGroup controlId="price" bsSize="large">
                             <ControlLabel> Prezzo </ControlLabel>

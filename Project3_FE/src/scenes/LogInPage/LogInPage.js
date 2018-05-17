@@ -13,8 +13,13 @@ class LogInPage extends Component {
 
         state = {
             isLogged: false,
+
             userName: "",
+            usernameIsChanged: false,
+
             password: "",
+            passwordIsChanged: false,
+
             message:""
         };
 
@@ -23,10 +28,42 @@ class LogInPage extends Component {
         return this.state.userName.length > 0 && this.state.password.length > 5;
     }
 
-    handleChange = event => {
+    handleUsernameChange = event => {
+
         this.setState({
-            [event.target.id]: event.target.value
+            [event.target.id]: event.target.value,
+            usernameIsChanged: true
         });
+    }
+
+    handlePasswordChange = event => {
+
+        this.setState({
+            [event.target.id]: event.target.value,
+            passwordIsChanged: true
+        });
+    }
+
+    getUsernameValidationState() {
+        if (this.state.usernameIsChanged) {
+            const length = this.state.userName.length;
+            if (length > 0) {
+                return 'success';
+            } else {
+                return 'error';
+            }
+        } return null;
+    }
+
+    getPasswordValidationState() {
+        if (this.state.passwordIsChanged) {
+            const length = this.state.password.length;
+            if (length > 5) {
+                return 'success';
+            } else {
+                return 'error';
+            }
+        } return null;
     }
 
 
@@ -78,20 +115,26 @@ class LogInPage extends Component {
                     <div className="LoginPage">
 
                         <form onSubmit={(event) => this.handleSubmit(event)}>
-                            <FormGroup controlId="userName" bsSize="large">
+                            <FormGroup
+                                controlId="userName"
+                                bsSize="large"
+                                validationState={this.getUsernameValidationState()}>
                                 <ControlLabel>UserName </ControlLabel>
                                 <FormControl
                                     autoFocus
                                     type="text"
                                     value={this.state.userName}
-                                    onChange={this.handleChange}
+                                    onChange={this.handleUsernameChange}
                                 />
                             </FormGroup>
-                            <FormGroup controlId="password" bsSize="large">
+                            <FormGroup
+                                controlId="password"
+                                bsSize="large"
+                                validationState={this.getPasswordValidationState()}>
                                 <ControlLabel>Password <small> (almeno 6 caratteri) </small></ControlLabel>
                                 <FormControl
                                     value={this.state.password}
-                                    onChange={this.handleChange}
+                                    onChange={this.handlePasswordChange}
                                     type="password"
                                 />
                             </FormGroup>
