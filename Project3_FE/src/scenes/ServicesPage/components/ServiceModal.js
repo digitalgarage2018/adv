@@ -1,6 +1,7 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import Web3 from 'web3';
+import DatePick from './DatePicker';
 
 let handleClick = () => {
 
@@ -52,6 +53,7 @@ const serviceModal = (props) => {
 
             </Modal.Body>
             <Modal.Footer>
+                <DatePick/>
                 {isLoggedIn ? (
                 <Button onClick={handleClick}> Paga con MetaMask </Button>
                 ) : (<Button href={`/LogIn`}>Acquista</Button>)}
