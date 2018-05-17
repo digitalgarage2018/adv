@@ -1,0 +1,10 @@
+@media all and (min-width: 480px) {
+    .AddServicePage {
+        padding: 60px 0;
+    }
+
+    .AddServicePage form {
+        margin: 0 auto;
+        max-width: 620px;
+    }
+}
