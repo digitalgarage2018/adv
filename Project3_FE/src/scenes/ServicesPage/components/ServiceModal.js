@@ -3,11 +3,15 @@ import {Modal, Button} from 'react-bootstrap';
 import Web3 from 'web3';
 
 let handleClick = () => {
+
+
     let web3js = new Web3(window.web3.currentProvider);
+
     console.log(window.web3);
+
     web3js.eth.sendTransaction({
-        to: '0xf59F88E6eA4A937e228E4aaf378e96EDfb646B14',
-        from: '0xE08aa75AAE695c4622Cd430FbeBF4B97689d4Ee3',
+        to: '0x6Dc8956E655Ccd80187265107b848D8c5B6d2459',
+        from: '0x2C7be34Be03F241A5E2038041ea6BbD0B7946dD2',
         value: web3js.utils.toWei('1', 'ether'),
     })
 };
