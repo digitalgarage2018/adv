@@ -1,49 +1,9 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
+import Web3 from 'web3';
 import DatePick from './DatePick';
 import {axiosinstance} from "../../../components/AxiosInstance/AxiosInstance";
-
-/*let handleClick = () => {
-
-
-let web3js = new Web3(window.web3.currentProvider);
-    let address = "";
-    web3js.eth.getAccounts()
-        .then((res) => {
-
-            address = res[0];
-
-            web3js.eth.sendTransaction({
-            to: '0x6Dc8956E655Ccd80187265107b848D8c5B6d2459',
-            from: address,
-            value: web3js.utils.toWei('1', 'ether'),
-        })
-            .then((res2) => {
-                console.log(`ho effettuato Metamask ${res}`);
-               /!* console.log('Chiamata al Back end per registrare acquisto... ');
-
-
-                const url =  'http://localhost:8091/purchase/'+ props.id + "/" + "";
-                let instance = axiosinstance();
-
-                instance.post('http://localhost:8070/purchase/{service_id}/{purchase_date}')
-                    .then(response => {
-
-                        sessionStorage.setItem('isLogged','false');
-                        this.props.history.push("/");
-                        window.location.reload();
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });*!/
-
-            })
-    })
-        .catch((err) => {
-            console.log('err', err);
-    });
-};*/
-
+import {withRouter} from 'react-router-dom';
 
 
 const serviceModal = (props) => {
@@ -52,25 +12,43 @@ const serviceModal = (props) => {
 
     let handleClick = () => {
 
-        console.log('Chiamata al Back end per registrare acquisto... ');
+        console.log('sto chiamando Metamask per ricevere il mio Account');
+        let web3js = new Web3(window.web3.currentProvider);
+        let address = "";
+        web3js.eth.getAccounts()
+            .then((res) => {
+                console.log('sto chiamando Metamask per effettuare la transazione');
 
-        // 'http://localhost:8070/purchase/{service_id}/{purchase_date}'
-        const url =  'http://localhost:8091/purchase/'+ props.id + "/" + "2018-07-21";
-        let instance = axiosinstance();
+                address = res[0];
 
-        instance.post(url)
-            .then(response => {
+                web3js.eth.sendTransaction({
+                    to: '0x6Dc8956E655Ccd80187265107b848D8c5B6d2459',
+                    from: address,
+                    value: web3js.utils.toWei('0.1', 'ether'),
+                })
+                    .then((res2) => {
 
-                console.log(response);
+                        console.log('Chiamata al Back end per registrare acquisto... ');
+                        const url =  'http://localhost:8091/purchase/'+ props.id + "/" + "2018-07-22";
+                        let instance = axiosinstance();
+
+                        instance.post(url)
+                            .then(res3 => {
+                                console.log('devo reindirizzarti ... ');
+                                props.history.push("/");
+
+                            })
+                            .catch(error => {
+                                console.log(error);});
+                    })
             })
-            .catch(error => {
-                console.log(error);});
-
-    }
-
+            .catch((err) => {
+                console.log('err', err);
+            });
+    };
 
     return (
-        <Modal  show={props.show} onHide={props.hide} >
+        <Modal show={props.show} onHide={props.hide} >
 
             <Modal.Header closeButton>
                 <Modal.Title>
@@ -111,7 +89,8 @@ const serviceModal = (props) => {
 
 };
 
-export default serviceModal;
+
+export default withRouter(serviceModal);
 
 
 

@@ -2,36 +2,49 @@ import React, { Component } from "react";
 import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-import './EditService.css';
+import './EditServicePage.css';
 import imagedefault from '../../images/home.jpg';
+
+// import { editService } from '../../services/EditService/EditService';
+
+
 
 
 const error = {
     color: 'red',
     textalign:'center'};
 
-
-export default class EditPage extends Component {
+export default class EditServicePage extends Component {
 
     state = {
-        name: "",
+        name: sessionStorage.getItem('serviceSelectedName'),
         nameIsChanged: false,
 
-        type: "",
+        type: sessionStorage.getItem('serviceSelectedType'),
         typeIsChanged: false,
 
-        description: "",
+        description: sessionStorage.getItem('serviceSelectedDescription'),
         descriptionIsChanged: false,
 
-        price: 0,
+        price: sessionStorage.getItem('serviceSelectedPrice'),
         priceIsChanged: false,
 
-        time: 0,
+        time: sessionStorage.getItem('serviceSelectedTime'),
         timeIsChanged: false,
 
-        image: ""
+        image: "",
+
+        serviceID: 0
     };
 
+    componentDidMount() {
+        console.log('devo chiamare il GETTER di EditService per prendere le info del selectedService');
+
+        // editService.getSelectedService();
+
+
+
+    }
 
     validateForm() {
 
@@ -158,8 +171,9 @@ export default class EditPage extends Component {
         if (this.state.image.length<50){
             this.setState({image:imagedefault});
         }
+        let url = 'http://localhost:8091/updateService/'+this.state.serviceID;
         let instance = axiosinstance();
-        instance.post('http://localhost:8091/addService', {
+        instance.put(url, {
 
             sr_name:this.state.name,
             sr_type:this.state.type,
@@ -175,7 +189,7 @@ export default class EditPage extends Component {
                 if (response.data.server === 406)
                 {this.setState({message:"Non hai i permessi per aggiungere un servizio. Loggati come centro benessere"})}
                 else{
-                    this.props.history.push("/Servizi");
+                    this.props.history.push("/MieiServizi");
                     window.location.reload();
                 }
 
@@ -263,7 +277,7 @@ export default class EditPage extends Component {
                         />
                     </FormGroup>
 
-                    <FormGroup controlId="image" bsSize="large">
+                  {/*  <FormGroup controlId="image" bsSize="large">
                         <ControlLabel>Immagine <small> (in Base64) </small></ControlLabel>
                         <FormControl
                             autoFocus
@@ -271,7 +285,7 @@ export default class EditPage extends Component {
                             onChange={this.handleImageChange}
                             type="text"
                         />
-                    </FormGroup>
+                    </FormGroup>*/}
 
                     <hr/>
 

@@ -146,10 +146,6 @@ export default class AddServicePage extends Component {
         } return null;
     }
 
-
-
-
-
     handleSubmit = (event) => {
         event.preventDefault();
 
@@ -175,7 +171,7 @@ export default class AddServicePage extends Component {
                 if (response.data.server === 406)
                 {this.setState({message:"Non hai i permessi per aggiungere un servizio. Loggati come centro benessere"})}
                 else{
-                this.props.history.push("/Servizi");
+                this.props.history.push("/MieiServizi");
                 window.location.reload();
                 }
 
