@@ -43,6 +43,7 @@ class CenterLogInPage extends Component {
                 console.log('Stato dopo la login', this.state);
                 sessionStorage.setItem("isLogged","true");
                 sessionStorage.setItem("jwt", response.headers.jwt);
+                sessionStorage.setItem("isCenter", 'true');
 
 
 
