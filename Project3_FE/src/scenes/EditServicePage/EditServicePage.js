@@ -14,23 +14,22 @@ const error = {
     color: 'red',
     textalign:'center'};
 
-
 export default class EditServicePage extends Component {
 
     state = {
-        name: sessionStorage.getItem('name'),
+        name: sessionStorage.getItem('serviceSelectedName'),
         nameIsChanged: false,
 
-        type: "",
+        type: sessionStorage.getItem('serviceSelectedType'),
         typeIsChanged: false,
 
-        description: "",
+        description: sessionStorage.getItem('serviceSelectedDescription'),
         descriptionIsChanged: false,
 
-        price: 0,
+        price: sessionStorage.getItem('serviceSelectedPrice'),
         priceIsChanged: false,
 
-        time: 0,
+        time: sessionStorage.getItem('serviceSelectedTime'),
         timeIsChanged: false,
 
         image: "",
@@ -278,7 +277,7 @@ export default class EditServicePage extends Component {
                         />
                     </FormGroup>
 
-                    <FormGroup controlId="image" bsSize="large">
+                  {/*  <FormGroup controlId="image" bsSize="large">
                         <ControlLabel>Immagine <small> (in Base64) </small></ControlLabel>
                         <FormControl
                             autoFocus
@@ -286,7 +285,7 @@ export default class EditServicePage extends Component {
                             onChange={this.handleImageChange}
                             type="text"
                         />
-                    </FormGroup>
+                    </FormGroup>*/}
 
                     <hr/>
 

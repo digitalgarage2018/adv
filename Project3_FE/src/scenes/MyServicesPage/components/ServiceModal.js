@@ -12,20 +12,22 @@ const serviceModal = (props) => {
     let isLoggedIn = sessionStorage.getItem('isLogged');
 
   
-    sessionStorage.setItem('name', props.title);
+    sessionStorage.setItem('serviceSelectedName', props.title);
+    sessionStorage.setItem('serviceSelectedType', props.type);
+    sessionStorage.setItem('serviceSelectedDescription', props.description);
+    sessionStorage.setItem('serviceSelectedPrice', props.price);
+    sessionStorage.setItem('serviceSelectedTime', props.time);
+    // sessionStorage.setItem('serviceSelectedImage', props.image);
 
 
+
+
+/*
     const editServiceHandler = (event) => {
         console.log('devo chiamare EditService per settare le proprietà di selected Service');
-
         // editService.setSelectedService("CIAO");
-
-
-
-
-
-
     }
+*/
 
 
     return (
@@ -59,11 +61,8 @@ const serviceModal = (props) => {
                 <DatePick onSelectedDate={props.selectedData}
                           serviceID={props.id}/>
 
-                <Button onClick={editServiceHandler} href={`/ModificaServizio`}> Modifica </Button>
-{/*
-                <Button onClick={this.handleClick}href={`/ModificaServizio`}>Modifica</Button>
-*/}
-
+                <Button href={`/ModificaServizio`}> Modifica </Button>
+            {/* <Button onClick={editServiceHandler} href={`/ModificaServizio`}>Modifica</Button> */}
 
             </Modal.Footer>
         </Modal>
