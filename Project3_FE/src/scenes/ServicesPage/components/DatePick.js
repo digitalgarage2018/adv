@@ -18,13 +18,9 @@ class DatePick extends React.Component {
     componentDidMount(){
         console.log('Sto facendo la chiamata ai servizi...');
         let url = 'http://localhost:8091/getDate/'+ this.props.serviceID;
-        console.log('prova url', url);
         axios.get(url)
             .then( response => {
 
-                console.log('res', response);
-                console.log('res.DATA:', response.data);
-                console.log('ARRAY:', response.data.response);
                 this.setState({dates: response.data.response});
                 }
 
@@ -54,8 +50,6 @@ class DatePick extends React.Component {
             let tmp = this.state.dates[i];
             arry.push(moment(tmp));
         }
-        console.log('ARRAAAAAAY ',arry);
-        console.log('DATA DUE',arry[0]);
 
 
         return (
@@ -64,8 +58,8 @@ class DatePick extends React.Component {
             onChange={this.handleChange}
             minDate={moment()}
             maxDate={moment().add(5, "months")}
-            showDisabledMonthNavigation
             excludeDates={arry}
+            placeholderText="Scegli una data"
 
         />
 

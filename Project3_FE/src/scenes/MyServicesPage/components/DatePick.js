@@ -22,9 +22,6 @@ class DatePick extends React.Component {
         axios.get(url)
             .then( response => {
 
-                    console.log('res', response);
-                    console.log('res.DATA:', response.data);
-                    console.log('ARRAY:', response.data.response);
                     this.setState({dates: response.data.response});
                 }
 
@@ -33,7 +30,7 @@ class DatePick extends React.Component {
                 this.setState({message: "Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})
             });
 
-    }
+    };
 
     handleChange(date) {
         let a = date.format();
@@ -54,8 +51,6 @@ class DatePick extends React.Component {
             let tmp = this.state.dates[i];
             arry.push(moment(tmp));
         }
-        console.log('ARRAAAAAAY ',arry);
-        console.log('DATA DUE',arry[0]);
 
 
         return (
