@@ -10,7 +10,6 @@ const error = {
 
 class CenterLogInPage extends Component {
 
-
         state = {
             isLogged: false,
 

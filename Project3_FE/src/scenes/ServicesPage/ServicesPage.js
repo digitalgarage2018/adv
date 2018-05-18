@@ -140,7 +140,6 @@ class ServicesPage extends Component {
                                <Navbar.Form pullLeft>
                                     <FormGroup>
                                         <FormControl
-
                                             autoFocus
                                             type="text"
                                             value={this.state.keyword}
