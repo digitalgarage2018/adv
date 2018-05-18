@@ -30,13 +30,12 @@ class DatePick extends React.Component {
 
     render() {
 
-
-
         return (
 
         <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
+            excludeDates={[moment(), moment().subtract(1, "days")]}
         />
 
         );
