@@ -12,6 +12,10 @@ const error = {
     color: 'red',
     textalign:'center'};
 
+let aligns={
+    textAlign: 'center'
+};
+
 
 
 class MyServicesPage extends Component {
@@ -77,20 +81,21 @@ class MyServicesPage extends Component {
     }
 
     handleSubmit = (event) => {
-        console.log('spedisco la keyword a BE per la Query... ');
-        event.preventDefault();
-        const url =  'http://localhost:8091/services/'+this.state.keyword;
-        axios.get(url)
-            .then(response => {
-
-                console.log('response della query', response.data.response);
-                this.setState({services: response.data.response});
-
-            })
-            .catch(error => {
-               console.log(error);
-
-            });
+        this.props.history.push('/AggiungiServizio');
+        // console.log('spedisco la keyword a BE per la Query... ');
+        // event.preventDefault();
+        // const url =  'http://localhost:8091/services/'+this.state.keyword;
+        // axios.get(url)
+        //     .then(response => {
+        //
+        //         console.log('response della query', response.data.response);
+        //         this.setState({services: response.data.response});
+        //
+        //     })
+        //     .catch(error => {
+        //        console.log(error);
+        //
+        //     });
 
     };
 
@@ -137,19 +142,10 @@ class MyServicesPage extends Component {
                                 <Navbar.Toggle />
                             </Navbar.Header>
                             <Navbar.Collapse>
-                               <Navbar.Form pullLeft>
-                                    <FormGroup>
-                                        <FormControl
+                               <Navbar.Form style={aligns}>
 
-                                            autoFocus
-                                            type="text"
-                                            value={this.state.keyword}
-                                            placeholder="Cerca..."
-                                            onChange={this.handleChange}
-                                        />
-                                    </FormGroup>{' '}
-                                    <Button onClick={(event) => this.handleSubmit(event)}>
-                                        <Glyphicon glyph="glyphicon glyphicon-search" />
+                                    <Button  onClick={(event) => this.handleSubmit(event)}>
+                                        <Glyphicon glyph="glyphicon glyphicon-plus" /> Aggiungi servizio
                                     </Button>
 
                                 </Navbar.Form>
