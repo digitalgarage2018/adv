@@ -4,11 +4,15 @@ import Web3 from 'web3';
 import DatePick from './DatePick';
 import {axiosinstance} from "../../../components/AxiosInstance/AxiosInstance";
 import {withRouter} from 'react-router-dom';
+import moment from 'moment';
+
 
 
 const serviceModal = (props) => {
     let isLoggedIn = sessionStorage.getItem('isLogged');
-
+    let a = moment().format();
+    let b = a.substring(0,10);
+    sessionStorage.setItem("date",b);
 
     let handleClick = () => {
 
@@ -29,7 +33,8 @@ const serviceModal = (props) => {
                     .then((res2) => {
 
                         console.log('Chiamata al Back end per registrare acquisto... ');
-                        const url =  'http://localhost:8091/purchase/'+ props.id + "/" + "2018-07-22";
+                        let datapost = sessionStorage.getItem('date');
+                        const url =  'http://localhost:8091/purchase/'+ props.id + "/" + datapost;
                         let instance = axiosinstance();
 
                         instance.post(url)

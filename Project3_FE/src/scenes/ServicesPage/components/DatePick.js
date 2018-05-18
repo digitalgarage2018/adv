@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import axios from "axios/index";
 
 class DatePick extends React.Component {
+
     constructor (props) {
         super(props);
         this.state = {
@@ -34,6 +35,7 @@ class DatePick extends React.Component {
     handleChange(date) {
         let a = date.format();
         let b = a.substring(0,10);
+        sessionStorage.setItem("date",b);
         this.setState({
             startDate: date,
             sendDate: b
