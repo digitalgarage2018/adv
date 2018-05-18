@@ -31,8 +31,12 @@ class logOutPage extends Component {
         instance.get('http://localhost:8070/logout')
             .then(response => {
                 sessionStorage.setItem('isLogged','false');
+                sessionStorage.setItem('isCenter','false');
+
                 this.props.history.push("/");
+
                 window.location.reload();
+
             })
             .catch(error => {
                 console.log(error);

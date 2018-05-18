@@ -9,6 +9,10 @@ import ProductsPage from "./scenes/ProductsPage/ProductsPage";
 import LogOutPage from "./scenes/LogOutPage/LogOutPage";
 import CenterLogInPage from './scenes/CenterLogInPage/CenterLogInPage';
 import AddServicePage from './scenes/AddServicePage/AddServicePage';
+import MyServicesPage from './scenes/MyServicesPage/MyServicesPage';
+import EditService from './scenes/EditService/EditService';
+
+
 
 
 export const AppRouter = (props) => {
@@ -26,6 +30,8 @@ export const AppRouter = (props) => {
                 <Route path="/Prodotti" component={ProductsPage}/>
                 <Route path="/LogOut" component={LogOutPage}/>
                 <Route path="/AggiungiServizio" component={AddServicePage}/>
+                <Route path="/MieiServizi" component={MyServicesPage}/>
+                <Route path="/ModificaServizio" component={EditService}/>
 
             </div>
         )

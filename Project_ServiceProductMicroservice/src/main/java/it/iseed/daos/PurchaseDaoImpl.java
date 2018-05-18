@@ -70,8 +70,9 @@ public class PurchaseDaoImpl implements PurchaseDao{
         }
     }
 
-	public List<PurchaseEntity> getInvalidDate(){
-		Query selectAll = entityManager.createQuery("select rr from PurchaseEntity rr order by pur_date");
+	public List<PurchaseEntity> getInvalidDate(long id){
+	    //search by service id in the purchase table
+		Query selectAll = entityManager.createQuery("select  rr.pur_date from PurchaseEntity rr  where rr.pur_serviceID like :id").setParameter("id", id);
 		return selectAll.getResultList();
 	}
 	

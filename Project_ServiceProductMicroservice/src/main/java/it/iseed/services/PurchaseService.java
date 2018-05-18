@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface PurchaseService {
 	public ResponseEntity<JsonResponseBody> addPurchase(PurchaseEntity purchaseEntity);
-	public List<PurchaseEntity> getInvalidDate() throws Exception;
+	public List<PurchaseEntity> getInvalidDate(long id) throws Exception;
 }
