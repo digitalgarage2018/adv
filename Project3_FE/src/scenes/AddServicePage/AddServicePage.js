@@ -146,10 +146,6 @@ export default class AddServicePage extends Component {
         } return null;
     }
 
-
-
-
-
     handleSubmit = (event) => {
         event.preventDefault();
 
