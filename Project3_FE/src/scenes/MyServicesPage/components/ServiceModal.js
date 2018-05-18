@@ -56,7 +56,8 @@ const serviceModal = (props) => {
 
             </Modal.Body>
             <Modal.Footer>
-                <DatePick onSelectedDate={props.selectedData}/>
+                <DatePick onSelectedDate={props.selectedData}
+                          serviceID={props.id}/>
 
                 <Button onClick={editServiceHandler} href={`/ModificaServizio`}> Modifica </Button>
 {/*

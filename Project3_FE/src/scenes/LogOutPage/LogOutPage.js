@@ -32,6 +32,8 @@ class logOutPage extends Component {
             .then(response => {
                 sessionStorage.setItem('isLogged','false');
                 sessionStorage.setItem('isCenter','false');
+                sessionStorage.setItem('jwt','');
+
 
                 this.props.history.push("/");
 

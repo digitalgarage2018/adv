@@ -1,6 +1,5 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
-import Web3 from 'web3';
 import DatePick from './DatePick';
 import {axiosinstance} from "../../../components/AxiosInstance/AxiosInstance";
 
@@ -98,7 +97,9 @@ const serviceModal = (props) => {
 
             </Modal.Body>
             <Modal.Footer>
-                <DatePick onSelectedDate={props.selectedData}/>
+                <DatePick
+                    onSelectedDate={props.selectedData}
+                    serviceID={props.id}/>
                 {isLoggedIn ? (
                     <Button onClick={handleClick}> Paga con MetaMask </Button>
                 ) : (<Button href={`/LogIn`}>Acquista</Button>)}
