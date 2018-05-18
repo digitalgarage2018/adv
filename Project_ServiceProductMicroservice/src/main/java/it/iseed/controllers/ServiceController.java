@@ -1,17 +1,28 @@
 package it.iseed.controllers;
 
+import java.util.LinkedHashMap;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import it.iseed.entities.JsonResponseBody;
 import it.iseed.entities.ServiceEntity;
+import it.iseed.entities.WellnessCenterEntity;
 import it.iseed.services.ServiceService;
+import it.iseed.utils.JwtUtils;
 
 @CrossOrigin("*")
 
@@ -56,6 +67,42 @@ public class ServiceController {
          return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No connection DB"));
         }
       
+
+    }
+    
+    
+    //Get the list of services linked to a Wellness Center by JWT
+    @RequestMapping(value = "/servicesCenter/", method = RequestMethod.GET,headers="Accept=application/json")
+    public ResponseEntity<JsonResponseBody> getListOfProductsByUser( HttpServletRequest request){
+
+        WellnessCenterEntity centerEntity= new WellnessCenterEntity();
+        /////////////////////////////////////////////////////////////////////////////
+        String jwt = JwtUtils.getJwtFromHttpRequest(request);
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+        headers.add("jwt", jwt);
+        HttpEntity<?> request_2 = new HttpEntity(String.class, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        try {/////////////////////////////////////////////////////checkjwtcenter///////////////////////////get
+            ResponseEntity<JsonResponseBody> responseEntity = restTemplate.exchange("http://localhost:8070/checkjwtcenter", HttpMethod.GET, request_2, JsonResponseBody.class);
+            int answer = (int) responseEntity.getBody().getServer();
+            if (answer!=200){
+                return responseEntity;
+            }
+            else {
+                LinkedHashMap user = (LinkedHashMap) responseEntity.getBody().getResponse();
+                String name = (String) user.get("w_name");/////////////////////////name of wellness center
+                centerEntity.setW_name(name);
+
+            }
+        }catch (Exception e){
+            System.out.println("eccezione: " + e);
+            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: "+e ));
+        }
+        ////////////////////////////////////////////////////////////////////////
+
+       // return productService.getListOfProductsByUser(loginEntity);
+        return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), serviceService.getListOfServicesByCenter(centerEntity)));
 
     }
 
