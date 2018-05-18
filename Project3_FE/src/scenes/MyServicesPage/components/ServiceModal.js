@@ -99,9 +99,8 @@ const serviceModal = (props) => {
             </Modal.Body>
             <Modal.Footer>
                 <DatePick onSelectedDate={props.selectedData}/>
-                {isLoggedIn ? (
-                    <Button onClick={handleClick}> Paga con MetaMask </Button>
-                ) : (<Button href={`/LogIn`}>Acquista</Button>)}
+
+                <Button href={`/ModificaServizio`}>Modifica</Button>
 
             </Modal.Footer>
         </Modal>
