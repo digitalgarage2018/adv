@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import DatePicker from '../../scenes/ServicesPage/components/DatePicker'
+import DatePicker from '../../scenes/ServicesPage/components/DatePick'
 export const buyService = (userData) => {
 
     return axios.post('http://localhost:8070/login', {

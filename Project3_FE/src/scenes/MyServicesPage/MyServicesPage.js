@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import {Navbar, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
 
-import './ServicesPage.css';
+import './MyServicesPage.css';
 import Service from './components/Service';
 import ServiceModal from './components/ServiceModal';
 
@@ -14,7 +14,7 @@ const error = {
 
 
 
-class ServicesPage extends Component {
+class MyServicesPage extends Component {
 
     state = {
         services: [],
@@ -186,6 +186,6 @@ class ServicesPage extends Component {
     }
 }
 
-export default ServicesPage;
+export default MyServicesPage;
 
 
