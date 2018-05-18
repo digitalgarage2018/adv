@@ -6,6 +6,7 @@ import { Button, FormGroup, FormControl, ControlLabel, Checkbox } from "react-bo
 
 import './AddServicePage.css';
 import imagedefault from '../../images/home.jpg';
+import ImageUpload from '../../components/ImageUpload/ImageUpload';
 
 const error = {
     color: 'red',
@@ -151,9 +152,6 @@ export default class AddServicePage extends Component {
 
         console.log('stato dopo la submit: ', this.state);
 
-        if (this.state.image.length<50){
-            this.setState({image:imagedefault});
-        }
         let instance = axiosinstance();
         instance.post('http://localhost:8091/addService', {
 
@@ -162,7 +160,7 @@ export default class AddServicePage extends Component {
 	        sr_description:this.state.description,
 	        sr_price:this.state.price,
 	        sr_time:this.state.time,
-	        sr_image:this.state.image
+	        sr_image:sessionStorage.getItem('imageUploaded')
 	        
         })
             .then( response => {
@@ -186,6 +184,11 @@ export default class AddServicePage extends Component {
                 }
             });
 
+    }
+
+
+    provaFunc(){
+        console.log();
     }
 
     render() {
@@ -259,15 +262,19 @@ export default class AddServicePage extends Component {
                             />
                         </FormGroup>
 
-                        <FormGroup controlId="image" bsSize="large">
+                        {/*<FormGroup controlId="image" bsSize="large">
                             <ControlLabel>Immagine <small> (in Base64) </small></ControlLabel>
                             <FormControl
                                 autoFocus
                                 value={this.state.image}
                                 onChange={this.handleImageChange}
-                                type="text"
+                                type="file"
                             />
-                        </FormGroup>
+                        </FormGroup>*/}
+
+                        <ImageUpload
+
+                        />
 
                         <hr/>
 
