@@ -1,10 +1,13 @@
 package it.iseed.services;
 
-import it.iseed.daos.ServiceDao;
-import it.iseed.entities.ServiceEntity;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import it.iseed.daos.ServiceDao;
+import it.iseed.entities.ServiceEntity;
+import it.iseed.entities.WellnessCenterEntity;
 
 @Service
 public class ServiceServiceImpl implements ServiceService {
@@ -51,6 +54,11 @@ public class ServiceServiceImpl implements ServiceService {
         }
         return ret;
     }
+    
+    //Get the list of services linked to a Wellness Center
+    public List<ServiceEntity> getListOfServicesByCenter(WellnessCenterEntity centerEntity){
+        return this.serviceDao.getListOfServicesByCenter(centerEntity);
 
+    }
 
 }
