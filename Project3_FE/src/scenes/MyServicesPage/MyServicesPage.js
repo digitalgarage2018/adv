@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import axios from "axios";
-import {Navbar, FormGroup, FormControl, Button, Glyphicon } from 'react-bootstrap';
+import {axiosinstance} from "../../components/AxiosInstance/AxiosInstance";
+
+import {Navbar, Button, Glyphicon } from 'react-bootstrap';
+import {Col, Grid, Row} from 'react-bootstrap';
 
 import './MyServicesPage.css';
 import Service from './components/Service';
 import ServiceModal from './components/ServiceModal';
 
-import {Col, Grid, Row} from 'react-bootstrap';
+
 
 const error = {
     color: 'red',
@@ -35,8 +37,10 @@ class MyServicesPage extends Component {
     };
 
     componentDidMount(){
+
         console.log('Sto facendo la chiamata ai servizi...');
-        axios.get('http://localhost:8091/services/')
+        let instance = axiosinstance();
+        instance.get('http://localhost:8091/servicesCenter/')
             .then( response => {
                 console.log('res', response);
 
@@ -48,7 +52,6 @@ class MyServicesPage extends Component {
             .catch(error => {
                 this.setState({message: "Ci dispiace ma qualcosa è andato storto... riprova più tardi!"})
             });
-
     }
 
 
@@ -82,21 +85,6 @@ class MyServicesPage extends Component {
 
     handleSubmit = (event) => {
         this.props.history.push('/AggiungiServizio');
-        // console.log('spedisco la keyword a BE per la Query... ');
-        // event.preventDefault();
-        // const url =  'http://localhost:8091/services/'+this.state.keyword;
-        // axios.get(url)
-        //     .then(response => {
-        //
-        //         console.log('response della query', response.data.response);
-        //         this.setState({services: response.data.response});
-        //
-        //     })
-        //     .catch(error => {
-        //        console.log(error);
-        //
-        //     });
-
     };
 
 

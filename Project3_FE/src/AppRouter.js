@@ -10,7 +10,7 @@ import LogOutPage from "./scenes/LogOutPage/LogOutPage";
 import CenterLogInPage from './scenes/CenterLogInPage/CenterLogInPage';
 import AddServicePage from './scenes/AddServicePage/AddServicePage';
 import MyServicesPage from './scenes/MyServicesPage/MyServicesPage';
-import EditService from './scenes/EditService/EditService';
+import EditService from './scenes/EditServicePage/EditServicePage';
 
 
 

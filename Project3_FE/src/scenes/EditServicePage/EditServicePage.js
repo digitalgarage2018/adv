@@ -2,8 +2,12 @@ import React, { Component } from "react";
 import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
-import './EditService.css';
+import './EditServicePage.css';
 import imagedefault from '../../images/home.jpg';
+
+// import { editService } from '../../services/EditService/EditService';
+
+
 
 
 const error = {
@@ -11,10 +15,10 @@ const error = {
     textalign:'center'};
 
 
-export default class EditPage extends Component {
+export default class EditServicePage extends Component {
 
     state = {
-        name: "",
+        name: sessionStorage.getItem('name'),
         nameIsChanged: false,
 
         type: "",
@@ -29,9 +33,19 @@ export default class EditPage extends Component {
         time: 0,
         timeIsChanged: false,
 
-        image: ""
+        image: "",
+
+        serviceID: 0
     };
 
+    componentDidMount() {
+        console.log('devo chiamare il GETTER di EditService per prendere le info del selectedService');
+
+        // editService.getSelectedService();
+
+
+
+    }
 
     validateForm() {
 
@@ -158,8 +172,9 @@ export default class EditPage extends Component {
         if (this.state.image.length<50){
             this.setState({image:imagedefault});
         }
+        let url = 'http://localhost:8091/updateService/'+this.state.serviceID;
         let instance = axiosinstance();
-        instance.post('http://localhost:8091/addService', {
+        instance.put(url, {
 
             sr_name:this.state.name,
             sr_type:this.state.type,
@@ -175,7 +190,7 @@ export default class EditPage extends Component {
                 if (response.data.server === 406)
                 {this.setState({message:"Non hai i permessi per aggiungere un servizio. Loggati come centro benessere"})}
                 else{
-                    this.props.history.push("/Servizi");
+                    this.props.history.push("/MieiServizi");
                     window.location.reload();
                 }
 

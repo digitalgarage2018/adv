@@ -1,71 +1,29 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
-import Web3 from 'web3';
 import DatePick from './DatePick';
-import {axiosinstance} from "../../../components/AxiosInstance/AxiosInstance";
-
-/*let handleClick = () => {
-
-
-let web3js = new Web3(window.web3.currentProvider);
-    let address = "";
-    web3js.eth.getAccounts()
-        .then((res) => {
-
-            address = res[0];
-
-            web3js.eth.sendTransaction({
-            to: '0x6Dc8956E655Ccd80187265107b848D8c5B6d2459',
-            from: address,
-            value: web3js.utils.toWei('1', 'ether'),
-        })
-            .then((res2) => {
-                console.log(`ho effettuato Metamask ${res}`);
-               /!* console.log('Chiamata al Back end per registrare acquisto... ');
-
-
-                const url =  'http://localhost:8091/purchase/'+ props.id + "/" + "";
-                let instance = axiosinstance();
-
-                instance.post('http://localhost:8070/purchase/{service_id}/{purchase_date}')
-                    .then(response => {
-
-                        sessionStorage.setItem('isLogged','false');
-                        this.props.history.push("/");
-                        window.location.reload();
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });*!/
-
-            })
-    })
-        .catch((err) => {
-            console.log('err', err);
-    });
-};*/
-
+// import { editService } from '../../../services/EditService/EditService';
 
 
 const serviceModal = (props) => {
+
+
+
+
     let isLoggedIn = sessionStorage.getItem('isLogged');
 
+  
+    sessionStorage.setItem('name', props.title);
 
-    let handleClick = () => {
 
-        console.log('Chiamata al Back end per registrare acquisto... ');
+    const editServiceHandler = (event) => {
+        console.log('devo chiamare EditService per settare le proprietà di selected Service');
 
-        // 'http://localhost:8070/purchase/{service_id}/{purchase_date}'
-        const url =  'http://localhost:8091/purchase/'+ props.id + "/" + "2018-07-21";
-        let instance = axiosinstance();
+        // editService.setSelectedService("CIAO");
 
-        instance.post(url)
-            .then(response => {
 
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);});
+
+
+
 
     }
 
@@ -100,7 +58,11 @@ const serviceModal = (props) => {
             <Modal.Footer>
                 <DatePick onSelectedDate={props.selectedData}/>
 
-                <Button href={`/ModificaServizio`}>Modifica</Button>
+                <Button onClick={editServiceHandler} href={`/ModificaServizio`}> Modifica </Button>
+{/*
+                <Button onClick={this.handleClick}href={`/ModificaServizio`}>Modifica</Button>
+*/}
+
 
             </Modal.Footer>
         </Modal>
