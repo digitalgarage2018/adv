@@ -54,10 +54,10 @@ public class PurchaseServiceImpl  implements PurchaseService {
 		//System.out.println("sono quiiiiii");
 	}
 
-	public List<PurchaseEntity> getInvalidDate() throws Exception{
+	public List<PurchaseEntity> getInvalidDate(long id) throws Exception{
 		List<PurchaseEntity> ret = null;
 		try {
-			ret = this.purchaseDao.getInvalidDate();
+			ret = this.purchaseDao.getInvalidDate(id);
 		}catch (Exception e){
 			throw new Exception("Impossibile raggiungere DB");
 		}
