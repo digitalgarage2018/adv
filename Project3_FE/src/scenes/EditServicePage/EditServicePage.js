@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+
 import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
 import { Button, FormGroup, FormControl, ControlLabel, Glyphicon } from "react-bootstrap";
 
+import DeleteModal from './components/DeleteModal';
 import './EditServicePage.css';
 
 
@@ -45,8 +47,9 @@ export default class EditServicePage extends Component {
         serviceID: sessionStorage.getItem('serviceSelectedID'),
 
         file: '',
-        imagePreviewUrl: sessionStorage.getItem('serviceSelectedImage')
+        imagePreviewUrl: sessionStorage.getItem('serviceSelectedImage'),
 
+        showModal: false
     };
 
     componentDidMount() {
@@ -230,8 +233,13 @@ export default class EditServicePage extends Component {
 
     }
 
-    deleteServiceHandler() {
-        console.log('devo eliminare il servizio chiamando il BE ... (da implementare)');
+    closeModalHandler() {
+        this.setState({showModal: false});
+    }
+
+    openModalHandler() {
+        console.log('devo aprire il modale di conferma ... ');
+        this.setState({showModal: true});
     }
 
     render() {
@@ -253,7 +261,7 @@ export default class EditServicePage extends Component {
                         INFORMAZIONI SERVIZIO
 
 
-                            <Button style={floatRight} bsStyle="primary" onClick={(event) => this.deleteServiceHandler(event)}>
+                            <Button style={floatRight} bsStyle="primary" onClick={(event) => this.openModalHandler(event)}>
                                 <Glyphicon glyph="glyphicon glyphicon-trash" />
                             </Button>
 
@@ -361,12 +369,22 @@ export default class EditServicePage extends Component {
                     </Button>
 
                 </form>
+
+                <DeleteModal
+                    show={this.state.showModal}
+                    hide={() => this.closeModalHandler()}
+                    id={this.state.serviceID}
+                />
+
+
             </div>
 
         )
 
     }
 }
+
+
 
 
 
