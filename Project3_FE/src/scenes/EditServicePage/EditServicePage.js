@@ -1,13 +1,30 @@
 import React, { Component } from "react";
-import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
+import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
+import { Button, FormGroup, FormControl, ControlLabel, Glyphicon } from "react-bootstrap";
+
+import DeleteModal from './components/DeleteModal';
 import './EditServicePage.css';
 
 
 const error = {
     color: 'red',
     textalign:'center'};
+
+const uploadButton = {
+    display: 'none'
+};
+
+const imagePreview = {
+    width: '100%',
+    marginTop: '35px',
+    marginBottom: '35px',
+    textAlign: 'center'
+};
+
+const floatRight = {
+    float: 'right'
+}
 
 export default class EditServicePage extends Component {
 
@@ -30,8 +47,9 @@ export default class EditServicePage extends Component {
         serviceID: sessionStorage.getItem('serviceSelectedID'),
 
         file: '',
-        imagePreviewUrl: sessionStorage.getItem('serviceSelectedImage')
+        imagePreviewUrl: sessionStorage.getItem('serviceSelectedImage'),
 
+        showModal: false
     };
 
     componentDidMount() {
@@ -166,9 +184,6 @@ export default class EditServicePage extends Component {
     }
 
 
-
-
-
     handleSubmit = (event) => {
         event.preventDefault();
         console.log('stato dopo la submit: ', this.state);
@@ -191,13 +206,20 @@ export default class EditServicePage extends Component {
             .then( response => {
 
                 console.log("Stato dopo l'inserimento: ", this.state);
-                if (response.data.server === 406)
-                {this.setState({message:"Non hai i permessi per aggiungere un servizio. Loggati come centro benessere"})}
-                else{
+                if (response.data.server === 201)
+                {
                     this.props.history.push("/MieiServizi");
                     window.location.reload();
-                }
-
+                   }
+                else if (response.data.server === 406){
+                    this.setState({message:"Non hai i permessi per modificare un servizio. Accedi come centro benessere"});
+                }else if(response.data.server === 504) {
+                    this.setState({message:"Sessione scaduta. Per favore accedi nuovamente"});
+                }else if(response.data.server === 403) {
+                    this.setState({message:"Per favore accedi"});
+                }else {
+                    this.setState({message:"Ci scusiamo, vi è stato un errore: "+response.data.response});
+                }  
 
             })
             .catch( error => {
@@ -205,10 +227,19 @@ export default class EditServicePage extends Component {
                     this.setState({message:"Inserire degli interi maggiori di zero in prezzo e durata"})
                 }
                 else{
-                    this.setState({message:error.response.data.response})
+                    this.setState({message:"Ci scusiamo, vi è stato un errore: "+error.response.data.response})
                 }
             });
 
+    }
+
+    closeModalHandler() {
+        this.setState({showModal: false});
+    }
+
+    openModalHandler() {
+        console.log('devo aprire il modale di conferma ... ');
+        this.setState({showModal: true});
     }
 
     render() {
@@ -216,7 +247,7 @@ export default class EditServicePage extends Component {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<div className="imgPreview"> <img src={imagePreviewUrl} /> </div>);
+            $imagePreview = (<div> <img style={imagePreview} src={imagePreviewUrl} /> </div>);
         } else {
             $imagePreview = (null);
         }
@@ -226,8 +257,19 @@ export default class EditServicePage extends Component {
 
             <div className="AddServicePage">
                 <form onSubmit={this.handleSubmit}>
+                    <h3>
+                        INFORMAZIONI SERVIZIO
 
-                    <h3> INFORMAZIONI SERVIZIO </h3>
+
+                            <Button style={floatRight} bsStyle="primary" onClick={(event) => this.openModalHandler(event)}>
+                                <Glyphicon glyph="glyphicon glyphicon-trash" />
+                            </Button>
+
+
+
+
+                    </h3>
+
                     <hr />
                     <FormGroup
                         controlId="name"
@@ -293,12 +335,20 @@ export default class EditServicePage extends Component {
 
                     <FormGroup controlId="image" bsSize="large">
                         <ControlLabel> Immagine </ControlLabel>
+                        <br />
+                        <label htmlFor="image" className="btn btn-primary">
+
+
                         <FormControl
                             autoFocus
+                            id="image"
                             onChange={(e)=>this.handleImageChange(e)}
                             type="file"
-                            label='prova'
+                            style={uploadButton}
                         />
+                            Scegli file
+                        </label>
+                        {'  '} Seleziona un'immagine...
                     </FormGroup>
 
                     <div>
@@ -319,12 +369,22 @@ export default class EditServicePage extends Component {
                     </Button>
 
                 </form>
+
+                <DeleteModal
+                    show={this.state.showModal}
+                    hide={() => this.closeModalHandler()}
+                    id={this.state.serviceID}
+                />
+
+
             </div>
 
         )
 
     }
 }
+
+
 
 
 

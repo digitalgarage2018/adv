@@ -7,4 +7,5 @@ import org.springframework.http.ResponseEntity;
 public interface WellnessCenterService {
     public ResponseEntity<JsonResponseBody> addService(ServiceEntity serviceEntity);
     public ResponseEntity<JsonResponseBody> updateService(ServiceEntity serviceEntity);
+	public void deleteService(long sr_serviceID);
 }

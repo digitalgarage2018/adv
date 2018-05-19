@@ -1,7 +1,6 @@
 import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import DatePick from './DatePick';
-// import { editService } from '../../../services/EditService/EditService';
 
 
 const serviceModal = (props) => {
@@ -19,16 +18,6 @@ const serviceModal = (props) => {
     sessionStorage.setItem('serviceSelectedTime', props.time);
     sessionStorage.setItem('serviceSelectedID', props.id);
     sessionStorage.setItem('serviceSelectedImage', props.image);
-
-
-
-
-/*
-    const editServiceHandler = (event) => {
-        console.log('devo chiamare EditService per settare le proprietà di selected Service');
-        // editService.setSelectedService("CIAO");
-    }
-*/
 
 
     return (

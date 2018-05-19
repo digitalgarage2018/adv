@@ -33,7 +33,7 @@ public class WellnessCenterDaoImpl implements WellnessCenterDao{
 
         return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.CREATED.value(), "Inserimento riuscito"));
         }catch (Exception e){
-        	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "Errore: "+e));
+        	return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "Errore: "+e));
         }
     }
     
@@ -54,8 +54,16 @@ public class WellnessCenterDaoImpl implements WellnessCenterDao{
  		
         return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.CREATED.value(), "Aggiornamento riuscito"));
         }catch(Exception e){
-        	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "Errore: "+e));
+        	return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "Errore: "+e));
         }
+    }
+    
+    public void deleteService(long sr_serviceID){
+    	String query = "delete from services where sr_serviceID = ?";
+		 entityManager.createNativeQuery(query)
+		    .setParameter(1, sr_serviceID)
+		    .executeUpdate();
+		 System.out.println("Eliminato servizio con ID: "+sr_serviceID);
     }
 
 }

@@ -7,6 +7,6 @@ import org.springframework.http.ResponseEntity;
 public interface WellnessCenterDao {
     public ResponseEntity<JsonResponseBody> addService(ServiceEntity serviceEntity);
     public ResponseEntity<JsonResponseBody> updateService(ServiceEntity serviceEntity);
-
+	public void deleteService(long sr_serviceID);
 
 }

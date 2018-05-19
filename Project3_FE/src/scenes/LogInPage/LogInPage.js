@@ -159,6 +159,7 @@ class LogInPage extends Component {
                             <br/>
                             <br/>
                            </form>
+
                         <div align="center">
 
                             <Link to="/WellnessCenterLogIn"> Accedi come Centro Benessere </Link>

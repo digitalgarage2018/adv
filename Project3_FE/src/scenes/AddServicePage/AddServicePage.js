@@ -8,6 +8,18 @@ const error = {
     textalign:'center'};
 
 
+const uploadButton = {
+    display: 'none'
+};
+
+const imagePreview = {
+    width: '100%',
+    marginTop: '35px',
+    marginBottom: '35px',
+    textAlign: 'center'
+};
+
+
 export default class AddServicePage extends Component {
 
     state = {
@@ -171,18 +183,26 @@ export default class AddServicePage extends Component {
         }).then( response => {
 
                 console.log("Stato dopo l'inserimento: ", this.state);
-                if (response.data.server === 406)
-                {this.setState({message:"Non hai i permessi per aggiungere un servizio. Loggati come centro benessere"})}
-                else{
-                this.props.history.push("/MieiServizi");
-                window.location.reload();
-                }
+                if (response.data.server === 201)
+                {
+                    this.props.history.push("/MieiServizi");
+                    window.location.reload();
+                   }
+                else if (response.data.server === 406){
+                    this.setState({message:"Non hai i permessi per aggiungere un servizio. Accedi come centro benessere"});
+                }else if(response.data.server === 504) {
+                    this.setState({message:"Sessione scaduta. Per favore accedi nuovamente"});
+                }else if(response.data.server === 403) {
+                    this.setState({message:"Per favore accedi"});
+                }else {
+                    this.setState({message:"Ci scusiamo, vi è stato un errore: "+response.data.response});
+                }   
         }).catch( error => {
                 if (error.response.status === 400){
-                    this.setState({message:"Inserire degli interi maggiori di zero in prezzo e durata"})
+                    this.setState({message:"Inserire degli interi maggiori di zero in prezzo e durata"});
                 }
                 else{
-                    this.setState({message:error.response.data.response})
+                    this.setState({message:"Ci scusiamo, vi è stato un errore: "+error.response.data.response});
                 }
             });
     }
@@ -192,7 +212,7 @@ export default class AddServicePage extends Component {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<div className="imgPreview"> <img src={imagePreviewUrl} /> </div>);
+            $imagePreview = (<div> <img style={imagePreview} src={imagePreviewUrl} /> </div>);
         } else {
             $imagePreview = (null);
         }
@@ -268,11 +288,19 @@ export default class AddServicePage extends Component {
 
                         <FormGroup controlId="image" bsSize="large">
                             <ControlLabel> Immagine </ControlLabel>
+                            <br />
+                            <label htmlFor="image" className="btn btn-primary">
+
+
                             <FormControl
                                 autoFocus
                                 onChange={(e)=>this.handleImageChange(e)}
                                 type="file"
+                                style={uploadButton}
                             />
+                                Scegli file
+                            </label>
+                            {'  '} Seleziona un'immagine...
                         </FormGroup>
 
                         <div>

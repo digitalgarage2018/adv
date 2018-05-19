@@ -126,6 +126,7 @@ public class WellnessCenterController {
                 }
                 //fine Controllo JWT
                 
+                //controllo che il centro benessere che sta per modificare il servizio sia il possessore di tale servizio
                 ServiceEntity serviceTmp = null;
                 try {
                     //TODO potrei trasformarlo in responseEntity, così da gestirlo meglio
@@ -149,6 +150,66 @@ public class WellnessCenterController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new JsonResponseBody(HttpStatus.FORBIDDEN.value(), "I campi devono tutti essere valorizzati: "));
 
         }
+    }
+    
+    
+    @RequestMapping(value = "/deleteService/{sr_serviceID}", method = RequestMethod.GET,headers = "Accept=application/json")
+    public ResponseEntity<JsonResponseBody> deleteService(@PathVariable long sr_serviceID, HttpServletRequest request) {
+
+    	//Controllo JWT
+        String jwt = JwtUtils.getJwtFromHttpRequest(request);
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<String, String>();
+        headers.add("jwt", jwt);
+        HttpEntity<?> request_2 = new HttpEntity(String.class, headers);
+        String name = null;
+
+        ServiceEntity serviceEntity = new ServiceEntity();
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<JsonResponseBody> responseEntity = restTemplate.exchange("http://localhost:8070/checkjwtcenter", HttpMethod.POST, request_2, JsonResponseBody.class);
+            int answer = (int) responseEntity.getBody().getServer();
+            if (answer != 200) {
+                return responseEntity;
+            } else {
+                LinkedHashMap center = (LinkedHashMap) responseEntity.getBody().getResponse();
+                //String name = (String) center.get("w_username");
+                name = (String) center.get("w_name");
+                serviceEntity.setSr_wellness_center(name);
+
+            }
+        } catch (Exception e) {
+            System.out.println("eccezione: " + e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: " + e));
+        }
+        //fine Controllo JWT
+        
+        //controllo che il centro benessere che sta per eliminare il servizio sia il possessore di tale servizio
+        ServiceEntity serviceTmp = null;
+        try {
+            //TODO potrei trasformarlo in responseEntity, così da gestirlo meglio
+            serviceTmp = ServiceService.getServiceById(sr_serviceID);
+            //
+        } catch (Exception e) {
+            System.out.println("eccezione: " + e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: " + e));
+        }
+        System.out.println("nome del centro del servizio da eliminare: |" + name + "!");
+        System.out.println("nome del centro del servizio che elimina: |" + serviceTmp.getSr_wellness_center() + "!");
+        
+        try {
+	        if (name.equals(serviceTmp.getSr_wellness_center())) {
+	            System.out.println("richiamo l'update");
+	            serviceEntity.setSr_serviceID(sr_serviceID);
+	            wellnessCenterService.deleteService(sr_serviceID);
+	            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.OK.value(), "Service deleted succesfully"));
+	        } else {
+	            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.NOT_ACCEPTABLE.value(), "You have no permissions to do this: "));
+	        }
+        } catch (Exception e) {
+            System.out.println("eccezione: " + e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: " + e));
+        }
+
     }
 
 }

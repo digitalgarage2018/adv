@@ -30,4 +30,8 @@ public class WellnessCenterServiceImpl implements WellnessCenterService{
         	return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "Errore: "+e));
         }
     }
+    
+    public void deleteService(long sr_serviceID){
+    	wellnessCenterDao.deleteService(sr_serviceID);
+    }
 }
