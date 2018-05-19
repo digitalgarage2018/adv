@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import { Button, FormGroup, FormControl, ControlLabel, Glyphicon } from "react-bootstrap";
 
 import './EditServicePage.css';
 
@@ -19,6 +19,10 @@ const imagePreview = {
     marginBottom: '35px',
     textAlign: 'center'
 };
+
+const floatRight = {
+    float: 'right'
+}
 
 export default class EditServicePage extends Component {
 
@@ -226,6 +230,10 @@ export default class EditServicePage extends Component {
 
     }
 
+    deleteServiceHandler() {
+        console.log('devo eliminare il servizio chiamando il BE ... (da implementare)');
+    }
+
     render() {
 
         let {imagePreviewUrl} = this.state;
@@ -241,8 +249,19 @@ export default class EditServicePage extends Component {
 
             <div className="AddServicePage">
                 <form onSubmit={this.handleSubmit}>
+                    <h3>
+                        INFORMAZIONI SERVIZIO
 
-                    <h3> INFORMAZIONI SERVIZIO </h3>
+
+                            <Button style={floatRight} bsStyle="primary" onClick={(event) => this.deleteServiceHandler(event)}>
+                                <Glyphicon glyph="glyphicon glyphicon-trash" />
+                            </Button>
+
+
+
+
+                    </h3>
+
                     <hr />
                     <FormGroup
                         controlId="name"
