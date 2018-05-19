@@ -15,7 +15,7 @@ const service = (props) => {
                 <CardBody>
                     <CardTitle>{props.name}</CardTitle>
                     <CardSubtitle>{props.type}</CardSubtitle>
-                    <Button bsStyle="primary" block onClick={props.click}> Acquista </Button>
+                    <Button bsStyle="primary" block onClick={props.click}> Vedi Dettagli </Button>
                 </CardBody>
             </Card>
         </div>
