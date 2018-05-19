@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-
 import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
-
-import { Button, FormGroup, FormControl, ControlLabel, Checkbox } from "react-bootstrap";
-
+import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import './AddServicePage.css';
-import imagedefault from '../../images/home.jpg';
-import ImageUpload from '../../components/ImageUpload/ImageUpload';
 
 const error = {
     color: 'red',
@@ -31,7 +26,8 @@ export default class AddServicePage extends Component {
         time: 0,
         timeIsChanged: false,
 
-        image: ""
+        file: '',
+        imagePreviewUrl: ''
     };
 
     validateForm() {
@@ -70,7 +66,6 @@ export default class AddServicePage extends Component {
         });
     }
 
-
     handlePriceChange = event => {
 
         this.setState({
@@ -87,11 +82,20 @@ export default class AddServicePage extends Component {
         });
     }
 
-    handleImageChange = event => {
+    handleImageChange(e) {
+        e.preventDefault();
 
-        this.setState({
-            [event.target.id]: event.target.value,
-        });
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                imagePreviewUrl: reader.result
+            });
+        }
+
+        reader.readAsDataURL(file)
     }
 
     getNameValidationState() {
@@ -149,8 +153,10 @@ export default class AddServicePage extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-
         console.log('stato dopo la submit: ', this.state);
+
+        sessionStorage.setItem('imageUploaded', this.state.imagePreviewUrl);
+        console.log('handle uploading: ', this.state.file);
 
         let instance = axiosinstance();
         instance.post('http://localhost:8091/addService', {
@@ -162,8 +168,7 @@ export default class AddServicePage extends Component {
 	        sr_time:this.state.time,
 	        sr_image:sessionStorage.getItem('imageUploaded')
 	        
-        })
-            .then( response => {
+        }).then( response => {
 
                 console.log("Stato dopo l'inserimento: ", this.state);
                 if (response.data.server === 406)
@@ -172,10 +177,7 @@ export default class AddServicePage extends Component {
                 this.props.history.push("/MieiServizi");
                 window.location.reload();
                 }
-
-
-            })
-            .catch( error => {
+        }).catch( error => {
                 if (error.response.status === 400){
                     this.setState({message:"Inserire degli interi maggiori di zero in prezzo e durata"})
                 }
@@ -183,16 +185,18 @@ export default class AddServicePage extends Component {
                     this.setState({message:error.response.data.response})
                 }
             });
-
-    }
-
-
-    provaFunc(){
-        console.log();
     }
 
     render() {
-        
+
+        let {imagePreviewUrl} = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+            $imagePreview = (<img src={imagePreviewUrl} />);
+        } else {
+            $imagePreview = (null);
+        }
+
             return (
 
                 <div className="AddServicePage">
@@ -262,22 +266,21 @@ export default class AddServicePage extends Component {
                             />
                         </FormGroup>
 
-                        {/*<FormGroup controlId="image" bsSize="large">
-                            <ControlLabel>Immagine <small> (in Base64) </small></ControlLabel>
+                        <FormGroup controlId="image" bsSize="large">
+                            <ControlLabel> Immagine </ControlLabel>
                             <FormControl
                                 autoFocus
-                                value={this.state.image}
-                                onChange={this.handleImageChange}
+                                onChange={(e)=>this.handleImageChange(e)}
                                 type="file"
+
                             />
-                        </FormGroup>*/}
+                        </FormGroup>
 
-                        <ImageUpload
-
-                        />
+                        <div className="imgPreview">
+                           {$imagePreview}
+                        </div>
 
                         <hr/>
-
                         <h4 align="center" style={error}> {this.state.message}</h4>
 
                         <Button
