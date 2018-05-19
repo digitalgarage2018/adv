@@ -97,7 +97,7 @@ public class ServiceController {
             }
         }catch (Exception e){
             System.out.println("eccezione: " + e);
-            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: "+e ));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: "+e ));
         }
         ////////////////////////////////////////////////////////////////////////
 

@@ -46,7 +46,18 @@ class MyServicesPage extends Component {
                 console.log('res', response);
 
                 console.log('res.data', response.data);
-                    this.setState({services: response.data.response});
+
+                    if (response.data.server === 200) {
+                        this.setState({services: response.data.response});
+                    }else if(response.data.server === 406) {
+                        this.setState({services: [], message: "Non hai i permessi per vedere questi servizi"});
+                    }else if(response.data.server === 504) {
+                        this.setState({services: [], message: "Sessione scaduta. Per favore accedi nuovamente"});
+                    }else if(response.data.server === 403) {
+                        this.setState({services: [], message: "Per favore accedi"});
+                    }else {
+                        this.setState({services: [], message: "Non ci sono servizi da visualizzare"});
+                    }   
                 }
 
             )
