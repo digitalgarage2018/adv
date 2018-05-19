@@ -44,7 +44,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-
+/*
     @RequestMapping(value="/products/{p_product_id}", method = RequestMethod.GET,headers="Accept=application/json")
     public ProductEntity getProductById(@PathVariable long p_product_id) {
 
@@ -85,8 +85,8 @@ public class ProductController {
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.SERVICE_UNAVAILABLE.value(), "No connection DB"));
         }
-
     }
+    */
 
     @RequestMapping(value = "/productsUser/", method = RequestMethod.GET,headers="Accept=application/json")
     public ResponseEntity<JsonResponseBody> getListOfProductsByUser( HttpServletRequest request){
@@ -113,7 +113,7 @@ public class ProductController {
             }
         }catch (Exception e){
             System.out.println("eccezione: " + e);
-            return ResponseEntity.status(HttpStatus.OK).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: "+e ));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new JsonResponseBody(HttpStatus.INTERNAL_SERVER_ERROR.value(), "There is an error, sorry. Retry later. Error: "+e ));
         }
         ////////////////////////////////////////////////////////////////////////
 
