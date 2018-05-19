@@ -60,10 +60,21 @@ class ProductsPage extends Component {
             .then( response => {
                     console.log('res.data', response.data.response);
                     console.log('prova lunghezza', response.data.response.length);
-                    if (response.data.response.length > 0) {
-                        this.setState({products: response.data.response, message: ""});
+                    if (response.data.server === 200) {
+                        if (response.data.response.length === 0){
+                            this.setState({products: [], message: "Non ci sono prodotti da visualizzare"});
+                        }
+                        else{
+                            this.setState({products: response.data.response, message: ""});
+                        }
 
-                    } else {
+                    }else if(response.data.server === 406) {
+                        this.setState({products: [], message: "Non hai i permessi per vedere i prodotti"});
+                    }else if(response.data.server === 504) {
+                        this.setState({products: [], message: "Sessione scaduta. Per favore accedi nuovamente"});
+                    }else if(response.data.server === 403) {
+                        this.setState({products: [], message: "Per favore accedi"});
+                    }else {
                         this.setState({products: [], message: "Non ci sono prodotti da visualizzare"});
                     }
 
