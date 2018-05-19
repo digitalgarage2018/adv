@@ -4,9 +4,17 @@ import { Card, CardImg, CardBody, CardTitle, CardSubtitle } from 'reactstrap';
 import {Button} from 'react-bootstrap';
 
 import './Service.css';
+import axios from "axios/index";
 
 
 const service = (props) => {
+
+    let coin = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR';
+    axios.get(coin)
+        .then( (response1) => {
+            let ethPrice = String(response1.data.EUR);
+            sessionStorage.setItem('ethPrice',ethPrice);
+        }).catch();// PREZZO ATTUALE ETH
 
     return (
         <div className="Service">

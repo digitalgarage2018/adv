@@ -8,6 +8,18 @@ const error = {
     textalign:'center'};
 
 
+const uploadButton = {
+    display: 'none'
+};
+
+const imagePreview = {
+    width: '100%',
+    marginTop: '35px',
+    marginBottom: '35px',
+    textAlign: 'center'
+};
+
+
 export default class AddServicePage extends Component {
 
     state = {
@@ -192,7 +204,7 @@ export default class AddServicePage extends Component {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<div className="imgPreview"> <img src={imagePreviewUrl} /> </div>);
+            $imagePreview = (<div> <img style={imagePreview} src={imagePreviewUrl} /> </div>);
         } else {
             $imagePreview = (null);
         }
@@ -268,11 +280,19 @@ export default class AddServicePage extends Component {
 
                         <FormGroup controlId="image" bsSize="large">
                             <ControlLabel> Immagine </ControlLabel>
+                            <br />
+                            <label htmlFor="image" className="btn btn-primary">
+
+
                             <FormControl
                                 autoFocus
                                 onChange={(e)=>this.handleImageChange(e)}
                                 type="file"
+                                style={uploadButton}
                             />
+                                Scegli file
+                            </label>
+                            {'  '} Seleziona un'immagine...
                         </FormGroup>
 
                         <div>

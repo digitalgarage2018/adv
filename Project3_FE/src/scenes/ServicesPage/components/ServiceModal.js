@@ -5,52 +5,67 @@ import DatePick from './DatePick';
 import {axiosinstance} from "../../../components/AxiosInstance/AxiosInstance";
 import {withRouter} from 'react-router-dom';
 import moment from 'moment';
+import axios from "axios/index";
 
 
 
 const serviceModal = (props) => {
+
+
     let isLoggedIn = sessionStorage.getItem('isLogged');
     let a = moment().format();
     let b = a.substring(0,10);
     sessionStorage.setItem("date",b);
+    let prezzo1 = String((props.price)/(sessionStorage.getItem('ethPrice')));
+    let prezzoServizio = prezzo1.substring(0,6);
 
-    let handleClick = () => {
 
-        console.log('sto chiamando Metamask per ricevere il mio Account');
-        let web3js = new Web3(window.web3.currentProvider);
-        let address = "";
-        web3js.eth.getAccounts()
-            .then((res) => {
-                console.log('sto chiamando Metamask per effettuare la transazione');
+    let handleClick = () => {  //Funzione per il pagamento tramite METAMASK
 
-                address = res[0];
+            let coin = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR';
+            axios.get(coin)
+                .then( (response) => {
+                    console.log('chiedo il valore attuale di ethereum e lo converto')
+                    let c = String((props.price)/(response.data.EUR));
+                    console.log('sto chiamando Metamask per ricevere il mio Account');
+                    let web3js = new Web3(window.web3.currentProvider);
+                    let address = "";
+                    web3js.eth.getAccounts()
+                        .then((res) => {
+                            console.log('sto chiamando Metamask per effettuare la transazione');
 
-                web3js.eth.sendTransaction({
-                    to: '0x6Dc8956E655Ccd80187265107b848D8c5B6d2459',
-                    from: address,
-                    value: web3js.utils.toWei('0.1', 'ether'),
-                })
-                    .then((res2) => {
+                            address = res[0];
 
-                        console.log('Chiamata al Back end per registrare acquisto... ');
-                        let datapost = sessionStorage.getItem('date');
-                        const url =  'http://localhost:8091/purchase/'+ props.id + "/" + datapost;
-                        let instance = axiosinstance();
-
-                        instance.post(url)
-                            .then(res3 => {
-                                console.log('devo reindirizzarti ... ');
-                                props.history.push("/");
-
+                            web3js.eth.sendTransaction({
+                                to: '0x6Dc8956E655Ccd80187265107b848D8c5B6d2459',
+                                from: address,
+                                value: web3js.utils.toWei(c, 'ether'),
                             })
-                            .catch(error => {
-                                console.log(error);});
-                    })
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
-    };
+                                .then((res2) => {
+
+                                    console.log('Chiamata al Back end per registrare acquisto... ');
+                                    let datapost = sessionStorage.getItem('date');
+                                    const url = 'http://localhost:8091/purchase/' + props.id + "/" + datapost;
+                                    let instance = axiosinstance();
+
+                                    instance.post(url)
+                                        .then(res3 => {
+                                            console.log('devo reindirizzarti ... ');
+                                            props.history.push("/");
+
+                                        })
+                                        .catch(error => {
+                                            console.log(error);
+                                        });
+                                })
+                        })
+                        .catch((err) => {
+                            console.log('err', err);
+                        });
+                }).catch((errno)=> {
+                console.log('ciao');});
+        }
+    ;
 
     return (
         <Modal show={props.show} onHide={props.hide} >
@@ -75,7 +90,7 @@ const serviceModal = (props) => {
 
                 {isLoggedIn ? (
                     <p>
-                        <strong> Prezzo: </strong>  {props.price} $ </p>
+                        <strong> Prezzo: </strong>  {props.price} € | {prezzoServizio} ETH</p>
                 ) : (null)}
 
             </Modal.Body>
