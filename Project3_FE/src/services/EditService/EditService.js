@@ -11,8 +11,6 @@ export const editService = () => {
 
 
     function setSelectedService(serviceInput) {
-
-
         serviceSelected = serviceInput;
     }
 

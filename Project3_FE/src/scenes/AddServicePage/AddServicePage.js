@@ -192,7 +192,7 @@ export default class AddServicePage extends Component {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<img src={imagePreviewUrl} />);
+            $imagePreview = (<div className="imgPreview"> <img src={imagePreviewUrl} /> </div>);
         } else {
             $imagePreview = (null);
         }
@@ -272,11 +272,10 @@ export default class AddServicePage extends Component {
                                 autoFocus
                                 onChange={(e)=>this.handleImageChange(e)}
                                 type="file"
-
                             />
                         </FormGroup>
 
-                        <div className="imgPreview">
+                        <div>
                            {$imagePreview}
                         </div>
 

@@ -3,11 +3,6 @@ import { axiosinstance } from '../../components/AxiosInstance/AxiosInstance';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
 import './EditServicePage.css';
-import imagedefault from '../../images/home.jpg';
-
-// import { editService } from '../../services/EditService/EditService';
-
-
 
 
 const error = {
@@ -32,9 +27,12 @@ export default class EditServicePage extends Component {
         time: sessionStorage.getItem('serviceSelectedTime'),
         timeIsChanged: false,
 
-        image: "",
+        serviceID: sessionStorage.getItem('serviceSelectedID'),
 
-        serviceID: 0
+        file: '',
+        imagePreviewUrl: ''
+
+
     };
 
     componentDidMount() {
@@ -99,11 +97,20 @@ export default class EditServicePage extends Component {
         });
     }
 
-    handleImageChange = event => {
+    handleImageChange(e) {
+        e.preventDefault();
 
-        this.setState({
-            [event.target.id]: event.target.value,
-        });
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                imagePreviewUrl: reader.result
+            });
+        }
+
+        reader.readAsDataURL(file)
     }
 
     getNameValidationState() {
@@ -165,12 +172,11 @@ export default class EditServicePage extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-
         console.log('stato dopo la submit: ', this.state);
 
-        if (this.state.image.length<50){
-            this.setState({image:imagedefault});
-        }
+        sessionStorage.setItem('imageUploaded', this.state.imagePreviewUrl);
+        console.log('handle uploading: ', this.state.file);
+
         let url = 'http://localhost:8091/updateService/'+this.state.serviceID;
         let instance = axiosinstance();
         instance.put(url, {
@@ -180,7 +186,7 @@ export default class EditServicePage extends Component {
             sr_description:this.state.description,
             sr_price:this.state.price,
             sr_time:this.state.time,
-            sr_image:this.state.image
+            sr_image:sessionStorage.getItem('imageUploaded')
 
         })
             .then( response => {
@@ -207,6 +213,15 @@ export default class EditServicePage extends Component {
     }
 
     render() {
+
+        let {imagePreviewUrl} = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+            $imagePreview = (<div className="imgPreview"> <img src={imagePreviewUrl} /> </div>);
+        } else {
+            $imagePreview = (null);
+        }
+
 
         return (
 
@@ -277,15 +292,18 @@ export default class EditServicePage extends Component {
                         />
                     </FormGroup>
 
-                  {/*  <FormGroup controlId="image" bsSize="large">
-                        <ControlLabel>Immagine <small> (in Base64) </small></ControlLabel>
+                    <FormGroup controlId="image" bsSize="large">
+                        <ControlLabel> Immagine </ControlLabel>
                         <FormControl
                             autoFocus
-                            value={this.state.image}
-                            onChange={this.handleImageChange}
-                            type="text"
+                            onChange={(e)=>this.handleImageChange(e)}
+                            type="file"
                         />
-                    </FormGroup>*/}
+                    </FormGroup>
+
+                    <div>
+                        {$imagePreview}
+                    </div>
 
                     <hr/>
 

@@ -17,6 +17,8 @@ const serviceModal = (props) => {
     sessionStorage.setItem('serviceSelectedDescription', props.description);
     sessionStorage.setItem('serviceSelectedPrice', props.price);
     sessionStorage.setItem('serviceSelectedTime', props.time);
+    sessionStorage.setItem('serviceSelectedID', props.id);
+
     // sessionStorage.setItem('serviceSelectedImage', props.image);
 
 
