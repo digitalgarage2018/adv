@@ -30,8 +30,7 @@ export default class EditServicePage extends Component {
         serviceID: sessionStorage.getItem('serviceSelectedID'),
 
         file: '',
-        imagePreviewUrl: ''
-
+        imagePreviewUrl: sessionStorage.getItem('serviceSelectedImage')
 
     };
 
@@ -298,6 +297,7 @@ export default class EditServicePage extends Component {
                             autoFocus
                             onChange={(e)=>this.handleImageChange(e)}
                             type="file"
+                            label='prova'
                         />
                     </FormGroup>
 

@@ -18,8 +18,7 @@ const serviceModal = (props) => {
     sessionStorage.setItem('serviceSelectedPrice', props.price);
     sessionStorage.setItem('serviceSelectedTime', props.time);
     sessionStorage.setItem('serviceSelectedID', props.id);
-
-    // sessionStorage.setItem('serviceSelectedImage', props.image);
+    sessionStorage.setItem('serviceSelectedImage', props.image);
 
 
 
@@ -64,7 +63,6 @@ const serviceModal = (props) => {
                           serviceID={props.id}/>
 
                 <Button href={`/ModificaServizio`}> Modifica </Button>
-            {/* <Button onClick={editServiceHandler} href={`/ModificaServizio`}>Modifica</Button> */}
 
             </Modal.Footer>
         </Modal>

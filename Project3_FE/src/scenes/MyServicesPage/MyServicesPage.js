@@ -32,6 +32,7 @@ class MyServicesPage extends Component {
         serviceSelectedTime: " ",
         serviceSelectedPrice: " ",
         serviceSelectedId: " ",
+        serviceSelectedImage: " ",
         message: "",
         keyword: ""
     };
@@ -68,6 +69,8 @@ class MyServicesPage extends Component {
         this.setState({serviceSelectedTime: serviceSelected.sr_time});
         this.setState({serviceSelectedPrice: serviceSelected.sr_price});
         this.setState({serviceSelectedId: serviceSelected.sr_serviceID});
+        this.setState({serviceSelectedImage: serviceSelected.sr_image});
+
 
         this.setState({showModal: true});
 
@@ -156,6 +159,7 @@ class MyServicesPage extends Component {
                     time={this.state.serviceSelectedTime}
                     price={this.state.serviceSelectedPrice}
                     id={this.state.serviceSelectedId}
+                    image={this.state.serviceSelectedImage}
                 />
 
 
