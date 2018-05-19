@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./CenterLogInPage.css";
@@ -114,7 +114,8 @@ class CenterLogInPage extends Component {
 
                 return (
                     <div className="LoginPage">
-
+                        <br/>
+                        <br/>
                         <form onSubmit={(event) => this.handleSubmit(event)}>
                             <FormGroup 
                                 controlId="userName" 
@@ -148,10 +149,12 @@ class CenterLogInPage extends Component {
                                 type="submit">
                                 Login
                             </Button>
-
+                            <br/>
+                            <br/>
                            </form>
-                        <div align="center">
 
+                        <div align="center">
+                            <Link to="/LogIn"> Non sei un centro benessere? </Link>
                         </div>
 
                     </div>
