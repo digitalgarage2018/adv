@@ -2,8 +2,6 @@ import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import Web3 from "web3";
 import axios from "axios/index";
-import {axiosinstance} from "../../../components/AxiosInstance/AxiosInstance";
-import {withRouter} from 'react-router-dom';
 
 
 
@@ -18,7 +16,8 @@ const productModal = (props) => {
             axios.get(coin)
                 .then( (response) => {
                     console.log('chiedo il valore attuale di ethereum e lo converto')
-                    let c = String((props.price)/(response.data.EUR));
+                    let tmp = String((props.price)/(response.data.EUR));
+                    let c = tmp.substring(0,8);
                     console.log('sto chiamando Metamask per ricevere il mio Account');
                     let web3js = new Web3(window.web3.currentProvider);
                     let address = "";
@@ -33,24 +32,12 @@ const productModal = (props) => {
                                 from: address,
                                 value: web3js.utils.toWei(c, 'ether'),
                             })
-                                .then((res2) => {
-
-                                    console.log('Chiamata al Back end per registrare acquisto... ');
-                                    let datapost = sessionStorage.getItem('date');
-                                    const url = 'http://localhost:8091/purchase/' + props.id + "/" + datapost;
-                                    let instance = axiosinstance();
-
-                                    instance.post(url)
-                                        .then(res3 => {
-                                            console.log('devo reindirizzarti ... ');
-
+                                .then((res2) => { console.log("ciao");
                                         })
-                                        .catch(error => {
-window.location.reload();                                        });
-                                })
-                        })
+
                         .catch((err) => {
-                            console.log('err', err);
+                            props.history.push("/");
+                            });
                         });
                 }).catch((errno)=> {
                 console.log('ciao');});

@@ -8,7 +8,6 @@ import moment from 'moment';
 import axios from "axios/index";
 
 
-
 const serviceModal = (props) => {
 
 
@@ -26,8 +25,10 @@ const serviceModal = (props) => {
             axios.get(coin)
                 .then( (response) => {
                     console.log('chiedo il valore attuale di ethereum e lo converto')
-                    let c = String((props.price)/(response.data.EUR));
+                    let tmp = String((props.price)/(response.data.EUR));
+                    let c = tmp.substring(0,8);
                     console.log('sto chiamando Metamask per ricevere il mio Account');
+                    console.log('CIAAAAAOOOOO',c);
                     let web3js = new Web3(window.web3.currentProvider);
                     let address = "";
                     web3js.eth.getAccounts()
