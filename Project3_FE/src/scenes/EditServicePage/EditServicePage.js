@@ -199,13 +199,20 @@ export default class EditServicePage extends Component {
             .then( response => {
 
                 console.log("Stato dopo l'inserimento: ", this.state);
-                if (response.data.server === 406)
-                {this.setState({message:"Non hai i permessi per aggiungere un servizio. Loggati come centro benessere"})}
-                else{
+                if (response.data.server === 201)
+                {
                     this.props.history.push("/MieiServizi");
                     window.location.reload();
-                }
-
+                   }
+                else if (response.data.server === 406){
+                    this.setState({message:"Non hai i permessi per modificare un servizio. Accedi come centro benessere"});
+                }else if(response.data.server === 504) {
+                    this.setState({message:"Sessione scaduta. Per favore accedi nuovamente"});
+                }else if(response.data.server === 403) {
+                    this.setState({message:"Per favore accedi"});
+                }else {
+                    this.setState({message:"Ci scusiamo, vi è stato un errore: "+response.data.response});
+                }  
 
             })
             .catch( error => {
@@ -213,7 +220,7 @@ export default class EditServicePage extends Component {
                     this.setState({message:"Inserire degli interi maggiori di zero in prezzo e durata"})
                 }
                 else{
-                    this.setState({message:error.response.data.response})
+                    this.setState({message:"Ci scusiamo, vi è stato un errore: "+error.response.data.response})
                 }
             });
 
