@@ -43,7 +43,7 @@ const serviceModal = (props) => {
 
                 {isLoggedIn ? (
                     <p>
-                        <strong> Prezzo: </strong>  {props.price} $ </p>
+                        <strong> Prezzo: </strong>  {props.price} € </p>
                 ) : (null)}
 
             </Modal.Body>
