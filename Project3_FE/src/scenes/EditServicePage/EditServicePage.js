@@ -9,6 +9,17 @@ const error = {
     color: 'red',
     textalign:'center'};
 
+const uploadButton = {
+    display: 'none'
+};
+
+const imagePreview = {
+    width: '100%',
+    marginTop: '35px',
+    marginBottom: '35px',
+    textAlign: 'center'
+};
+
 export default class EditServicePage extends Component {
 
     state = {
@@ -166,9 +177,6 @@ export default class EditServicePage extends Component {
     }
 
 
-
-
-
     handleSubmit = (event) => {
         event.preventDefault();
         console.log('stato dopo la submit: ', this.state);
@@ -216,7 +224,7 @@ export default class EditServicePage extends Component {
         let {imagePreviewUrl} = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<div className="imgPreview"> <img src={imagePreviewUrl} /> </div>);
+            $imagePreview = (<div> <img style={imagePreview} src={imagePreviewUrl} /> </div>);
         } else {
             $imagePreview = (null);
         }
@@ -293,12 +301,20 @@ export default class EditServicePage extends Component {
 
                     <FormGroup controlId="image" bsSize="large">
                         <ControlLabel> Immagine </ControlLabel>
+                        <br />
+                        <label htmlFor="image" className="btn btn-primary">
+
+
                         <FormControl
                             autoFocus
+                            id="image"
                             onChange={(e)=>this.handleImageChange(e)}
                             type="file"
-                            label='prova'
+                            style={uploadButton}
                         />
+                            Scegli file
+                        </label>
+                        {'  '} Seleziona un'immagine...
                     </FormGroup>
 
                     <div>
