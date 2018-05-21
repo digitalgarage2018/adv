@@ -7,6 +7,14 @@ import {withRouter} from 'react-router-dom';
 import moment from 'moment';
 import axios from "axios/index";
 
+const inlineFlex = {
+    display: 'inline-flex'
+}
+
+const dataPickStyle = {
+    marginLeft: '7px'
+}
+
 
 const serviceModal = (props) => {
 
@@ -46,6 +54,7 @@ const serviceModal = (props) => {
 
                                     console.log('Chiamata al Back end per registrare acquisto... ');
                                     let datapost = sessionStorage.getItem('date');
+                                    console.log('data servizio', datapost);
                                     const url = 'http://localhost:8091/purchase/' + props.id + "/" + datapost;
                                     let instance = axiosinstance();
 
@@ -94,11 +103,15 @@ const serviceModal = (props) => {
                         <strong> Prezzo: </strong>  {props.price} € | {prezzoServizio} ETH</p>
                 ) : (null)}
 
+                <p style={inlineFlex}>
+                    <strong> Seleziona una data: </strong>
+                    <div style={dataPickStyle}>
+                        <DatePick onSelectedDate={props.selectedData} serviceID={props.id}/>
+                    </div>
+                </p>
+
             </Modal.Body>
             <Modal.Footer>
-                <DatePick
-                    onSelectedDate={props.selectedData}
-                    serviceID={props.id}/>
                 {isLoggedIn ? (
                     <Button onClick={handleClick}> Paga con MetaMask </Button>
                 ) : (<Button href={`/LogIn`}>Acquista</Button>)}

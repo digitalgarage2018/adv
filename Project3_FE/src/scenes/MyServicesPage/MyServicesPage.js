@@ -6,7 +6,7 @@ import {Col, Grid, Row} from 'react-bootstrap';
 
 import './MyServicesPage.css';
 import Service from './components/Service';
-import ServiceModal from './components/ServiceModal';
+import MyServiceModal from './components/MyServiceModal';
 
 
 
@@ -160,7 +160,7 @@ class MyServicesPage extends Component {
 
                 </Grid>
 
-                <ServiceModal
+                <MyServiceModal
                     show={this.state.showModal}
                     hide={() => this.closeModalHandler()}
                     title={this.state.serviceSelectedName}

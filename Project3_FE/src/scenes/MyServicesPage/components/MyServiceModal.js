@@ -2,8 +2,17 @@ import React from 'react';
 import {Modal, Button} from 'react-bootstrap';
 import DatePick from './DatePick';
 
+const inlineFlex = {
+    display: 'inline-flex'
+}
 
-const serviceModal = (props) => {
+const dataPickStyle = {
+    marginLeft: '7px'
+}
+
+
+
+const myServiceModal = (props) => {
 
 
 
@@ -46,10 +55,16 @@ const serviceModal = (props) => {
                         <strong> Prezzo: </strong>  {props.price} € </p>
                 ) : (null)}
 
-            </Modal.Body>
+                <div style={inlineFlex}>
+                    <strong> Seleziona una data: </strong>
+                    <div style={dataPickStyle}>
+                    <DatePick onSelectedDate={props.selectedData} serviceID={props.id}/>
+                    </div>
+                </div>
+
+                </Modal.Body>
             <Modal.Footer>
-                <DatePick onSelectedDate={props.selectedData}
-                          serviceID={props.id}/>
+
 
                 <Button href={`/ModificaServizio`}> Modifica </Button>
 
@@ -60,7 +75,7 @@ const serviceModal = (props) => {
 
 };
 
-export default serviceModal;
+export default myServiceModal;
 
 
 
