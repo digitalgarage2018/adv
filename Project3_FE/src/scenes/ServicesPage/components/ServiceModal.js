@@ -19,7 +19,7 @@ const dataPickStyle = {
 const serviceModal = (props) => {
 
 
-    let isLoggedIn = sessionStorage.getItem('isLogged');
+    let isLoggedIn = (sessionStorage.getItem('isLogged') === "true");
     let a = moment().format();
     let b = a.substring(0,10);
     sessionStorage.setItem("date",b);
@@ -29,14 +29,13 @@ const serviceModal = (props) => {
 
     let handleClick = () => {  //Funzione per il pagamento tramite METAMASK
 
-            let coin = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR';
+            let coin = 'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=EUR';  //prende valore attuale eth
             axios.get(coin)
                 .then( (response) => {
                     console.log('chiedo il valore attuale di ethereum e lo converto')
                     let tmp = String((props.price)/(response.data.EUR));
                     let c = tmp.substring(0,8);
                     console.log('sto chiamando Metamask per ricevere il mio Account');
-                    console.log('CIAAAAAOOOOO',c);
                     let web3js = new Web3(window.web3.currentProvider);
                     let address = "";
                     web3js.eth.getAccounts()
