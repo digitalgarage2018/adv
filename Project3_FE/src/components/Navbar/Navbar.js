@@ -3,7 +3,8 @@ import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 
 let margin ={
-    marginBottom:'0px'
+    marginBottom:'0px',
+    borderRadius: '0px'
 };
 
 class NavBar extends Component {
@@ -26,7 +27,7 @@ class NavBar extends Component {
 
 
             return (
-                <div className="Navbar">
+                <div>
                     <Navbar style={margin} inverse collapseOnSelect>
                         <Navbar.Header>
                             <Navbar.Brand>
